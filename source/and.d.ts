@@ -1,4 +1,4 @@
-import type {AndAll} from './and-all.d.ts';
+import type { AndAll } from './and-all.d.ts';
 
 /**
 Returns a boolean for whether two given types are both `true`.

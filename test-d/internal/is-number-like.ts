@@ -1,6 +1,6 @@
-import {expectType} from 'tsd';
-import type {IsNumberLike} from '../../source/internal/numeric.d.ts';
-import type {NegativeInfinity, PositiveInfinity} from '../../index.d.ts';
+import { expectType } from 'tsd';
+import type { IsNumberLike } from '../../source/internal/numeric.d.ts';
+import type { NegativeInfinity, PositiveInfinity } from '../../index.d.ts';
 
 // Integer
 expectType<IsNumberLike<'-1'>>(true);
@@ -19,13 +19,13 @@ expectType<IsNumberLike<1.1>>(true);
 // Scientific
 expectType<IsNumberLike<'+1.2e+3'>>(true);
 expectType<IsNumberLike<'1.2e+3'>>(true);
-expectType<IsNumberLike<1.2e+3>>(true);
+expectType<IsNumberLike<1.2e3>>(true);
 expectType<IsNumberLike<'+5e-3'>>(true);
 expectType<IsNumberLike<'5e-3'>>(true);
 expectType<IsNumberLike<5e-3>>(true);
 
 expectType<IsNumberLike<'-1.2e+3'>>(true);
-expectType<IsNumberLike<-1.2e+3>>(true);
+expectType<IsNumberLike<-1.2e3>>(true);
 expectType<IsNumberLike<'-5e-3'>>(true);
 expectType<IsNumberLike<-5e-3>>(true);
 

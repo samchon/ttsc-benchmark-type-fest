@@ -1,5 +1,18 @@
-import {expectAssignable, expectNotAssignable, expectNotType, expectType} from 'tsd';
-import type {Opaque, UnwrapOpaque, Tagged, GetTagMetadata, UnwrapTagged, InvariantOf,	SnakeCasedPropertiesDeep} from '../index.d.ts';
+import {
+  expectAssignable,
+  expectNotAssignable,
+  expectNotType,
+  expectType,
+} from 'tsd';
+import type {
+  Opaque,
+  UnwrapOpaque,
+  Tagged,
+  GetTagMetadata,
+  UnwrapTagged,
+  InvariantOf,
+  SnakeCasedPropertiesDeep,
+} from '../index.d.ts';
 
 type Value = Opaque<number, 'Value'>;
 
@@ -20,12 +33,12 @@ expectAssignable<WithoutToken>(2 as WithoutToken);
 
 // Verify that the Opaque's token can be the parent type itself.
 type Person = {
-	id: Opaque<number, Person>;
-	name: string;
+  id: Opaque<number, Person>;
+  name: string;
 };
 const person = {
-	id: 42 as Opaque<number, Person>,
-	name: 'Arthur',
+  id: 42 as Opaque<number, Person>,
+  name: 'Arthur',
 };
 expectType<Person>(person);
 
@@ -33,11 +46,11 @@ expectType<Person>(person);
 // Use `Opaque` value as `Record` index type.
 type UUID = Opaque<string, 'UUID'>;
 type NormalizedDictionary<T> = Record<UUID, T>;
-type Foo = {bar: string};
+type Foo = { bar: string };
 
 const userEntities: NormalizedDictionary<Foo> = {
-	['7dd4a16e-d5ee-454c-b1d0-71e23d9fa70b' as UUID]: {bar: 'John'},
-	['6ce31270-31eb-4a72-a9bf-43192d4ab436' as UUID]: {bar: 'Doe'},
+  ['7dd4a16e-d5ee-454c-b1d0-71e23d9fa70b' as UUID]: { bar: 'John' },
+  ['6ce31270-31eb-4a72-a9bf-43192d4ab436' as UUID]: { bar: 'Doe' },
 };
 
 const johnsId = '7dd4a16e-d5ee-454c-b1d0-71e23d9fa70b' as UUID;
@@ -55,7 +68,7 @@ expectNotType<Value>(plainValue);
 
 // UnwrapOpque should work even when the token _happens_ to make the Opaque type
 // have the same underlying structure as a Tagged type.
-expectType<number>(4 as UnwrapOpaque<Opaque<number, {x: void}>>);
+expectType<number>(4 as UnwrapOpaque<Opaque<number, { x: void }>>);
 
 // All the basic tests that apply to Opaque types should pass for Tagged types too.
 // See rationale for each test in the Opaque tests above.
@@ -71,8 +84,8 @@ expectNotAssignable<TaggedValue>(value + 2);
 expectAssignable<number>(value + 2);
 
 const userEntities2: Record<TaggedUUID, Foo> = {
-	['7dd4a16e-d5ee-454c-b1d0-71e23d9fa70b' as UUID]: {bar: 'John'},
-	['6ce31270-31eb-4a72-a9bf-43192d4ab436' as UUID]: {bar: 'Doe'},
+  ['7dd4a16e-d5ee-454c-b1d0-71e23d9fa70b' as UUID]: { bar: 'John' },
+  ['6ce31270-31eb-4a72-a9bf-43192d4ab436' as UUID]: { bar: 'Doe' },
 };
 
 const johnsId2 = '7dd4a16e-d5ee-454c-b1d0-71e23d9fa70b' as TaggedUUID;
@@ -139,10 +152,10 @@ expectNotAssignable<JsonOf<number>>('' as JsonOf<number | string>);
 expectNotAssignable<JsonOf<InvariantOf<number>>>('' as JsonOf<string | number>);
 expectNotAssignable<JsonOf<InvariantOf<number>>>('' as JsonOf<42>);
 expectAssignable<JsonOf<InvariantOf<number>>>(
-	'' as JsonOf<InvariantOf<number>>,
+  '' as JsonOf<InvariantOf<number>>,
 );
 
 // Test for issue https://github.com/sindresorhus/type-fest/issues/643
 type IdType = Opaque<number, 'test'>;
-type TestSnakeObject = SnakeCasedPropertiesDeep<{testId: IdType}>;
-expectType<TestSnakeObject>({test_id: 2 as IdType});
+type TestSnakeObject = SnakeCasedPropertiesDeep<{ testId: IdType }>;
+expectType<TestSnakeObject>({ test_id: 2 as IdType });

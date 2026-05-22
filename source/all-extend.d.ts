@@ -1,16 +1,16 @@
-import type {CollapseRestElement} from './internal/array.d.ts';
-import type {ApplyDefaultOptions} from './internal/object.d.ts';
-import type {IfNotAnyOrNever, Not} from './internal/type.d.ts';
-import type {IsAny} from './is-any.d.ts';
-import type {IsNever} from './is-never.d.ts';
-import type {Or} from './or.d.ts';
-import type {UnknownArray} from './unknown-array.d.ts';
+import type { CollapseRestElement } from './internal/array.d.ts';
+import type { ApplyDefaultOptions } from './internal/object.d.ts';
+import type { IfNotAnyOrNever, Not } from './internal/type.d.ts';
+import type { IsAny } from './is-any.d.ts';
+import type { IsNever } from './is-never.d.ts';
+import type { Or } from './or.d.ts';
+import type { UnknownArray } from './unknown-array.d.ts';
 
 /**
 @see {@link AllExtend}
 */
 export type AllExtendOptions = {
-	/**
+  /**
 	Consider `never` elements to match the target type only if the target type itself is `never` (or `any`).
 
 	- When set to `true` (default), `never` is _not_ treated as a bottom type, instead, it is treated as a type that matches only itself (or `any`).
@@ -47,11 +47,11 @@ export type AllExtendOptions = {
 	//=> false
 	```
 	*/
-	strictNever?: boolean;
+  strictNever?: boolean;
 };
 
 type DefaultAllExtendOptions = {
-	strictNever: true;
+  strictNever: true;
 };
 
 /**
@@ -100,20 +100,37 @@ type B = AllExtend<[1?, 2?, 3?], number | undefined>;
 @category Utilities
 @category Array
 */
-export type AllExtend<TArray extends UnknownArray, Type, Options extends AllExtendOptions = {}> =
-	_AllExtend<CollapseRestElement<TArray>, Type, ApplyDefaultOptions<AllExtendOptions, DefaultAllExtendOptions, Options>>;
+export type AllExtend<
+  TArray extends UnknownArray,
+  Type,
+  Options extends AllExtendOptions = {},
+> = _AllExtend<
+  CollapseRestElement<TArray>,
+  Type,
+  ApplyDefaultOptions<AllExtendOptions, DefaultAllExtendOptions, Options>
+>;
 
-type _AllExtend<TArray extends UnknownArray, Type, Options extends Required<AllExtendOptions>> = IfNotAnyOrNever<TArray,
-	TArray extends readonly [infer First, ...infer Rest]
-		? IsNever<First> extends true
-			? Or<Or<IsNever<Type>, IsAny<Type>>, Not<Options['strictNever']>> extends true
-				// If target `Type` is also `never`, or is `any`, or `strictNever` is disabled, recurse further.
-				? _AllExtend<Rest, Type, Options>
-				: false
-			: First extends Type
-				? _AllExtend<Rest, Type, Options>
-				: false
-		: true,
-	false, false>;
+type _AllExtend<
+  TArray extends UnknownArray,
+  Type,
+  Options extends Required<AllExtendOptions>,
+> = IfNotAnyOrNever<
+  TArray,
+  TArray extends readonly [infer First, ...infer Rest]
+    ? IsNever<First> extends true
+      ? Or<
+          Or<IsNever<Type>, IsAny<Type>>,
+          Not<Options['strictNever']>
+        > extends true
+        ? // If target `Type` is also `never`, or is `any`, or `strictNever` is disabled, recurse further.
+          _AllExtend<Rest, Type, Options>
+        : false
+      : First extends Type
+        ? _AllExtend<Rest, Type, Options>
+        : false
+    : true,
+  false,
+  false
+>;
 
 export {};

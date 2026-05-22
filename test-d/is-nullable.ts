@@ -1,5 +1,5 @@
-import {expectType} from 'tsd';
-import type {IsNullable} from '../source/is-nullable.d.ts';
+import { expectType } from 'tsd';
+import type { IsNullable } from '../source/is-nullable.d.ts';
 
 expectType<IsNullable<any>>(true);
 expectType<IsNullable<null>>(true);

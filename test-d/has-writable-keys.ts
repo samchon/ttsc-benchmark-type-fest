@@ -1,19 +1,19 @@
-import {expectType} from 'tsd';
-import type {HasWritableKeys} from '../index.d.ts';
+import { expectType } from 'tsd';
+import type { HasWritableKeys } from '../index.d.ts';
 
 type TestType1 = {
-	a: string;
-	readonly b: boolean;
+  a: string;
+  readonly b: boolean;
 };
 
 type TestType2 = {
-	readonly a: string;
-	readonly b: boolean;
+  readonly a: string;
+  readonly b: boolean;
 };
 
 type TestType3 = {
-	a: string;
-	b: boolean;
+  a: string;
+  b: boolean;
 };
 
 type HasWritableKeys1 = HasWritableKeys<TestType1>;

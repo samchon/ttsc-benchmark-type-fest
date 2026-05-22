@@ -1,34 +1,41 @@
 /* eslint-disable @typescript-eslint/consistent-type-definitions */
 // TODO: Convert the `interface`'s to `type`s.
-import {expectAssignable, expectNotAssignable, expectType} from 'tsd';
-import type {EmptyObject, Jsonify, JsonObject, JsonValue, NegativeInfinity, PositiveInfinity} from '../index.d.ts';
+import { expectAssignable, expectNotAssignable, expectType } from 'tsd';
+import type {
+  EmptyObject,
+  Jsonify,
+  JsonObject,
+  JsonValue,
+  NegativeInfinity,
+  PositiveInfinity,
+} from '../index.d.ts';
 
 interface A {
-	a: number;
+  a: number;
 }
 
 class B {
-	a!: number;
+  a!: number;
 }
 
 interface V {
-	a?: number;
+  a?: number;
 }
 
 interface X {
-	a: Date;
+  a: Date;
 }
 
 interface Y {
-	a?: Date;
+  a?: Date;
 }
 
 interface Z {
-	a: number | undefined;
+  a: number | undefined;
 }
 
 interface W {
-	a?: () => any;
+  a?: () => any;
 }
 
 declare const a: Jsonify<A>;
@@ -50,15 +57,15 @@ expectAssignable<JsonValue>([]);
 expectAssignable<JsonValue>([] as const);
 expectAssignable<JsonValue>({});
 expectAssignable<JsonValue>([0]);
-expectAssignable<JsonValue>({a: 0});
+expectAssignable<JsonValue>({ a: 0 });
 expectAssignable<JsonValue>(a);
 expectAssignable<JsonValue>(b);
-expectAssignable<JsonValue>({a: {b: true, c: {}}, d: [{}, 2, 'hi']});
-expectAssignable<JsonValue>([{}, {a: 'hi'}, null, 3]);
+expectAssignable<JsonValue>({ a: { b: true, c: {} }, d: [{}, 2, 'hi'] });
+expectAssignable<JsonValue>([{}, { a: 'hi' }, null, 3]);
 
 expectNotAssignable<JsonValue>(new Date());
 expectNotAssignable<JsonValue>([new Date()]);
-expectNotAssignable<JsonValue>({a: new Date()});
+expectNotAssignable<JsonValue>({ a: new Date() });
 expectNotAssignable<JsonValue>(v);
 expectNotAssignable<JsonValue>(x);
 expectNotAssignable<JsonValue>(y);
@@ -69,13 +76,13 @@ expectNotAssignable<JsonValue>(5 as number | undefined);
 
 // TODO: Convert this to a `type`.
 interface Geometry {
-	type: 'Point' | 'Polygon';
-	coordinates: [number, number];
+  type: 'Point' | 'Polygon';
+  coordinates: [number, number];
 }
 
 const point: Geometry = {
-	type: 'Point',
-	coordinates: [1, 1],
+  type: 'Point',
+  coordinates: [1, 1],
 };
 
 expectNotAssignable<JsonValue>(point);
@@ -98,13 +105,16 @@ expectAssignable<JsonValue>(parsedStringifiedX);
 expectAssignable<string>(parsedStringifiedX.a);
 
 class NonJsonWithToJSON {
-	public fixture = new Map<string, number>([['a', 1], ['b', 2]]);
+  public fixture = new Map<string, number>([
+    ['a', 1],
+    ['b', 2],
+  ]);
 
-	public toJSON(): {fixture: Array<[string, number]>} {
-		return {
-			fixture: [...this.fixture.entries()],
-		};
-	}
+  public toJSON(): { fixture: Array<[string, number]> } {
+    return {
+      fixture: [...this.fixture.entries()],
+    };
+  }
 }
 
 const nonJsonWithToJSON = new NonJsonWithToJSON();
@@ -113,55 +123,60 @@ expectAssignable<JsonValue>(nonJsonWithToJSON.toJSON());
 expectAssignable<Jsonify<NonJsonWithToJSON>>(nonJsonWithToJSON.toJSON());
 
 class NonJsonExtendPrimitiveWithToJSON extends Number {
-	public fixture = 42n;
+  public fixture = 42n;
 
-	public toJSON(): {fixture: string} {
-		return {
-			fixture: '42n',
-		};
-	}
+  public toJSON(): { fixture: string } {
+    return {
+      fixture: '42n',
+    };
+  }
 }
 
 const nonJsonExtendPrimitiveWithToJSON = new NonJsonExtendPrimitiveWithToJSON();
 expectNotAssignable<JsonValue>(nonJsonExtendPrimitiveWithToJSON);
 expectAssignable<JsonValue>(nonJsonExtendPrimitiveWithToJSON.toJSON());
-expectAssignable<Jsonify<NonJsonExtendPrimitiveWithToJSON>>(nonJsonExtendPrimitiveWithToJSON.toJSON());
+expectAssignable<Jsonify<NonJsonExtendPrimitiveWithToJSON>>(
+  nonJsonExtendPrimitiveWithToJSON.toJSON(),
+);
 
 class NonJsonWithToJSONWrapper {
-	public inner: NonJsonWithToJSON = nonJsonWithToJSON;
-	public override = 42;
+  public inner: NonJsonWithToJSON = nonJsonWithToJSON;
+  public override = 42;
 
-	public toJSON() {
-		const stringOverride = 'override';
+  public toJSON() {
+    const stringOverride = 'override';
 
-		return {
-			override: stringOverride,
-			inner: this.inner,
-			innerDeep: {inner: this.inner},
-		};
-	}
+    return {
+      override: stringOverride,
+      inner: this.inner,
+      innerDeep: { inner: this.inner },
+    };
+  }
 }
 
 expectNotAssignable<JsonValue>(new NonJsonWithToJSONWrapper());
 
-type InnerFixture = {fixture: Array<[string, number]>};
+type InnerFixture = { fixture: Array<[string, number]> };
 
 expectType<{
-	override: string;
-	inner: InnerFixture;
-	innerDeep: {inner: InnerFixture};
+  override: string;
+  inner: InnerFixture;
+  innerDeep: { inner: InnerFixture };
 }>({} as Jsonify<NonJsonWithToJSONWrapper>);
 
 class NonJsonWithInvalidToJSON {
-	public fixture = new Map<string, number>([['a', 1], ['b', 2]]);
+  public fixture = new Map<string, number>([
+    ['a', 1],
+    ['b', 2],
+  ]);
 
-	// This is intentionally invalid `.toJSON()`.
-	// It is invalid because the result is not assignable to `JsonValue`.
-	public toJSON(): {fixture: Map<string, number>} {
-		return {
-			fixture: this.fixture,
-		};
-	}
+  // This is intentionally invalid `.toJSON()`.
+  // It is invalid because the result is not assignable to `JsonValue`.
+  public toJSON(): { fixture: Map<string, number> } {
+    return {
+      fixture: this.fixture,
+    };
+  }
 }
 
 const nonJsonWithInvalidToJSON = new NonJsonWithInvalidToJSON();
@@ -192,11 +207,18 @@ expectType<never>(plainSymbol);
 declare const arrayMemberUndefined: Jsonify<Array<typeof undefined>>;
 expectType<null[]>(arrayMemberUndefined);
 
-declare const arrayMemberUnionWithUndefined: Jsonify<Array<typeof undefined | typeof number>>;
+declare const arrayMemberUnionWithUndefined: Jsonify<
+  Array<typeof undefined | typeof number>
+>;
 expectType<Array<null | number>>(arrayMemberUnionWithUndefined);
 
-declare const arrayMemberUnionWithUndefinedDeep: Jsonify<Array<Array<typeof undefined | typeof number>> | {foo: Array<typeof undefined | typeof number>}>;
-expectType<Array<Array<null | number>> | {foo: Array<null | number>}>(arrayMemberUnionWithUndefinedDeep);
+declare const arrayMemberUnionWithUndefinedDeep: Jsonify<
+  | Array<Array<typeof undefined | typeof number>>
+  | { foo: Array<typeof undefined | typeof number> }
+>;
+expectType<Array<Array<null | number>> | { foo: Array<null | number> }>(
+  arrayMemberUnionWithUndefinedDeep,
+);
 
 declare const arrayMemberFunction: Jsonify<Array<typeof function_>>;
 expectType<null[]>(arrayMemberFunction);
@@ -205,18 +227,30 @@ declare const arrayMemberSymbol: Jsonify<Array<typeof symbol>>;
 expectType<null[]>(arrayMemberSymbol);
 
 // When used in object values, these keys are filtered
-declare const objectValueUndefined: Jsonify<{keep: string; undefined: typeof undefined}>;
-expectType<{keep: string}>(objectValueUndefined);
+declare const objectValueUndefined: Jsonify<{
+  keep: string;
+  undefined: typeof undefined;
+}>;
+expectType<{ keep: string }>(objectValueUndefined);
 
-declare const objectValueFunction: Jsonify<{keep: string; fn: typeof function_}>;
-expectType<{keep: string}>(objectValueFunction);
+declare const objectValueFunction: Jsonify<{
+  keep: string;
+  fn: typeof function_;
+}>;
+expectType<{ keep: string }>(objectValueFunction);
 
-declare const objectValueSymbol: Jsonify<{keep: string; symbol: typeof symbol}>;
-expectType<{keep: string}>(objectValueSymbol);
+declare const objectValueSymbol: Jsonify<{
+  keep: string;
+  symbol: typeof symbol;
+}>;
+expectType<{ keep: string }>(objectValueSymbol);
 
 // Symbol keys are filtered
-declare const objectKeySymbol: Jsonify<{[key: typeof symbol]: number; keep: string}>;
-expectType<{keep: string}>(objectKeySymbol);
+declare const objectKeySymbol: Jsonify<{
+  [key: typeof symbol]: number;
+  keep: string;
+}>;
+expectType<{ keep: string }>(objectKeySymbol);
 
 // Number, String and Boolean values are turned into primitive counterparts
 declare const number: Number;
@@ -264,7 +298,7 @@ expectAssignable<Jsonify<typeof map>>({});
 
 // Regression test for https://github.com/sindresorhus/type-fest/issues/466
 expectNotAssignable<Jsonify<typeof map>>(42);
-expectNotAssignable<Jsonify<typeof map>>({foo: 42});
+expectNotAssignable<Jsonify<typeof map>>({ foo: 42 });
 
 declare const set: Set<string>;
 declare const setJson: Jsonify<typeof set>;
@@ -273,7 +307,7 @@ expectAssignable<Jsonify<typeof set>>({});
 
 // Regression test for https://github.com/sindresorhus/type-fest/issues/466
 expectNotAssignable<Jsonify<typeof set>>(42);
-expectNotAssignable<Jsonify<typeof set>>({foo: 42});
+expectNotAssignable<Jsonify<typeof set>>({ foo: 42 });
 
 // Positive and negative Infinity, NaN and null are turned into null
 // NOTE: NaN is not detectable in TypeScript, so it is not tested; see https://github.com/sindresorhus/type-fest/issues/406
@@ -286,55 +320,55 @@ expectType<null>(negativeInfJson);
 
 // Test that optional type members are not discarded wholesale.
 type OptionalPrimitive = {
-	a?: string;
+  a?: string;
 };
 
 type OptionalTypeUnion = {
-	a?: string | (() => any);
+  a?: string | (() => any);
 };
 
 type NonOptionalTypeUnion = {
-	a: string | undefined;
+  a: string | undefined;
 };
 
 declare const jsonifiedOptionalPrimitive: Jsonify<OptionalPrimitive>;
 declare const jsonifiedOptionalTypeUnion: Jsonify<OptionalTypeUnion>;
 declare const jsonifiedNonOptionalTypeUnion: Jsonify<NonOptionalTypeUnion>;
 
-expectType<{a?: string}>(jsonifiedOptionalPrimitive);
+expectType<{ a?: string }>(jsonifiedOptionalPrimitive);
 expectType<{}>(jsonifiedOptionalTypeUnion);
-expectType<{a?: string}>(jsonifiedNonOptionalTypeUnion);
+expectType<{ a?: string }>(jsonifiedNonOptionalTypeUnion);
 
 // Test for 'Jsonify support for optional object keys, unserializable object values' #424
 // See https://github.com/sindresorhus/type-fest/issues/424
 type AppData = {
-	// Should be kept
-	requiredString: string;
-	requiredUnion: number | boolean;
+  // Should be kept
+  requiredString: string;
+  requiredUnion: number | boolean;
 
-	// Should be kept and set to optional
-	optionalString?: string;
-	optionalUnion?: number | string;
-	optionalStringUndefined: string | undefined;
-	optionalUnionUndefined: number | string | undefined;
+  // Should be kept and set to optional
+  optionalString?: string;
+  optionalUnion?: number | string;
+  optionalStringUndefined: string | undefined;
+  optionalUnionUndefined: number | string | undefined;
 
-	// Should be omitted
-	requiredFunction: () => any;
-	optionalFunction?: () => any;
-	requiredFunctionUnion: string | (() => any);
-	optionalFunctionUnion?: string | (() => any);
-	optionalFunctionUndefined: (() => any) | undefined;
-	optionalFunctionUnionUndefined: string | (() => any) | undefined;
+  // Should be omitted
+  requiredFunction: () => any;
+  optionalFunction?: () => any;
+  requiredFunctionUnion: string | (() => any);
+  optionalFunctionUnion?: string | (() => any);
+  optionalFunctionUndefined: (() => any) | undefined;
+  optionalFunctionUnionUndefined: string | (() => any) | undefined;
 };
 
 type ExpectedAppDataJson = {
-	requiredString: string;
-	requiredUnion: number | boolean;
+  requiredString: string;
+  requiredUnion: number | boolean;
 
-	optionalString?: string;
-	optionalUnion?: string | number;
-	optionalStringUndefined?: string;
-	optionalUnionUndefined?: string | number;
+  optionalString?: string;
+  optionalUnion?: string | number;
+  optionalStringUndefined?: string;
+  optionalUnionUndefined?: string | number;
 };
 
 declare const response: Jsonify<AppData>;
@@ -344,9 +378,9 @@ expectType<ExpectedAppDataJson>(response);
 expectType<any>({} as Jsonify<any>);
 
 declare const objectWithAnyProperty: Jsonify<{
-	a: any;
+  a: any;
 }>;
-expectType<{a: any}>(objectWithAnyProperty);
+expectType<{ a: any }>(objectWithAnyProperty);
 
 declare const objectWithAnyProperties: Jsonify<Record<string, any>>;
 expectType<Record<string, any>>(objectWithAnyProperties);
@@ -354,16 +388,16 @@ expectType<Record<string, any>>(objectWithAnyProperties);
 // Test for `Jsonify` support for nested objects with _only_ a name property.
 // See https://github.com/sindresorhus/type-fest/issues/657
 declare const nestedObjectWithNameProperty: {
-	first: {
-		name: string;
-	};
+  first: {
+    name: string;
+  };
 };
 declare const jsonifiedNestedObjectWithNameProperty: Jsonify<
-	typeof nestedObjectWithNameProperty
+  typeof nestedObjectWithNameProperty
 >;
 
 expectType<typeof nestedObjectWithNameProperty>(
-	jsonifiedNestedObjectWithNameProperty,
+  jsonifiedNestedObjectWithNameProperty,
 );
 
 // Regression test for https://github.com/sindresorhus/type-fest/issues/629
@@ -374,7 +408,7 @@ expectType<[1, 2, 3]>(readonlyTuple);
 declare const unknownValue: Jsonify<unknown>;
 declare const unknownArray: Jsonify<unknown[]>;
 declare const unknownTuple: Jsonify<[unknown, unknown]>;
-declare const objectWithUnknownValue: Jsonify<{key: unknown}>;
+declare const objectWithUnknownValue: Jsonify<{ key: unknown }>;
 expectType<JsonValue>(unknownValue);
 expectAssignable<Jsonify<unknown>>('foo');
 expectAssignable<Jsonify<unknown>>(['foo']);
@@ -385,11 +419,11 @@ expectNotAssignable<Jsonify<unknown[]>>([new Date()]);
 expectType<[JsonValue, JsonValue]>(unknownTuple);
 expectAssignable<Jsonify<[unknown, unknown]>>(['foo', 'foo']);
 expectNotAssignable<Jsonify<[unknown, unknown]>>([new Date(), new Date()]);
-expectType<{key: JsonValue}>(objectWithUnknownValue);
-expectAssignable<Jsonify<{key: unknown}>>({key: []});
-expectNotAssignable<Jsonify<{key: unknown}>>({key: new Date()});
+expectType<{ key: JsonValue }>(objectWithUnknownValue);
+expectAssignable<Jsonify<{ key: unknown }>>({ key: [] });
+expectNotAssignable<Jsonify<{ key: unknown }>>({ key: new Date() });
 
-expectAssignable<JsonObject>({} as {a: string});
-expectNotAssignable<JsonObject>({} as {a: string | undefined});
-expectAssignable<JsonObject>({} as {a?: string});
-expectNotAssignable<JsonObject>({} as {a?: string | undefined}); // Requires `exactOptionalPropertyTypes` to be enabled
+expectAssignable<JsonObject>({} as { a: string });
+expectNotAssignable<JsonObject>({} as { a: string | undefined });
+expectAssignable<JsonObject>({} as { a?: string });
+expectNotAssignable<JsonObject>({} as { a?: string | undefined }); // Requires `exactOptionalPropertyTypes` to be enabled

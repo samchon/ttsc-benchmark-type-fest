@@ -1,8 +1,8 @@
-import type {RequireExactlyOne} from './require-exactly-one.d.ts';
-import type {IfNotAnyOrNever, RequireNone} from './internal/index.d.ts';
-import type {If} from './if.d.ts';
-import type {IsAny} from './is-any.d.ts';
-import type {IsNever} from './is-never.d.ts';
+import type { RequireExactlyOne } from './require-exactly-one.d.ts';
+import type { IfNotAnyOrNever, RequireNone } from './internal/index.d.ts';
+import type { If } from './if.d.ts';
+import type { IsAny } from './is-any.d.ts';
+import type { IsNever } from './is-never.d.ts';
 
 /**
 Create a type that requires exactly one of the given keys or none of the given keys, while keeping the remaining keys as is.
@@ -34,16 +34,25 @@ const responder3: Responder = {
 
 @category Object
 */
-export type RequireOneOrNone<ObjectType, KeysType extends keyof ObjectType = keyof ObjectType> =
-	IfNotAnyOrNever<ObjectType,
-		If<IsNever<KeysType>,
-			ObjectType,
-			_RequireOneOrNone<ObjectType, If<IsAny<KeysType>, keyof ObjectType, KeysType>>
-		>>;
+export type RequireOneOrNone<
+  ObjectType,
+  KeysType extends keyof ObjectType = keyof ObjectType,
+> = IfNotAnyOrNever<
+  ObjectType,
+  If<
+    IsNever<KeysType>,
+    ObjectType,
+    _RequireOneOrNone<
+      ObjectType,
+      If<IsAny<KeysType>, keyof ObjectType, KeysType>
+    >
+  >
+>;
 
 type _RequireOneOrNone<ObjectType, KeysType extends keyof ObjectType> = (
-	| RequireExactlyOne<ObjectType, KeysType>
-	| RequireNone<KeysType>
-) & Omit<ObjectType, KeysType>; // Ignore unspecified keys.
+  | RequireExactlyOne<ObjectType, KeysType>
+  | RequireNone<KeysType>
+) &
+  Omit<ObjectType, KeysType>; // Ignore unspecified keys.
 
 export {};

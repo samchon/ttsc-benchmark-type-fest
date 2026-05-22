@@ -1,5 +1,5 @@
-import {expectType} from 'tsd';
-import type {ExcludeRestElement, TupleOf, UnknownArray} from '../index.d.ts';
+import { expectType } from 'tsd';
+import type { ExcludeRestElement, TupleOf, UnknownArray } from '../index.d.ts';
 
 // Basic static tuples (No rest element)
 expectType<ExcludeRestElement<[]>>({} as []);
@@ -18,7 +18,9 @@ expectType<ExcludeRestElement<[...unknown[], 2, 3]>>({} as [2, 3]);
 expectType<ExcludeRestElement<['a', ...string[], 'z']>>({} as ['a', 'z']);
 expectType<ExcludeRestElement<['x', ...boolean[], true]>>({} as ['x', true]);
 expectType<ExcludeRestElement<['x', ...any[], 'y']>>({} as ['x', 'y']);
-expectType<ExcludeRestElement<['x', ...readonly number[], 'y']>>({} as ['x', 'y']);
+expectType<ExcludeRestElement<['x', ...(readonly number[]), 'y']>>(
+  {} as ['x', 'y'],
+);
 
 // Trailing rest element
 expectType<ExcludeRestElement<[1, 2, ...string[]]>>({} as [1, 2]);
@@ -32,21 +34,37 @@ expectType<ExcludeRestElement<readonly [...boolean[]]>>({} as readonly []);
 expectType<ExcludeRestElement<[...string[]]>>({} as []);
 
 // Optional & mixed optional
-expectType<ExcludeRestElement<[string?, boolean?, ...number[]]>>({} as [string?, boolean?]);
-expectType<ExcludeRestElement<[number, boolean?, ...number[]]>>({} as [number, boolean?]);
+expectType<ExcludeRestElement<[string?, boolean?, ...number[]]>>(
+  {} as [string?, boolean?],
+);
+expectType<ExcludeRestElement<[number, boolean?, ...number[]]>>(
+  {} as [number, boolean?],
+);
 expectType<ExcludeRestElement<[1?, ...string[]]>>({} as [1?]);
 
 // Unions
-expectType<ExcludeRestElement<[1, ...string[]] | [2, ...number[]]>>({} as [1] | [2]);
-expectType<ExcludeRestElement<[...boolean[], 'end'] | ['start', ...string[]]>>({} as ['end'] | ['start']);
+expectType<ExcludeRestElement<[1, ...string[]] | [2, ...number[]]>>(
+  {} as [1] | [2],
+);
+expectType<ExcludeRestElement<[...boolean[], 'end'] | ['start', ...string[]]>>(
+  {} as ['end'] | ['start'],
+);
 
 // Readonly
-expectType<ExcludeRestElement<readonly [...number[], 'done']>>({} as readonly ['done']);
-expectType<ExcludeRestElement<readonly [1, ...string[], 2]>>({} as readonly [1, 2]);
+expectType<ExcludeRestElement<readonly [...number[], 'done']>>(
+  {} as readonly ['done'],
+);
+expectType<ExcludeRestElement<readonly [1, ...string[], 2]>>(
+  {} as readonly [1, 2],
+);
 
 // Nested Arrays
-expectType<ExcludeRestElement<[[1, 2], ...number[], [3, 4]]>>({} as [[1, 2], [3, 4]]);
-expectType<ExcludeRestElement<[['a'], ...string[], ['z']]>>({} as [['a'], ['z']]);
+expectType<ExcludeRestElement<[[1, 2], ...number[], [3, 4]]>>(
+  {} as [[1, 2], [3, 4]],
+);
+expectType<ExcludeRestElement<[['a'], ...string[], ['z']]>>(
+  {} as [['a'], ['z']],
+);
 
 // Edge: `never` / `any`
 expectType<ExcludeRestElement<any>>({} as any);
@@ -54,11 +72,17 @@ expectType<ExcludeRestElement<never>>({} as never);
 
 // Long tuples
 type FiftyZeroes = TupleOf<50, '0'>;
-expectType<ExcludeRestElement<[...FiftyZeroes, ...number[]]>>({} as FiftyZeroes);
+expectType<ExcludeRestElement<[...FiftyZeroes, ...number[]]>>(
+  {} as FiftyZeroes,
+);
 
 type NineHundredNinetyNineZeroes = TupleOf<999, '0'>;
-expectType<ExcludeRestElement<[...NineHundredNinetyNineZeroes, ...number[]]>>({} as NineHundredNinetyNineZeroes);
+expectType<ExcludeRestElement<[...NineHundredNinetyNineZeroes, ...number[]]>>(
+  {} as NineHundredNinetyNineZeroes,
+);
 
 // Generic instantiations
 type Assignability<_T extends UnknownArray> = unknown;
-type TestAssignability<T extends UnknownArray> = Assignability<ExcludeRestElement<T>>;
+type TestAssignability<T extends UnknownArray> = Assignability<
+  ExcludeRestElement<T>
+>;

@@ -22,6 +22,7 @@ type StringKeysOfFoo = KeyAsString<Foo>;
 
 @category Object
 */
-export type KeyAsString<BaseType> = `${Extract<keyof BaseType, string | number>}`;
+export type KeyAsString<BaseType> =
+  `${Extract<keyof BaseType, string | number>}`;
 
 export {};

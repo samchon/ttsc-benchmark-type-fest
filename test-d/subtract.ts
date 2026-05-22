@@ -1,6 +1,9 @@
-import {expectType} from 'tsd';
-import type {Subtract} from '../index.d.ts';
-import type {NegativeInfinity, PositiveInfinity} from '../source/numeric.d.ts';
+import { expectType } from 'tsd';
+import type { Subtract } from '../index.d.ts';
+import type {
+  NegativeInfinity,
+  PositiveInfinity,
+} from '../source/numeric.d.ts';
 
 // Positive result
 expectType<12>({} as Subtract<10, -2>);
@@ -26,7 +29,9 @@ expectType<PositiveInfinity>({} as Subtract<PositiveInfinity, 999>);
 expectType<NegativeInfinity>({} as Subtract<-999, PositiveInfinity>);
 expectType<NegativeInfinity>({} as Subtract<NegativeInfinity, 999>);
 expectType<PositiveInfinity>({} as Subtract<999, NegativeInfinity>);
-expectType<NegativeInfinity>({} as Subtract<NegativeInfinity, PositiveInfinity>);
+expectType<NegativeInfinity>(
+  {} as Subtract<NegativeInfinity, PositiveInfinity>,
+);
 
 // Number
 expectType<number>({} as Subtract<number, 2>);

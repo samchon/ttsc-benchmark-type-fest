@@ -1,5 +1,5 @@
-import {expectType} from 'tsd';
-import type {SetReturnType} from '../index.d.ts';
+import { expectType } from 'tsd';
+import type { SetReturnType } from '../index.d.ts';
 
 declare const anything: unknown;
 
@@ -9,7 +9,10 @@ expectType<() => number>(variation1);
 variation1.call(anything);
 
 // Without `thisArg` and with parameters.
-declare const variation2: SetReturnType<(foo: string, bar: boolean) => number, void>;
+declare const variation2: SetReturnType<
+  (foo: string, bar: boolean) => number,
+  void
+>;
 expectType<(foo: string, bar: boolean) => void>(variation2);
 variation2.call(anything, 'foo', true);
 

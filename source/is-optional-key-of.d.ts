@@ -1,4 +1,4 @@
-import type {IsAny} from './is-any.d.ts';
+import type { IsAny } from './is-any.d.ts';
 
 /**
 Returns a boolean for whether the given key is an optional key of type.
@@ -41,11 +41,12 @@ type T5 = IsOptionalKeyOf<User | Admin, 'surname'>;
 @category Utilities
 */
 export type IsOptionalKeyOf<Type extends object, Key extends keyof Type> =
-	IsAny<Type | Key> extends true ? never
-		: Key extends keyof Type
-			? Type extends Record<Key, Type[Key]>
-				? false
-				: true
-			: false;
+  IsAny<Type | Key> extends true
+    ? never
+    : Key extends keyof Type
+      ? Type extends Record<Key, Type[Key]>
+        ? false
+        : true
+      : false;
 
 export {};

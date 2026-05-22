@@ -1,5 +1,5 @@
-import {expectAssignable, expectNotAssignable} from 'tsd';
-import type {StructuredCloneable} from '../index.d.ts';
+import { expectAssignable, expectNotAssignable } from 'tsd';
+import type { StructuredCloneable } from '../index.d.ts';
 
 /*
 Source: https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm
@@ -109,14 +109,14 @@ expectAssignable<StructuredCloneable>(uriError);
 
 // Object: but only plain objects (e.g. from object literals).
 expectAssignable<StructuredCloneable>({});
-expectAssignable<StructuredCloneable>({x: 10});
-expectAssignable<StructuredCloneable>({x: {y: 10}});
-expectAssignable<StructuredCloneable>({x: 10} as const);
+expectAssignable<StructuredCloneable>({ x: 10 });
+expectAssignable<StructuredCloneable>({ x: { y: 10 } });
+expectAssignable<StructuredCloneable>({ x: 10 } as const);
 class CustomType {}
 expectNotAssignable<StructuredCloneable>(new CustomType());
 class CustomTypeWithProperties {
-	foo = 'wow';
-	bar = 1;
+  foo = 'wow';
+  bar = 1;
 }
 expectNotAssignable<StructuredCloneable>(new CustomTypeWithProperties());
 
@@ -124,8 +124,11 @@ expectNotAssignable<StructuredCloneable>(new CustomTypeWithProperties());
 expectAssignable<StructuredCloneable>([]);
 expectAssignable<StructuredCloneable>([1, 2, 3]);
 expectAssignable<StructuredCloneable>([1, 2, 3] as const);
-expectAssignable<StructuredCloneable>([[1, 2], [3, 4]]);
-expectAssignable<StructuredCloneable>([{x: 1}, {x: 2}]);
+expectAssignable<StructuredCloneable>([
+  [1, 2],
+  [3, 4],
+]);
+expectAssignable<StructuredCloneable>([{ x: 1 }, { x: 2 }]);
 
 // Map
 expectAssignable<StructuredCloneable>(new Map<string, Date>());

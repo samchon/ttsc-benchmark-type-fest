@@ -19,6 +19,9 @@ type C = ValueOf<{id: number; name: string; active: boolean}, 'id' | 'name'>;
 
 @category Object
 */
-export type ValueOf<ObjectType, ValueType extends keyof ObjectType = keyof ObjectType> = ObjectType[ValueType];
+export type ValueOf<
+  ObjectType,
+  ValueType extends keyof ObjectType = keyof ObjectType,
+> = ObjectType[ValueType];
 
 export {};

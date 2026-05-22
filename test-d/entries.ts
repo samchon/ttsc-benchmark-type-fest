@@ -1,9 +1,9 @@
-import {expectAssignable} from 'tsd';
-import type {Entries} from '../index.d.ts';
-import type {Entry} from '../source/entry.d.ts';
+import { expectAssignable } from 'tsd';
+import type { Entries } from '../index.d.ts';
+import type { Entry } from '../source/entry.d.ts';
 
 // Objects
-const objectExample = {a: 1};
+const objectExample = { a: 1 };
 
 const objectEntry: Entry<typeof objectExample> = ['a', 1];
 expectAssignable<[string, number]>(objectEntry);
@@ -24,28 +24,25 @@ expectAssignable<Array<[string, number]>>(mapEntries);
 const arrayExample = ['a', 1];
 
 const arrayEntryString: Entry<typeof arrayExample> = [0, 'a'];
-expectAssignable<[number, (string | number)]>(arrayEntryString);
+expectAssignable<[number, string | number]>(arrayEntryString);
 
 const arrayEntryNumber: Entry<typeof arrayExample> = [1, 1];
-expectAssignable<[number, (string | number)]>(arrayEntryNumber);
+expectAssignable<[number, string | number]>(arrayEntryNumber);
 
 const arrayEntries: Entries<typeof arrayExample> = [
-	arrayEntryString,
-	arrayEntryNumber,
+  arrayEntryString,
+  arrayEntryNumber,
 ];
-expectAssignable<Array<[number, (string | number)]>>(arrayEntries);
+expectAssignable<Array<[number, string | number]>>(arrayEntries);
 
 // Sets
 const setExample = new Set(['a', 1]);
 
 const setEntryString: Entry<typeof setExample> = ['a', 'a'];
-expectAssignable<[(string | number), (string | number)]>(setEntryString);
+expectAssignable<[string | number, string | number]>(setEntryString);
 
 const setEntryNumber: Entry<typeof setExample> = [1, 1];
-expectAssignable<[(string | number), (string | number)]>(setEntryNumber);
+expectAssignable<[string | number, string | number]>(setEntryNumber);
 
-const setEntries: Entries<typeof setExample> = [
-	setEntryString,
-	setEntryNumber,
-];
-expectAssignable<Array<[(string | number), (string | number)]>>(setEntries);
+const setEntries: Entries<typeof setExample> = [setEntryString, setEntryNumber];
+expectAssignable<Array<[string | number, string | number]>>(setEntries);

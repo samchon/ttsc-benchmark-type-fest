@@ -1,5 +1,5 @@
-import type {ApplyDefaultOptions} from './internal/index.d.ts';
-import type {_DefaultWordsOptions, Words, WordsOptions} from './words.d.ts';
+import type { ApplyDefaultOptions } from './internal/index.d.ts';
+import type { _DefaultWordsOptions, Words, WordsOptions } from './words.d.ts';
 
 /**
 CamelCase options.
@@ -7,26 +7,26 @@ CamelCase options.
 @see {@link CamelCase}
 */
 export type CamelCaseOptions = WordsOptions & {
-	/**
+  /**
 	Whether to preserved consecutive uppercase letter.
 
 	@default false
 	*/
-	preserveConsecutiveUppercase?: boolean;
+  preserveConsecutiveUppercase?: boolean;
 
-	/**
+  /**
 	Whether to preserve leading underscores.
 
 	This matches the behavior of the [`camelcase`](https://github.com/sindresorhus/camelcase) package v9+.
 
 	@default false
 	*/
-	preserveLeadingUnderscores?: boolean;
+  preserveLeadingUnderscores?: boolean;
 };
 
 export type _DefaultCamelCaseOptions = _DefaultWordsOptions & {
-	preserveConsecutiveUppercase: false;
-	preserveLeadingUnderscores: false;
+  preserveConsecutiveUppercase: false;
+  preserveLeadingUnderscores: false;
 };
 
 /**
@@ -41,26 +41,28 @@ type B = LeadingUnderscores<'foo_bar'>;
 //=> ''
 ```
 */
-type LeadingUnderscores<Type extends string, Underscores extends string = ''> =
-	Type extends `_${infer Rest}`
-		? LeadingUnderscores<Rest, `_${Underscores}`>
-		: Underscores;
+type LeadingUnderscores<
+  Type extends string,
+  Underscores extends string = '',
+> = Type extends `_${infer Rest}`
+  ? LeadingUnderscores<Rest, `_${Underscores}`>
+  : Underscores;
 
 /**
 Convert an array of words to camel-case.
 */
 type CamelCaseFromArray<
-	Words extends string[],
-	Options extends Required<CamelCaseOptions>,
-	OutputString extends string = '',
+  Words extends string[],
+  Options extends Required<CamelCaseOptions>,
+  OutputString extends string = '',
 > = Words extends [
-	infer FirstWord extends string,
-	...infer RemainingWords extends string[],
+  infer FirstWord extends string,
+  ...infer RemainingWords extends string[],
 ]
-	? Options['preserveConsecutiveUppercase'] extends true
-		? `${Capitalize<FirstWord>}${CamelCaseFromArray<RemainingWords, Options>}`
-		: `${Capitalize<Lowercase<FirstWord>>}${CamelCaseFromArray<RemainingWords, Options>}`
-	: OutputString;
+  ? Options['preserveConsecutiveUppercase'] extends true
+    ? `${Capitalize<FirstWord>}${CamelCaseFromArray<RemainingWords, Options>}`
+    : `${Capitalize<Lowercase<FirstWord>>}${CamelCaseFromArray<RemainingWords, Options>}`
+  : OutputString;
 
 /**
 Convert a string literal to camel-case.
@@ -110,16 +112,24 @@ const dbResult: CamelCasedProperties<RawOptions> = {
 @category Change case
 @category Template literal
 */
-export type CamelCase<Type, Options extends CamelCaseOptions = {}> = Type extends string
-	? string extends Type
-		? Type
-		: `${Options['preserveLeadingUnderscores'] extends true
-			? LeadingUnderscores<Type>
-			: ''
-		}${Uncapitalize<CamelCaseFromArray<
-			Words<Type extends Uppercase<Type> ? Lowercase<Type> : Type, Options>,
-			ApplyDefaultOptions<CamelCaseOptions, _DefaultCamelCaseOptions, Options>
-		>>}`
-	: Type;
+export type CamelCase<
+  Type,
+  Options extends CamelCaseOptions = {},
+> = Type extends string
+  ? string extends Type
+    ? Type
+    : `${Options['preserveLeadingUnderscores'] extends true
+        ? LeadingUnderscores<Type>
+        : ''}${Uncapitalize<
+        CamelCaseFromArray<
+          Words<Type extends Uppercase<Type> ? Lowercase<Type> : Type, Options>,
+          ApplyDefaultOptions<
+            CamelCaseOptions,
+            _DefaultCamelCaseOptions,
+            Options
+          >
+        >
+      >}`
+  : Type;
 
 export {};

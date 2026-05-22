@@ -1,6 +1,9 @@
-import {expectType} from 'tsd';
-import type {LessThan} from '../index.d.ts';
-import type {NegativeInfinity, PositiveInfinity} from '../source/numeric.d.ts';
+import { expectType } from 'tsd';
+import type { LessThan } from '../index.d.ts';
+import type {
+  NegativeInfinity,
+  PositiveInfinity,
+} from '../source/numeric.d.ts';
 
 declare const never: never;
 

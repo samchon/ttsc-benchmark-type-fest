@@ -1,4 +1,4 @@
-import type {GreaterThan} from './greater-than.d.ts';
+import type { GreaterThan } from './greater-than.d.ts';
 
 /**
 Returns a boolean for whether a given number is greater than or equal to another number.
@@ -50,14 +50,17 @@ setNonNegative(-1);
 setNonNegative(-2);
 ```
 */
-export type GreaterThanOrEqual<A extends number, B extends number> = number extends A | B
-	? boolean
-	: A extends number // For distributing `A`
-		? B extends number // For distributing `B`
-			? A extends B
-				? true
-				: GreaterThan<A, B>
-			: never // Should never happen
-		: never; // Should never happen
+export type GreaterThanOrEqual<
+  A extends number,
+  B extends number,
+> = number extends A | B
+  ? boolean
+  : A extends number // For distributing `A`
+    ? B extends number // For distributing `B`
+      ? A extends B
+        ? true
+        : GreaterThan<A, B>
+      : never // Should never happen
+    : never; // Should never happen
 
 export {};

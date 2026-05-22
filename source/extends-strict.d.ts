@@ -1,13 +1,13 @@
-import type {IsNever} from './is-never.d.ts';
-import type {IsAny} from './is-any.d.ts';
-import type {ApplyDefaultOptions} from './internal/object.d.ts';
-import type {And} from './and.d.ts';
-import type {Or} from './or.d.ts';
-import type {IsUnknown} from './is-unknown.d.ts';
-import type {OrAll} from './or-all.d.ts';
+import type { IsNever } from './is-never.d.ts';
+import type { IsAny } from './is-any.d.ts';
+import type { ApplyDefaultOptions } from './internal/object.d.ts';
+import type { And } from './and.d.ts';
+import type { Or } from './or.d.ts';
+import type { IsUnknown } from './is-unknown.d.ts';
+import type { OrAll } from './or-all.d.ts';
 
 export type ExtendsStrictOptions = {
-	/**
+  /**
 	Whether to distribute over unions.
 
 	@default false
@@ -23,9 +23,9 @@ export type ExtendsStrictOptions = {
 	//=> false
 	```
 	*/
-	distributiveUnions?: boolean;
+  distributiveUnions?: boolean;
 
-	/**
+  /**
 	Whether `never` extends every other type.
 
 	When enabled, `never` is not treated as a bottom type and only extends itself (or `any` / `unknown`).
@@ -54,9 +54,9 @@ export type ExtendsStrictOptions = {
 
 	Note: This option only has an effect when checking assignability from `never` (`ExtendsStrict<never, ...>`), and not when checking assignability to `never` (`ExtendsStrict<..., never>`).
 	*/
-	strictNever?: boolean;
+  strictNever?: boolean;
 
-	/**
+  /**
 	Whether `any` extends every other type.
 
 	When enabled, `any` does not extend every other type, it only extends itself (or `unknown`).
@@ -98,13 +98,13 @@ export type ExtendsStrictOptions = {
 
 	Note: This option only has an effect when checking assignability from `any` (`ExtendsStrict<any, ...>`), and not when checking assignability to `any` (`ExtendsStrict<..., any>`).
 	*/
-	strictAny?: boolean;
+  strictAny?: boolean;
 };
 
 type DefaultExtendsStrictOptions = {
-	distributiveUnions: false;
-	strictNever: true;
-	strictAny: false;
+  distributiveUnions: false;
+  strictNever: true;
+  strictAny: false;
 };
 
 /**
@@ -130,22 +130,37 @@ type T3 = ExtendsStrict<any, number, {strictAny: true}>;
 
 @category Improved Built-in
 */
-export type ExtendsStrict<Left, Right, Options extends ExtendsStrictOptions = {}> =
-	_ExtendsStrict<Left, Right, ApplyDefaultOptions<ExtendsStrictOptions, DefaultExtendsStrictOptions, Options>>;
+export type ExtendsStrict<
+  Left,
+  Right,
+  Options extends ExtendsStrictOptions = {},
+> = _ExtendsStrict<
+  Left,
+  Right,
+  ApplyDefaultOptions<
+    ExtendsStrictOptions,
+    DefaultExtendsStrictOptions,
+    Options
+  >
+>;
 
-type _ExtendsStrict<Left, Right, Options extends Required<ExtendsStrictOptions>> =
-	And<IsAny<Left>, Options['strictAny']> extends true
-		? Or<IsAny<Right>, IsUnknown<Right>>
-		: IsNever<Left> extends true
-			? Options['strictNever'] extends true
-				? OrAll<[IsNever<Right>, IsAny<Right>, IsUnknown<Right>]>
-				: true
-			: Options['distributiveUnions'] extends true
-				? Left extends Right
-					? true
-					: false
-				: [Left] extends [Right]
-					? true
-					: false;
+type _ExtendsStrict<
+  Left,
+  Right,
+  Options extends Required<ExtendsStrictOptions>,
+> =
+  And<IsAny<Left>, Options['strictAny']> extends true
+    ? Or<IsAny<Right>, IsUnknown<Right>>
+    : IsNever<Left> extends true
+      ? Options['strictNever'] extends true
+        ? OrAll<[IsNever<Right>, IsAny<Right>, IsUnknown<Right>]>
+        : true
+      : Options['distributiveUnions'] extends true
+        ? Left extends Right
+          ? true
+          : false
+        : [Left] extends [Right]
+          ? true
+          : false;
 
 export {};

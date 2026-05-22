@@ -1,10 +1,10 @@
-import {expectType} from 'tsd';
-import type {ObjectValue} from '../../source/internal/index.d.ts';
+import { expectType } from 'tsd';
+import type { ObjectValue } from '../../source/internal/index.d.ts';
 
 type ObjectT = {
-	string: string;
-	0: number;
-	'1': number;
+  string: string;
+  0: number;
+  '1': number;
 };
 
 declare const normal: ObjectValue<ObjectT, 'string'>;

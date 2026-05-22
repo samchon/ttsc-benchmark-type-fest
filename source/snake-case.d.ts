@@ -1,6 +1,9 @@
-import type {_DefaultDelimiterCaseOptions, DelimiterCase} from './delimiter-case.d.ts';
-import type {ApplyDefaultOptions} from './internal/index.d.ts';
-import type {WordsOptions} from './words.d.ts';
+import type {
+  _DefaultDelimiterCaseOptions,
+  DelimiterCase,
+} from './delimiter-case.d.ts';
+import type { ApplyDefaultOptions } from './internal/index.d.ts';
+import type { WordsOptions } from './words.d.ts';
 
 /**
 Convert a string literal to snake-case.
@@ -40,9 +43,10 @@ const dbResult: SnakeCasedProperties<ModelProps> = {
 @category Change case
 @category Template literal
 */
-export type SnakeCase<
-	Value,
-	Options extends WordsOptions = {},
-> = DelimiterCase<Value, '_', ApplyDefaultOptions<WordsOptions, _DefaultDelimiterCaseOptions, Options>>;
+export type SnakeCase<Value, Options extends WordsOptions = {}> = DelimiterCase<
+  Value,
+  '_',
+  ApplyDefaultOptions<WordsOptions, _DefaultDelimiterCaseOptions, Options>
+>;
 
 export {};

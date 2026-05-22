@@ -1,4 +1,4 @@
-import type {UnionToTuple} from './union-to-tuple.d.ts';
+import type { UnionToTuple } from './union-to-tuple.d.ts';
 
 /**
 Returns the length of a union type.

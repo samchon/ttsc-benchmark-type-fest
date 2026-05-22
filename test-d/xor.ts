@@ -1,5 +1,5 @@
-import {expectType} from 'tsd';
-import type {Xor} from '../source/xor.d.ts';
+import { expectType } from 'tsd';
+import type { Xor } from '../source/xor.d.ts';
 
 declare const boolean: boolean;
 

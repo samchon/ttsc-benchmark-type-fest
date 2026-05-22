@@ -1,10 +1,10 @@
-import {expectType} from 'tsd';
-import type {Split, StringRepeat, TupleOf} from '../index.d.ts';
+import { expectType } from 'tsd';
+import type { Split, StringRepeat, TupleOf } from '../index.d.ts';
 
-declare function split<
-	S extends string,
-	Delimiter extends string,
->(string: S, separator: Delimiter): Split<S, Delimiter>;
+declare function split<S extends string, Delimiter extends string>(
+  string: S,
+  separator: Delimiter,
+): Split<S, Delimiter>;
 
 const items = 'foo,bar,baz,waldo';
 
@@ -15,10 +15,27 @@ expectType<['foo', 'bar', 'baz', 'waldo']>(split(items, ','));
 expectType<['foo,bar,baz,waldo']>(split(items, ' '));
 
 // Empty string split (every character).
-expectType<[
-	'f', 'o', 'o', ',', 'b', 'a', 'r', ',',
-	'b', 'a', 'z', ',', 'w', 'a', 'l', 'd', 'o',
-]>(split(items, ''));
+expectType<
+  [
+    'f',
+    'o',
+    'o',
+    ',',
+    'b',
+    'a',
+    'r',
+    ',',
+    'b',
+    'a',
+    'z',
+    ',',
+    'w',
+    'a',
+    'l',
+    'd',
+    'o',
+  ]
+>(split(items, ''));
 
 // Split single same character.
 expectType<['', '']>(split(' ', ' '));
@@ -30,18 +47,26 @@ expectType<[]>(split('', ''));
 expectType<['']>(split('', ' '));
 
 // Unions
-expectType<['a', 'b', 'c'] | ['x', 'y', 'z']>({} as Split<'a,b,c' | 'x,y,z', ','>);
+expectType<['a', 'b', 'c'] | ['x', 'y', 'z']>(
+  {} as Split<'a,b,c' | 'x,y,z', ','>,
+);
 expectType<['a', 'b', 'c'] | ['a,', ',c']>({} as Split<'a,b,c', ',' | 'b'>);
-expectType<['a', 'b', 'c'] | ['a,b,c'] | ['x', 'y', 'z'] | ['x:y:z']>({} as Split<'a,b,c' | 'x:y:z', ',' | ':'>);
+expectType<['a', 'b', 'c'] | ['a,b,c'] | ['x', 'y', 'z'] | ['x:y:z']>(
+  {} as Split<'a,b,c' | 'x:y:z', ',' | ':'>,
+);
 
 // -- strictLiteralChecks: false --
 // NOTE: The behaviour covered in the test below is not acurate because the `a.b.${string}` type might hold a value like `a.b.c.d`,
 // which, when split by `.`, would result in `['a', 'b', 'c', 'd']`, which wouldn't conform to the output type of `['a', 'b', string]`.
-expectType<['a', 'b', string]>({} as Split<`a.b.${string}`, '.', {strictLiteralChecks: false}>);
+expectType<['a', 'b', string]>(
+  {} as Split<`a.b.${string}`, '.', { strictLiteralChecks: false }>,
+);
 
 // Ensure the last dynamic "string" is not dropped when split by `''`.
 // https://github.com/sindresorhus/type-fest/issues/1203
-expectType<['a', 'b', string]>({} as Split<`ab${string}`, '', {strictLiteralChecks: false}>);
+expectType<['a', 'b', string]>(
+  {} as Split<`ab${string}`, '', { strictLiteralChecks: false }>,
+);
 
 // -- strictLiteralChecks: true --
 expectType<string[]>({} as Split<string, ''>);
@@ -49,12 +74,26 @@ expectType<string[]>({} as Split<Uppercase<string>, '-'>);
 expectType<string[]>({} as Split<`on${string}`, 'n'>);
 expectType<string[]>({} as Split<'a,b,c', string>);
 expectType<string[]>({} as Split<'a,b,c', Lowercase<string>>);
-expectType<string[]>({} as Split<'a,b,c', `,${string}`, {strictLiteralChecks: true}>);
-expectType<string[]>({} as Split<`on${string}`, Lowercase<string>, {strictLiteralChecks: true}>);
+expectType<string[]>(
+  {} as Split<'a,b,c', `,${string}`, { strictLiteralChecks: true }>,
+);
+expectType<string[]>(
+  {} as Split<`on${string}`, Lowercase<string>, { strictLiteralChecks: true }>,
+);
 
-expectType<['a', 'b', 'c'] | string[]>({} as Split<'a,b,c' | `bye, ${string}`, ',', {strictLiteralChecks: true}>);
-expectType<['a', 'b', 'c'] | string[]>({} as Split<'a,b,c', ',' | `b${string}`, {strictLiteralChecks: true}>);
-expectType<['a', 'b', 'c'] | string[]>({} as Split<'a,b,c' | `bye, ${string}`, ',' | `b${string}`, {strictLiteralChecks: true}>);
+expectType<['a', 'b', 'c'] | string[]>(
+  {} as Split<'a,b,c' | `bye, ${string}`, ',', { strictLiteralChecks: true }>,
+);
+expectType<['a', 'b', 'c'] | string[]>(
+  {} as Split<'a,b,c', ',' | `b${string}`, { strictLiteralChecks: true }>,
+);
+expectType<['a', 'b', 'c'] | string[]>(
+  {} as Split<
+    'a,b,c' | `bye, ${string}`,
+    ',' | `b${string}`,
+    { strictLiteralChecks: true }
+  >,
+);
 
 // Recursion depth at which a non-tail recursive implementation starts to fail.
 type FiftyZeroes = StringRepeat<'0', 50>;

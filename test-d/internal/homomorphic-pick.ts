@@ -1,23 +1,32 @@
-import {expectType} from 'tsd';
-import type {HomomorphicPick} from '../../source/internal/index.d.ts';
+import { expectType } from 'tsd';
+import type { HomomorphicPick } from '../../source/internal/index.d.ts';
 
 // Picks specified keys
-declare const test1: HomomorphicPick<{a: 1; b: 2; c: 3}, 'a' | 'b'>;
-expectType<{a: 1; b: 2}>(test1);
+declare const test1: HomomorphicPick<{ a: 1; b: 2; c: 3 }, 'a' | 'b'>;
+expectType<{ a: 1; b: 2 }>(test1);
 
 // Works with unions
-declare const test2: HomomorphicPick<{a: 1; b: 2} | {a: 3; c: 4}, 'a'>;
-expectType<{a: 1} | {a: 3}>(test2);
+declare const test2: HomomorphicPick<{ a: 1; b: 2 } | { a: 3; c: 4 }, 'a'>;
+expectType<{ a: 1 } | { a: 3 }>(test2);
 
-declare const test3: HomomorphicPick<{a: 1; b: 2} | {c: 3; d: 4}, 'a' | 'c'>;
-expectType<{a: 1} | {c: 3}>(test3);
+declare const test3: HomomorphicPick<
+  { a: 1; b: 2 } | { c: 3; d: 4 },
+  'a' | 'c'
+>;
+expectType<{ a: 1 } | { c: 3 }>(test3);
 
 // Preserves property modifiers
-declare const test4: HomomorphicPick<{readonly a: 1; b?: 2; readonly c?: 3}, 'a' | 'c'>;
-expectType<{readonly a: 1; readonly c?: 3}>(test4);
+declare const test4: HomomorphicPick<
+  { readonly a: 1; b?: 2; readonly c?: 3 },
+  'a' | 'c'
+>;
+expectType<{ readonly a: 1; readonly c?: 3 }>(test4);
 
-declare const test5: HomomorphicPick<{readonly a: 1; b?: 2} | {readonly c?: 3; d?: 4}, 'a' | 'c'>;
-expectType<{readonly a: 1} | {readonly c?: 3}>(test5);
+declare const test5: HomomorphicPick<
+  { readonly a: 1; b?: 2 } | { readonly c?: 3; d?: 4 },
+  'a' | 'c'
+>;
+expectType<{ readonly a: 1 } | { readonly c?: 3 }>(test5);
 
 // Passes through primitives unchanged
 declare const test6: HomomorphicPick<string, never>;
@@ -36,17 +45,23 @@ declare const test10: HomomorphicPick<symbol, never>;
 expectType<symbol>(test10);
 
 // Picks all keys, if `KeyType` is `any`
-declare const test11: HomomorphicPick<{readonly a: 1; b?: 2} | {readonly c?: 3}, any>;
-expectType<{readonly a: 1; b?: 2} | {readonly c?: 3}>(test11);
+declare const test11: HomomorphicPick<
+  { readonly a: 1; b?: 2 } | { readonly c?: 3 },
+  any
+>;
+expectType<{ readonly a: 1; b?: 2 } | { readonly c?: 3 }>(test11);
 
 // Picks no keys, if `KeyType` is `never`
-declare const test12: HomomorphicPick<{a: 1; b: 2}, never>;
+declare const test12: HomomorphicPick<{ a: 1; b: 2 }, never>;
 expectType<{}>(test12);
 
 // Works with index signatures
-declare const test13: HomomorphicPick<{[k: string]: unknown; a: 1; b: 2}, 'a' | 'b'>;
-expectType<{a: 1; b: 2}>(test13);
+declare const test13: HomomorphicPick<
+  { [k: string]: unknown; a: 1; b: 2 },
+  'a' | 'b'
+>;
+expectType<{ a: 1; b: 2 }>(test13);
 
 // Doesn't pick `number` from a `string` index signature
-declare const test14: HomomorphicPick<{[k: string]: unknown}, number>;
+declare const test14: HomomorphicPick<{ [k: string]: unknown }, number>;
 expectType<{}>(test14);

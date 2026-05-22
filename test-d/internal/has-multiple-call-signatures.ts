@@ -1,19 +1,19 @@
-import {expectType} from 'tsd';
-import type {HasMultipleCallSignatures} from '../../source/internal/index.d.ts';
+import { expectType } from 'tsd';
+import type { HasMultipleCallSignatures } from '../../source/internal/index.d.ts';
 
 type Overloaded = {
-	(foo: number): string;
-	(foo: string, bar: number): number;
+  (foo: number): string;
+  (foo: string, bar: number): number;
 };
 
 type Overloaded2 = {
-	(foo: number | undefined): string;
-	(foo: number): string;
+  (foo: number | undefined): string;
+  (foo: number): string;
 };
 
 type Namespace = {
-	(foo: number): string;
-	baz: boolean[];
+  (foo: number): string;
+  baz: boolean[];
 };
 
 expectType<true>({} as HasMultipleCallSignatures<Overloaded>);

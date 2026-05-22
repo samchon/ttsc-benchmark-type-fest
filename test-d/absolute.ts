@@ -1,6 +1,9 @@
-import {expectType} from 'tsd';
-import type {Absolute} from '../source/absolute.d.ts';
-import type {NegativeInfinity, PositiveInfinity} from '../source/numeric.d.ts';
+import { expectType } from 'tsd';
+import type { Absolute } from '../source/absolute.d.ts';
+import type {
+  NegativeInfinity,
+  PositiveInfinity,
+} from '../source/numeric.d.ts';
 
 // Integers
 expectType<Absolute<0>>(0);
@@ -45,10 +48,10 @@ expectType<Absolute<0o77_7000n>>(0o77_7000n);
 expectType<Absolute<-0o77_7000n>>(0o77_7000n);
 
 // Hexadecimals
-expectType<Absolute<0xF0>>(0xF0);
-expectType<Absolute<-0xF0>>(0xF0);
-expectType<Absolute<0xFF_F0_00n>>(0xFF_F0_00n);
-expectType<Absolute<-0xFF_F0_00n>>(0xFF_F0_00n);
+expectType<Absolute<0xf0>>(0xf0);
+expectType<Absolute<-0xf0>>(0xf0);
+expectType<Absolute<0xff_f0_00n>>(0xff_f0_00n);
+expectType<Absolute<-0xff_f0_00n>>(0xff_f0_00n);
 
 // Scientific notations
 expectType<Absolute<6.022e23>>(6.022e23);
@@ -72,9 +75,15 @@ expectType<Absolute<-2 | -1 | 0>>({} as 2 | 1 | 0);
 expectType<Absolute<2 | -2>>(2);
 expectType<Absolute<-12_345n | 12_345n>>(12_345n);
 expectType<Absolute<2 | 4 | -12_345n>>({} as 2 | 4 | 12_345n);
-expectType<Absolute<2 | 98_765n | 9.8 | 0b11n | 0o77 | 0xFF | 3e8>>({} as 2 | 98_765n | 9.8 | 0b11n | 0o77 | 0xFF | 3e8);
-expectType<Absolute<-2 | -98_765n | -9.8 | -0b11n | -0o77 | -0xFF | -3e8>>({} as 2 | 98_765n | 9.8 | 0b11n | 0o77 | 0xFF | 3e8);
-expectType<Absolute<-2 | -98_765n | 9.8 | 0b11n | 0o77 | -0xFF | 3e8>>({} as 2 | 98_765n | 9.8 | 0b11n | 0o77 | 0xFF | 3e8);
+expectType<Absolute<2 | 98_765n | 9.8 | 0b11n | 0o77 | 0xff | 3e8>>(
+  {} as 2 | 98_765n | 9.8 | 0b11n | 0o77 | 0xff | 3e8,
+);
+expectType<Absolute<-2 | -98_765n | -9.8 | -0b11n | -0o77 | -0xff | -3e8>>(
+  {} as 2 | 98_765n | 9.8 | 0b11n | 0o77 | 0xff | 3e8,
+);
+expectType<Absolute<-2 | -98_765n | 9.8 | 0b11n | 0o77 | -0xff | 3e8>>(
+  {} as 2 | 98_765n | 9.8 | 0b11n | 0o77 | 0xff | 3e8,
+);
 
 // 2. Literal and non-literal members
 expectType<Absolute<bigint | 100>>({} as bigint | 100);

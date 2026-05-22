@@ -1,19 +1,19 @@
-import {expectNever, expectType} from 'tsd';
-import type {NonEmptyObject, RequireAtLeastOne} from '../index.d.ts';
+import { expectNever, expectType } from 'tsd';
+import type { NonEmptyObject, RequireAtLeastOne } from '../index.d.ts';
 
 type TestType1 = {
-	a: string;
-	b: boolean;
+  a: string;
+  b: boolean;
 };
 
 type TestType2 = {
-	a?: string;
-	b?: boolean;
+  a?: string;
+  b?: boolean;
 };
 
 type TestType3 = {
-	a: string;
-	b?: boolean;
+  a: string;
+  b?: boolean;
 };
 
 type TestType4 = {};

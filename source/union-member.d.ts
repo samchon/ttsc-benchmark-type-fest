@@ -1,5 +1,5 @@
-import type {UnionToIntersection} from './union-to-intersection.d.ts';
-import type {IsNever} from './is-never.d.ts';
+import type { UnionToIntersection } from './union-to-intersection.d.ts';
+import type { IsNever } from './is-never.d.ts';
 
 /**
 Returns an arbitrary member of a union type.
@@ -56,10 +56,10 @@ type LastNever = UnionMember<never>;
 @category Type
 */
 export type UnionMember<T> =
-	IsNever<T> extends true
-		? never
-		: UnionToIntersection<T extends any ? () => T : never> extends () => (infer R)
-			? R
-			: never;
+  IsNever<T> extends true
+    ? never
+    : UnionToIntersection<T extends any ? () => T : never> extends () => infer R
+      ? R
+      : never;
 
 export {};

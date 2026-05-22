@@ -1,15 +1,15 @@
-import {expectType} from 'tsd';
+import { expectType } from 'tsd';
 import type {
-	Finite,
-	Float,
-	Integer,
-	Negative,
-	NegativeFloat,
-	NegativeInfinity,
-	NegativeInteger,
-	NonNegative,
-	NonNegativeInteger,
-	PositiveInfinity,
+  Finite,
+  Float,
+  Integer,
+  Negative,
+  NegativeFloat,
+  NegativeInfinity,
+  NegativeInteger,
+  NonNegative,
+  NonNegativeInteger,
+  PositiveInfinity,
 } from '../index.d.ts';
 
 // Finite
@@ -24,7 +24,7 @@ declare const integer: Integer<1>;
 declare const integerWithDecimal: Integer<1.0>; // eslint-disable-line unicorn/no-zero-fractions
 declare const numberType: Integer<number>;
 declare const integerMixed: Integer<1 | 1.5 | -1>;
-declare const bigInteger: Integer<1e+100>;
+declare const bigInteger: Integer<1e100>;
 declare const octalInteger: Integer<0o10>;
 declare const binaryInteger: Integer<0b10>;
 declare const hexadecimalInteger: Integer<0x10>;
@@ -37,7 +37,7 @@ expectType<1>(integer);
 expectType<1>(integerWithDecimal);
 expectType<never>(numberType);
 expectType<1 | -1>(integerMixed);
-expectType<1e+100>(bigInteger);
+expectType<1e100>(bigInteger);
 expectType<0o10>(octalInteger);
 expectType<0b10>(binaryInteger);
 expectType<0x10>(hexadecimalInteger);

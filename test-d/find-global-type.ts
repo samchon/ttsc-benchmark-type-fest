@@ -1,6 +1,6 @@
 /* eslint-disable no-var */
-import {expectType} from 'tsd';
-import type {FindGlobalInstanceType, FindGlobalType} from '../index.d.ts';
+import { expectType } from 'tsd';
+import type { FindGlobalInstanceType, FindGlobalType } from '../index.d.ts';
 
 declare class NonGlobalES6Class {}
 declare let nonGlobalVar: number;
@@ -8,19 +8,19 @@ declare let nonGlobalLet: number;
 declare const nonGlobalConst: number;
 
 declare global {
-	class GlobalES6Class {}
-	var globalVar: string;
-	let globalLet: number;
-	const globalConst: number;
+  class GlobalES6Class {}
+  var globalVar: string;
+  let globalLet: number;
+  const globalConst: number;
 
-	type GlobalClass = {foo: string};
-	var GlobalConstructorVarStyle: new () => GlobalClass;
-	let GlobalConstructorLetStyle: new () => GlobalClass;
-	const GlobalConstructorConstStyle: new () => GlobalClass;
+  type GlobalClass = { foo: string };
+  var GlobalConstructorVarStyle: new () => GlobalClass;
+  let GlobalConstructorLetStyle: new () => GlobalClass;
+  const GlobalConstructorConstStyle: new () => GlobalClass;
 
-	type GlobalTypeAlias = {value: string};
+  type GlobalTypeAlias = { value: string };
 
-	var nonConstructorFunction: () => Date;
+  var nonConstructorFunction: () => Date;
 }
 
 // === FindGlobalType ===
@@ -51,7 +51,9 @@ declare const foundInstanceDate: FindGlobalInstanceType<'Date'>;
 expectType<Date>(foundInstanceDate);
 declare const foundInstanceMultiple: FindGlobalInstanceType<'Date' | 'Error'>;
 expectType<Date | Error>(foundInstanceMultiple);
-declare const foundInstanceMultiplePartial: FindGlobalInstanceType<'Date' | 'Error' | 'NonExistentType'>;
+declare const foundInstanceMultiplePartial: FindGlobalInstanceType<
+  'Date' | 'Error' | 'NonExistentType'
+>;
 expectType<Date | Error>(foundInstanceMultiplePartial);
 declare const foundInstanceGlobalConstructorVarStyle: FindGlobalInstanceType<'GlobalConstructorVarStyle'>;
 expectType<GlobalClass>(foundInstanceGlobalConstructorVarStyle);
