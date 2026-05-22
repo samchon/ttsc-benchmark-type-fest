@@ -87,8 +87,12 @@ function narrowingTest3(foo: Simplify<RequireExactlyOne<{a: string; b: string; c
 	return foo.b;
 }
 
-expectType<{a: number; b?: never} | {a?: never; b: string}>({} as Simplify<RequireExactlyOne<{a: number; b: string}>>); // `Simplify` is required for the assertion to pass
-expectType<{a: number; b?: never} | {a?: never; b: string}>({} as Simplify<RequireExactlyOne<{a: number; b: string}, any>>); // `Simplify` is required for the assertion to pass
+expectType<{a: number; b?: never} | {a?: never; b: string}>(
+  {} as Simplify<RequireExactlyOne<{a: number; b: string}>>,
+); // `Simplify` is required for the assertion to pass
+expectType<{a: number; b?: never} | {a?: never; b: string}>(
+  {} as Simplify<RequireExactlyOne<{a: number; b: string}, any>>,
+); // `Simplify` is required for the assertion to pass
 expectType<{a: number; b?: never; c?: never} | {a?: never; b: string; c?: never} | {a?: never; b?: never; c: boolean}>(
 	{} as Simplify<RequireExactlyOne<{a: number; b: string; c: boolean}>>, // `Simplify` is required for the assertion to pass
 );

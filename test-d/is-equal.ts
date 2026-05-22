@@ -46,7 +46,9 @@ type LongTupleNumber = TupleOf<50, 0>;
 expectType<true>({} as IsEqual<LongTupleNumber, LongTupleNumber>);
 
 type ReadonlyLongTupleNumber = Readonly<TupleOf<50, 0>>;
-expectType<true>({} as IsEqual<ReadonlyLongTupleNumber, ReadonlyLongTupleNumber>);
+expectType<true>(
+  {} as IsEqual<ReadonlyLongTupleNumber, ReadonlyLongTupleNumber>,
+);
 
 expectType<false>({} as IsEqual<ReadonlyLongTupleNumber, LongTupleNumber>);
 

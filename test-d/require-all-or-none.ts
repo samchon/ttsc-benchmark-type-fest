@@ -81,8 +81,12 @@ function narrowingTest3(foo: Simplify<RequireAllOrNone<{a: string; b: string; c:
 	return '';
 }
 
-expectType<{a: number; b: string} | {a?: never; b?: never}>({} as Simplify<RequireAllOrNone<{a: number; b: string}>>); // `Simplify` is required for the assertion to pass
-expectType<{a: number; b: string} | {a?: never; b?: never}>({} as Simplify<RequireAllOrNone<{a: number; b: string}, any>>); // `Simplify` is required for the assertion to pass
+expectType<{a: number; b: string} | {a?: never; b?: never}>(
+  {} as Simplify<RequireAllOrNone<{a: number; b: string}>>,
+); // `Simplify` is required for the assertion to pass
+expectType<{a: number; b: string} | {a?: never; b?: never}>(
+  {} as Simplify<RequireAllOrNone<{a: number; b: string}, any>>,
+); // `Simplify` is required for the assertion to pass
 expectType<{a: number; b: string; c: boolean} | {a?: never; b?: never; c?: never}>(
 	{} as Simplify<RequireAllOrNone<{a: number; b: string; c: boolean}>>, // `Simplify` is required for the assertion to pass
 );
@@ -91,7 +95,9 @@ expectType<{a: number; b: string; c: boolean} | {a?: never; b?: never; c?: never
 );
 
 expectType<{}>({} as RequireAllOrNone<{}>);
-expectType<{a: string; b: number}>({} as RequireAllOrNone<{a: string; b: number}, never>);
+expectType<{a: string; b: number}>(
+  {} as RequireAllOrNone<{a: string; b: number}, never>,
+);
 
 expectType<any>({} as RequireAllOrNone<any>);
 expectType<any>({} as RequireAllOrNone<any, 'foo'>);

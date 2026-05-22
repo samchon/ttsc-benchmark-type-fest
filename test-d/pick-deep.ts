@@ -77,7 +77,9 @@ declare const optional: PickDeep<Testing, 'optionalObject.optionalString'>;
 expectType<{optionalObject?: {optionalString?: string}}>(optional);
 
 declare const optionalUnion: PickDeep<Testing, 'optionalObject.string' | 'object.number'>;
-expectType<{optionalObject?: {string?: string}; object: {number: number}}>(optionalUnion);
+expectType<{optionalObject?: {string?: string}; object: {number: number}}>(
+  optionalUnion,
+);
 
 declare const readonlyTest: PickDeep<Testing, 'readonlyObject.a'>;
 expectType<{readonly readonlyObject: {a: 1}}>(readonlyTest);
@@ -98,16 +100,24 @@ declare const objectArray2: PickDeep<Testing, `object.objectArray.${number}.a`>;
 expectType<{object: {objectArray: Array<{a: 1}>}}>(objectArray2);
 
 declare const leadingSpreadArray1: PickDeep<Testing, `object.leadingSpreadArray.${number}.a`>;
-expectType<{object: {leadingSpreadArray: [...Array<{a: 1}>]}}>(leadingSpreadArray1);
+expectType<{object: {leadingSpreadArray: [...Array<{a: 1}>]}}>(
+  leadingSpreadArray1,
+);
 
 declare const leadingSpreadArray2: PickDeep<Testing, `object.leadingSpreadArray.${number}`>;
-expectType<{object: {leadingSpreadArray: [...Array<{a: 1}>, {b: 2}]}}>(leadingSpreadArray2);
+expectType<{object: {leadingSpreadArray: [...Array<{a: 1}>, {b: 2}]}}>(
+  leadingSpreadArray2,
+);
 
 declare const tailingSpreadArray1: PickDeep<Testing, 'object.tailingSpreadArray.1'>;
-expectType<{object: {tailingSpreadArray: [unknown, {b: {c: 2; other: 2}}]}}>(tailingSpreadArray1);
+expectType<{object: {tailingSpreadArray: [unknown, {b: {c: 2; other: 2}}]}}>(
+  tailingSpreadArray1,
+);
 
 declare const tailingSpreadArray2: PickDeep<Testing, 'object.tailingSpreadArray.1.b.c'>;
-expectType<{object: {tailingSpreadArray: [unknown, {b: {c: 2}}]}}>(tailingSpreadArray2);
+expectType<{object: {tailingSpreadArray: [unknown, {b: {c: 2}}]}}>(
+  tailingSpreadArray2,
+);
 
 declare const date: PickDeep<Testing, 'object.date'>;
 expectType<{object: {date: Date}}>(date);

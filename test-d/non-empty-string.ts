@@ -10,7 +10,9 @@ expectType<never>({} as NonEmptyString<Uppercase<string>>);
 expectType<`on${string}`>({} as NonEmptyString<`on${string}`>);
 
 expectType<'a' | 'b'>({} as NonEmptyString<'a' | 'b'>);
-expectType<'a' | `${number}.${number}`>({} as NonEmptyString<'a' | `${number}.${number}`>);
+expectType<'a' | `${number}.${number}`>(
+  {} as NonEmptyString<'a' | `${number}.${number}`>,
+);
 expectType<never>({} as NonEmptyString<'' | 'a'>);
 expectType<never>({} as NonEmptyString<'a' | Uppercase<string>>);
 expectType<never>({} as NonEmptyString<'' | `on${string}`>);

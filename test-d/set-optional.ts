@@ -23,7 +23,9 @@ expectType<{readonly a: number; readonly b?: string; c?: boolean}>(variation5);
 
 // Works with unions.
 declare const variation6: SetOptional<{readonly a: number; b: number; c: boolean} | {a: string; readonly b: string; d: boolean}, 'a' | 'b'>;
-expectType<{readonly a?: number; b?: number; c: boolean} | {a?: string; readonly b?: string; d: boolean}>(variation6);
+expectType<{readonly a?: number; b?: number; c: boolean} | {a?: string; readonly b?: string; d: boolean}>(
+  variation6,
+);
 
 // Marks all keys as optional, if `Keys` is `any`.
 declare const variation7: SetOptional<{readonly a: number; b: string; c: boolean}, any>;
@@ -40,11 +42,15 @@ expectType<{[k: string]: unknown; a?: number; b?: string}>(variation9);
 // Works with functions containing properties
 declare const variation10: SetOptional<{(a1: string, a2: number): boolean; p1: string; readonly p2?: number}, 'p1'>;
 expectType<boolean>(variation10('foo', 1));
-expectType<{p1?: string; readonly p2?: number}>({} as Simplify<typeof variation10>); // `Simplify` removes the call signature from `typeof variation10`
+expectType<{p1?: string; readonly p2?: number}>(
+  {} as Simplify<typeof variation10>,
+); // `Simplify` removes the call signature from `typeof variation10`
 
 declare const variation11: SetOptional<{(a1: boolean, ...a2: string[]): number; p1: string; readonly p2: number; p3: boolean}, 'p1' | 'p2'>;
 expectType<number>(variation11(true, 'foo', 'bar', 'baz'));
-expectType<{p1?: string; readonly p2?: number; p3: boolean}>({} as Simplify<typeof variation11>);
+expectType<{p1?: string; readonly p2?: number; p3: boolean}>(
+  {} as Simplify<typeof variation11>,
+);
 
 // Functions without properties are returned as is
 declare const variation12: SetOptional<(a: string) => number, never>;

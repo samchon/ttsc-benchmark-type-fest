@@ -1,15 +1,15 @@
 import {expectType} from 'tsd';
 import type {
-	Finite,
-	Float,
-	Integer,
-	Negative,
-	NegativeFloat,
-	NegativeInfinity,
-	NegativeInteger,
-	NonNegative,
-	NonNegativeInteger,
-	PositiveInfinity,
+  Finite,
+  Float,
+  Integer,
+  Negative,
+  NegativeFloat,
+  NegativeInfinity,
+  NegativeInteger,
+  NonNegative,
+  NonNegativeInteger,
+  PositiveInfinity,
 } from '../index.d.ts';
 
 // Finite

@@ -7,8 +7,8 @@ expectType<{a: number}>(except);
 const _a: unknown = except.b;
 
 const nonStrict = {
-	a: 1,
-	b: '2',
+  a: 1,
+  b: '2',
 };
 
 const nonStrictAssignment: typeof except = nonStrict; // No error
@@ -25,6 +25,9 @@ type Example = {
 	bar: string;
 };
 
-const test: Except<Example, 'bar', {requireExactProps: false}> = {foo: 123, bar: 'asdf'};
+const test: Except<Example, 'bar', {requireExactProps: false}> = {
+  foo: 123,
+  bar: 'asdf',
+};
 expectType<number>(test.foo);
 expectType<unknown>(test.bar);

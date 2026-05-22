@@ -70,7 +70,9 @@ declare const optional: SharedUnionFieldsDeep<TestingType | {optional: string; f
 expectType<{optional?: boolean | string | undefined}>(optional);
 
 declare const propertyWithKeyword: SharedUnionFieldsDeep<TestingType | {readonly propertyWithKeyword: string; foo: any}>;
-expectType<{readonly propertyWithKeyword: boolean | string}>(propertyWithKeyword);
+expectType<{readonly propertyWithKeyword: boolean | string}>(
+  propertyWithKeyword,
+);
 
 declare const map: SharedUnionFieldsDeep<TestingType | {map: Map<string, {propertyA: string}>; foo: any}>;
 expectType<{map: TestingType['map'] | Map<string, {propertyA: string}>}>(map);
@@ -89,7 +91,9 @@ declare const array: SharedUnionFieldsDeepRecurseIntoArrays<TestingType | {array
 expectType<{array: Array<{a: number}>}>(array);
 
 declare const arrayWithoutRecursive: SharedUnionFieldsDeep<TestingType | {array: Array<{a: number; bar: string}>; foo: any}>;
-expectType<{array: TestingType['array'] | Array<{a: number; bar: string}>}>(arrayWithoutRecursive);
+expectType<{array: TestingType['array'] | Array<{a: number; bar: string}>}>(
+  arrayWithoutRecursive,
+);
 
 declare const readonlyArray: SharedUnionFieldsDeepRecurseIntoArrays<TestingType | {readonlyArray: ReadonlyArray<{a: number; bar: string}>; foo: any}>;
 expectType<{readonlyArray: ReadonlyArray<{a: number}>}>(readonlyArray);
@@ -112,17 +116,23 @@ declare const fixedLengthTuple2: SharedUnionFieldsDeepRecurseIntoArrays<{tuple: 
 expectType<{tuple: []}>(fixedLengthTuple2);
 
 declare const fixedLengthTuple3: SharedUnionFieldsDeepRecurseIntoArrays<{tuple: [number, string, number]} | {tuple: [number, boolean, ...string[]]}>;
-expectType<{tuple: [number, string | boolean, number | string]}>(fixedLengthTuple3);
+expectType<{tuple: [number, string | boolean, number | string]}>(
+  fixedLengthTuple3,
+);
 
 declare const threeLengthTuple: SharedUnionFieldsDeepRecurseIntoArrays<{tuple: [number, string]} | {tuple: [number, string, boolean]} | {tuple: number[]}>;
 expectType<{tuple: [number, string | number]}>(threeLengthTuple);
 
 /** Test for non-fixed length tuple */
 declare const nonFixedLengthTuple: SharedUnionFieldsDeepRecurseIntoArrays<{tuple: [number, ...string[]]} | {tuple: boolean[]}>;
-expectType<{tuple: [number | boolean, ...Array<string | boolean>]}>(nonFixedLengthTuple);
+expectType<{tuple: [number | boolean, ...Array<string | boolean>]}>(
+  nonFixedLengthTuple,
+);
 
 declare const nonFixedLengthTuple2: SharedUnionFieldsDeepRecurseIntoArrays<{tuple: [number, ...string[]]} | {tuple: [number, string, ...boolean[]]}>;
-expectType<{tuple: [number, string, ...Array<string | boolean>]}>(nonFixedLengthTuple2);
+expectType<{tuple: [number, string, ...Array<string | boolean>]}>(
+  nonFixedLengthTuple2,
+);
 
 // Test for same type
 type TestingType2 = TestingType & {foo: any};

@@ -19,7 +19,9 @@ declare const fooBarPunctuatedSplit: PascalCasedProperties<FoobarPunctuated, {sp
 expectType<{'HelloWorld1': {'foo::Bar': string}}>(fooBarPunctuatedSplit);
 
 declare const fooBarPunctuatedSplitNumberSplit: PascalCasedProperties<FoobarPunctuated, {splitOnPunctuation: true; splitOnNumbers: true}>;
-expectType<{'HelloWorld1': {'foo::Bar': string}}>(fooBarPunctuatedSplitNumberSplit);
+expectType<{'HelloWorld1': {'foo::Bar': string}}>(
+  fooBarPunctuatedSplitNumberSplit,
+);
 
 // Verify example
 type User = {
@@ -33,11 +35,13 @@ type UserPunctuated = {
 };
 
 const result: PascalCasedProperties<User> = {
-	UserId: 1,
-	UserName: 'Tom',
+  UserId: 1,
+  UserName: 'Tom',
 };
 expectType<PascalCasedProperties<User>>(result);
-expectType<PascalCasedProperties<UserPunctuated, {splitOnPunctuation: true}>>(result);
+expectType<PascalCasedProperties<UserPunctuated, {splitOnPunctuation: true}>>(
+  result,
+);
 
 declare const baz: PascalCasedProperties<{fooBAR: number; BARFoo: string}, {preserveConsecutiveUppercase: true}>;
 expectType<{FooBAR: number; BARFoo: string}>(baz);

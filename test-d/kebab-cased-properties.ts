@@ -17,7 +17,9 @@ declare const fooBarPunctuatedSplit: KebabCasedProperties<FoobarPunctuated, {spl
 expectType<{'hello-world1': {'foo::Bar': string}}>(fooBarPunctuatedSplit);
 
 declare const fooBarPunctuatedSplitNumberSplit: KebabCasedProperties<FoobarPunctuated, {splitOnPunctuation: true; splitOnNumbers: true}>;
-expectType<{'hello-world-1': {'foo::Bar': string}}>(fooBarPunctuatedSplitNumberSplit);
+expectType<{'hello-world-1': {'foo::Bar': string}}>(
+  fooBarPunctuatedSplitNumberSplit,
+);
 
 // Verify example
 type User = {
@@ -31,9 +33,11 @@ type UserPunctuated = {
 };
 
 const result: KebabCasedProperties<User> = {
-	'user-id': 1,
-	'user-name': 'Tom',
+  'user-id': 1,
+  'user-name': 'Tom',
 };
 expectType<KebabCasedProperties<User>>(result);
 
-expectType<KebabCasedProperties<UserPunctuated, {splitOnPunctuation: true}>>(result);
+expectType<KebabCasedProperties<UserPunctuated, {splitOnPunctuation: true}>>(
+  result,
+);

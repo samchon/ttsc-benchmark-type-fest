@@ -19,15 +19,21 @@ declare const noOptionsSpecified: ApplyDefaultOptions<PathsOptions, DefaultPaths
 expectType<DefaultPathsOptions>(noOptionsSpecified);
 
 declare const someOptionsSpecified: ApplyDefaultOptions<PathsOptions, DefaultPathsOptions, {leavesOnly: true; depth: 2}>;
-expectType<{maxRecursionDepth: 10; bracketNotation: false; leavesOnly: true; depth: 2}>(someOptionsSpecified);
+expectType<{maxRecursionDepth: 10; bracketNotation: false; leavesOnly: true; depth: 2}>(
+  someOptionsSpecified,
+);
 
 declare const someOptionsSpecified2: ApplyDefaultOptions<PathsOptions, DefaultPathsOptions, {maxRecursionDepth: 5}>;
-expectType<{maxRecursionDepth: 5; bracketNotation: false; leavesOnly: false; depth: number}>(someOptionsSpecified2);
+expectType<{maxRecursionDepth: 5; bracketNotation: false; leavesOnly: false; depth: number}>(
+  someOptionsSpecified2,
+);
 
 declare const allOptionsSpecified: ApplyDefaultOptions<
 	PathsOptions, DefaultPathsOptions, {maxRecursionDepth: 5; bracketNotation: false; leavesOnly: false; depth: 1}
 >;
-expectType<{maxRecursionDepth: 5; bracketNotation: false; leavesOnly: false; depth: 1}>(allOptionsSpecified);
+expectType<{maxRecursionDepth: 5; bracketNotation: false; leavesOnly: false; depth: 1}>(
+  allOptionsSpecified,
+);
 
 declare const requiredOptions: ApplyDefaultOptions<{fixedLengthOnly?: boolean; strict: boolean}, {fixedLengthOnly: false}, {strict: true}>;
 expectType<{fixedLengthOnly: false; strict: true}>(requiredOptions);

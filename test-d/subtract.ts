@@ -26,7 +26,9 @@ expectType<PositiveInfinity>({} as Subtract<PositiveInfinity, 999>);
 expectType<NegativeInfinity>({} as Subtract<-999, PositiveInfinity>);
 expectType<NegativeInfinity>({} as Subtract<NegativeInfinity, 999>);
 expectType<PositiveInfinity>({} as Subtract<999, NegativeInfinity>);
-expectType<NegativeInfinity>({} as Subtract<NegativeInfinity, PositiveInfinity>);
+expectType<NegativeInfinity>(
+  {} as Subtract<NegativeInfinity, PositiveInfinity>,
+);
 
 // Number
 expectType<number>({} as Subtract<number, 2>);

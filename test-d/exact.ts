@@ -245,44 +245,54 @@ import type {Exact, Opaque} from '../index.d.ts';
 	const function_ = <T extends Exact<Type, T>>(arguments_: T) => arguments_;
 
 	{ // It should accept valid input
-		const input = [{
-			x: '',
-			z: 1,
-		}];
+		const input = [
+      {
+        x: '',
+        z: 1,
+      },
+    ];
 		function_(input);
 	}
 
 	{ // It should reject missing field
-		const input = [{
-			z: 1,
-		}];
+		const input = [
+      {
+        z: 1,
+      },
+    ];
 		// @ts-expect-error
 		function_(input);
 	}
 
 	{ // It should reject missing field
-		const input = [{
-			x: '',
-		}];
+		const input = [
+      {
+        x: '',
+      },
+    ];
 		// @ts-expect-error
 		function_(input);
 	}
 
 	{ // It should reject incorrect type
-		const input = [{
-			x: 1,
-			z: 1,
-		}];
+		const input = [
+      {
+        x: 1,
+        z: 1,
+      },
+    ];
 		// @ts-expect-error
 		function_(input);
 	}
 
 	{ // It should reject excess field
-		const input = [{
-			x: '',
-			y: '',
-			z: 1,
-		}];
+		const input = [
+      {
+        x: '',
+        y: '',
+        z: 1,
+      },
+    ];
 		// @ts-expect-error
 		function_(input);
 	}
@@ -293,44 +303,54 @@ import type {Exact, Opaque} from '../index.d.ts';
 	const function_ = <T extends Exact<Type, T>>(arguments_: T) => arguments_;
 
 	{ // It should accept valid input
-		const input = [{
-			x: '',
-			z: 1,
-		}];
+		const input = [
+      {
+        x: '',
+        z: 1,
+      },
+    ];
 		function_(input);
 	}
 
 	{ // It should reject missing field
-		const input = [{
-			z: 1,
-		}];
+		const input = [
+      {
+        z: 1,
+      },
+    ];
 		// @ts-expect-error
 		function_(input);
 	}
 
 	{ // It should reject missing field
-		const input = [{
-			x: '',
-		}];
+		const input = [
+      {
+        x: '',
+      },
+    ];
 		// @ts-expect-error
 		function_(input);
 	}
 
 	{ // It should reject incorrect type
-		const input = [{
-			x: 1,
-			z: 1,
-		}];
+		const input = [
+      {
+        x: 1,
+        z: 1,
+      },
+    ];
 		// @ts-expect-error
 		function_(input);
 	}
 
 	{ // It should reject excess field
-		const input = [{
-			x: '',
-			y: '',
-			z: 1,
-		}];
+		const input = [
+      {
+        x: '',
+        y: '',
+        z: 1,
+      },
+    ];
 		// @ts-expect-error
 		function_(input);
 	}
@@ -405,10 +425,8 @@ import type {Exact, Opaque} from '../index.d.ts';
 	const onlyAcceptNameImproved = <T extends Exact<OnlyAcceptName, T>>(arguments_: T) => arguments_;
 
 	onlyAcceptNameImproved({
-		// The error before the workaround:
-		// Error: Type 'SpecialName' is not assignable to type 'never'
-		name: 'name' as SpecialName,
-	});
+    name: 'name' as SpecialName,
+  });
 }
 
 // Spec - special test case for Opaque type
@@ -424,10 +442,8 @@ import type {Exact, Opaque} from '../index.d.ts';
 	const function_ = <T extends Exact<OnlyAcceptName, T>>(arguments_: T) => arguments_;
 
 	function_({
-		// The error before the workaround:
-		// Error: Type 'SpecialName' is not assignable to type 'never'
-		name: 1 as SpecialName,
-	});
+    name: 1 as SpecialName,
+  });
 }
 
 // Spec - test the above for tagged types too.
@@ -521,17 +537,17 @@ import type {Exact, Opaque} from '../index.d.ts';
 	const function_ = <T extends Exact<UserType, T>>(arguments_: T) => arguments_;
 
 	function_({
-		id: 'asd',
-		name: 'John',
-		createdAt: new Date(),
-	});
+    id: 'asd',
+    name: 'John',
+    createdAt: new Date(),
+  });
 
 	const withExcessSurname = {
-		id: 'asd',
-		name: 'John',
-		createdAt: new Date(),
-		surname: 'Doe',
-	};
+    id: 'asd',
+    name: 'John',
+    createdAt: new Date(),
+    surname: 'Doe',
+  };
 
 	// Expects error due to surname is an excess field
 	// @ts-expect-error

@@ -13,7 +13,9 @@ expectType<(() => void) | undefined>({} as Optional<() => void>);
 // Strips `null`
 expectType<string | undefined>({} as Optional<string | null>);
 expectType<string | undefined>({} as Optional<string | null | undefined>);
-expectType<number | boolean | undefined>({} as Optional<number | null | boolean>);
+expectType<number | boolean | undefined>(
+  {} as Optional<number | null | boolean>,
+);
 expectType<true | undefined>({} as Optional<true | null>);
 
 // Already `undefined` (idempotent)

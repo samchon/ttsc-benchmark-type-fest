@@ -20,12 +20,20 @@ expectType<AndAll<[true, boolean, false]>>(false);
 expectType<AndAll<[boolean, boolean, boolean]>>(boolean);
 
 // Unions
-expectType<AndAll<[true, true, true] | [true, true, false]>>(boolean); // `true` | `false`
+expectType<AndAll<[true, true, true] | [true, true, false]>>(
+  boolean,
+); // `true` | `false`
 expectType<AndAll<[true, true] | [true]>>(true); // `true` | `true`
 expectType<AndAll<[false] | [true, false, true]>>(false); // `false` | `false`
-expectType<AndAll<[true, true] | [true, boolean]>>(boolean); // `true` | `boolean`
-expectType<AndAll<[false, true] | [true, true, boolean]>>(boolean); // `false` | `boolean`
-expectType<AndAll<[boolean, true, true] | [boolean]>>(boolean); // `boolean` | `boolean`
+expectType<AndAll<[true, true] | [true, boolean]>>(
+  boolean,
+); // `true` | `boolean`
+expectType<AndAll<[false, true] | [true, true, boolean]>>(
+  boolean,
+); // `false` | `boolean`
+expectType<AndAll<[boolean, true, true] | [boolean]>>(
+  boolean,
+); // `boolean` | `boolean`
 
 // Tuples with rest element
 expectType<AndAll<[true, ...Array<true>]>>(true);

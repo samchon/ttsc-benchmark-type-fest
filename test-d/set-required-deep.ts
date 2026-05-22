@@ -19,7 +19,9 @@ expectType<{a: number; b?: {c?: string}}>(variation4);
 
 // Set key to required in a union.
 declare const variation5: SetRequiredDeep<{a?: '1'; b?: {c?: boolean}} | {a?: '2'; b?: {c?: boolean}}, 'a'>;
-expectType<{a: '1'; b?: {c?: boolean}} | {a: '2'; b?: {c?: boolean}}>(variation5);
+expectType<{a: '1'; b?: {c?: boolean}} | {a: '2'; b?: {c?: boolean}}>(
+  variation5,
+);
 
 // Set key with array type to required
 declare const variation6: SetRequiredDeep<{a?: Array<{b?: number}>}, 'a'>;
@@ -82,7 +84,9 @@ expectType<{1.2: string; 1?: {2: string}}>(variation21);
 
 // Works with unions
 declare const variation22: SetRequiredDeep<{a?: {readonly b?: number}} | {readonly b?: {c?: number[]}}, 'a.b' | 'b' | 'b.c'>;
-expectType<{a?: {readonly b: number}} | {readonly b: {c: number[]}}>(variation22);
+expectType<{a?: {readonly b: number}} | {readonly b: {c: number[]}}>(
+  variation22,
+);
 
 // Works with `KeyPaths` containing template literals
 declare const variation23: SetRequiredDeep<{a?: number; b?: {c?: number} | {d?: number}}, `b.${'c' | 'd'}`>;
@@ -91,7 +95,9 @@ expectType<{a?: number; b?: {c: number} | {d: number}}>(variation23);
 declare const variation24: SetRequiredDeep<
 	{a?: number; b?: {readonly c?: {1?: number}} | {d?: {1?: number}}}, 'a' | `b.${'c' | 'd'}.1`
 >;
-expectType<{a: number; b?: {readonly c?: {1: number}} | {d?: {1: number}}}>(variation24);
+expectType<{a: number; b?: {readonly c?: {1: number}} | {d?: {1: number}}}>(
+  variation24,
+);
 
 // Calls `RequiredDeep` when `KeyPaths` is `any`
 declare const variation25: SetRequiredDeep<{a?: number; readonly b?: {c?: string}}, any>;
@@ -106,48 +112,64 @@ expectType<{a?: number; readonly b?: {c?: string}}>(variation26);
 // =================
 
 // All optional elements
-expectType<{a?: [string, number, boolean?]}>({} as SetRequiredDeep<{a?: [string?, number?, boolean?]}, 'a.0' | 'a.1'>);
+expectType<{a?: [string, number, boolean?]}>(
+  {} as SetRequiredDeep<{a?: [string?, number?, boolean?]}, 'a.0' | 'a.1'>,
+);
 
 // Mix of optional and required elements
-expectType<{a: readonly [string, number, boolean]}>({} as SetRequiredDeep<{a: readonly [string, number?, boolean?]}, 'a.1' | 'a.2'>);
+expectType<{a: readonly [string, number, boolean]}>(
+  {} as SetRequiredDeep<{a: readonly [string, number?, boolean?]}, 'a.1' | 'a.2'>,
+);
 
 // Mix of optional and rest elements
-expectType<{readonly a: [string, number, boolean?, ...number[]]}>({} as SetRequiredDeep<{readonly a: [string?, number?, boolean?, ...number[]]}, 'a.0' | 'a.1'>);
+expectType<{readonly a: [string, number, boolean?, ...number[]]}>(
+  {} as SetRequiredDeep<{readonly a: [string?, number?, boolean?, ...number[]]}, 'a.0' | 'a.1'>,
+);
 
 // Mix of optional, required, and rest elements
-expectType<{readonly a?: [string, number, boolean, ...string[]]}>({} as SetRequiredDeep<{readonly a?: [string, number?, boolean?, ...string[]]}, 'a.1' | 'a.2'>);
+expectType<{readonly a?: [string, number, boolean, ...string[]]}>(
+  {} as SetRequiredDeep<{readonly a?: [string, number?, boolean?, ...string[]]}, 'a.1' | 'a.2'>,
+);
 
 // Works with readonly arrays
-expectType<{a?: {b?: readonly [(string | number)]}}>({} as SetRequiredDeep<{a?: {b?: readonly [(string | number)?]}}, 'a.b.0'>);
+expectType<{a?: {b?: readonly [(string | number)]}}>(
+  {} as SetRequiredDeep<{a?: {b?: readonly [(string | number)?]}}, 'a.b.0'>,
+);
 expectType<{a: readonly [string, number, boolean, ...string[]]}>(
-	{} as SetRequiredDeep<{a?: readonly [string, number?, boolean?, ...string[]]}, 'a' | 'a.1' | 'a.2'>,
+  {} as SetRequiredDeep<{a?: readonly [string, number?, boolean?, ...string[]]}, 'a' | 'a.1' | 'a.2'>,
 );
 
 // Ignores `Keys` that are already required
-expectType<{a: [string, number?, boolean?]}>({} as SetRequiredDeep<{a: [string, number?, boolean?]}, 'a.0'>);
+expectType<{a: [string, number?, boolean?]}>(
+  {} as SetRequiredDeep<{a: [string, number?, boolean?]}, 'a.0'>,
+);
 
 // Ignores `Keys` that are not known
 // This case is only possible when the array contains a rest element,
 // because otherwise the constaint on `KeyPaths` would disallow out of bound keys.
 expectType<{a?: readonly [string?, number?, boolean?, ...number[]]}>(
-	{} as SetRequiredDeep<{a?: readonly [string?, number?, boolean?, ...number[]]}, 'a.10'>,
+  {} as SetRequiredDeep<{a?: readonly [string?, number?, boolean?, ...number[]]}, 'a.10'>,
 );
 
 // Marks all keys as required, if `Keys` is `number`.
 // This case is only possible when the array contains a rest element,
 // because otherwise the constaint on `KeyPaths` would be stricter.
 expectType<{a?: readonly [string, number, boolean, ...number[]]}>(
-	{} as SetRequiredDeep<{a?: readonly [string?, number?, boolean?, ...number[]]}, `a.${number}`>,
+  {} as SetRequiredDeep<{a?: readonly [string?, number?, boolean?, ...number[]]}, `a.${number}`>,
 );
 
 // Preserves `| undefined`, similar to how built-in `Required` works.
-expectType<{a: [string | undefined, number | undefined, boolean]}>({} as SetRequiredDeep<{a: [string | undefined, (number | undefined)?, boolean?]}, 'a.0' | 'a.1' | 'a.2'>);
+expectType<{a: [string | undefined, number | undefined, boolean]}>(
+  {} as SetRequiredDeep<{a: [string | undefined, (number | undefined)?, boolean?]}, 'a.0' | 'a.1' | 'a.2'>,
+);
 expectType<{a: readonly [string | undefined, (number | undefined)?, boolean?]}>(
-	{} as SetRequiredDeep<{a: readonly [(string | undefined)?, (number | undefined)?, boolean?]}, 'a.0'>,
+  {} as SetRequiredDeep<{a: readonly [(string | undefined)?, (number | undefined)?, boolean?]}, 'a.0'>,
 );
 
 // Optional elements cannot appear after required ones, `Keys` leading to such situations are ignored.
-expectType<{a: [string?, number?, boolean?]}>({} as SetRequiredDeep<{a: [string?, number?, boolean?]}, 'a.1' | 'a.2'>); // `a.1` and `a.2` can't be required when `a.0` is optional
+expectType<{a: [string?, number?, boolean?]}>(
+  {} as SetRequiredDeep<{a: [string?, number?, boolean?]}, 'a.1' | 'a.2'>,
+); // `a.1` and `a.2` can't be required when `a.0` is optional
 expectType<{a: [string, number, boolean?, string?, string?]}>(
 	{} as SetRequiredDeep<{a: [string?, number?, boolean?, string?, string?]}, 'a.0' | 'a.1' | 'a.3'>, // `a.3` can't be required when `a.2` is optional
 );
@@ -157,28 +179,46 @@ expectType<{a: readonly [string | undefined, number?, boolean?, ...string[]]}>(
 
 // Works with unions of arrays
 expectType<{a: [string] | [string, number, boolean?, ...number[]] | readonly [string, number, boolean?]}>(
-	{} as SetRequiredDeep<{a: [string?] | [string, number?, boolean?, ...number[]] | readonly [string, number?, boolean?]}, 'a.0' | 'a.1'>,
+  {} as SetRequiredDeep<{a: [string?] | [string, number?, boolean?, ...number[]] | readonly [string, number?, boolean?]}, 'a.0' | 'a.1'>,
 );
 
 // Works with labelled tuples
-expectType<{a?: [b: string, c: number]}>({} as SetRequiredDeep<{a?: [b?: string, c?: number]}, 'a.0' | 'a.1'>);
+expectType<{a?: [b: string, c: number]}>(
+  {} as SetRequiredDeep<{a?: [b?: string, c?: number]}, 'a.0' | 'a.1'>,
+);
 
 // Non tuple arrays are left unchanged
 expectType<{a: string[]}>({} as SetRequiredDeep<{a: string[]}, `a.${number}`>);
-expectType<{readonly a: ReadonlyArray<string | number>}>({} as SetRequiredDeep<{readonly a?: ReadonlyArray<string | number>}, 'a' | `a.${number}`>);
+expectType<{readonly a: ReadonlyArray<string | number>}>(
+  {} as SetRequiredDeep<{readonly a?: ReadonlyArray<string | number>}, 'a' | `a.${number}`>,
+);
 
 // Works with nested arrays
-expectType<{a?: [[string, number?]?]}>({} as SetRequiredDeep<{a?: [[string?, number?]?]}, 'a.0.0'>);
-expectType<{a?: [[string, number]]}>({} as SetRequiredDeep<{a?: [[string?, number?]?]}, 'a.0' | 'a.0.0' | 'a.0.1'>);
-expectType<{a?: Array<[string, number?]>}>({} as SetRequiredDeep<{a?: Array<[string?, number?]>}, `a.${number}.0`>);
+expectType<{a?: [[string, number?]?]}>(
+  {} as SetRequiredDeep<{a?: [[string?, number?]?]}, 'a.0.0'>,
+);
+expectType<{a?: [[string, number]]}>(
+  {} as SetRequiredDeep<{a?: [[string?, number?]?]}, 'a.0' | 'a.0.0' | 'a.0.1'>,
+);
+expectType<{a?: Array<[string, number?]>}>(
+  {} as SetRequiredDeep<{a?: Array<[string?, number?]>}, `a.${number}.0`>,
+);
 
 // Set key inside array to required
-expectType<{a?: Array<{b: number}>}>({} as SetRequiredDeep<{a?: Array<{b?: number}>}, `a.${number}.b`>);
-expectType<{readonly a?: [{readonly b: number}]}>({} as SetRequiredDeep<{readonly a?: [{readonly b?: number}]}, 'a.0.b'>);
+expectType<{a?: Array<{b: number}>}>(
+  {} as SetRequiredDeep<{a?: Array<{b?: number}>}, `a.${number}.b`>,
+);
+expectType<{readonly a?: [{readonly b: number}]}>(
+  {} as SetRequiredDeep<{readonly a?: [{readonly b?: number}]}, 'a.0.b'>,
+);
 expectType<{readonly a: [{readonly b: number}, {c?: string}]}>(
-	{} as SetRequiredDeep<{readonly a?: [{readonly b?: number}, {c?: string}?]}, 'a' | 'a.0.b' | 'a.1'>,
+  {} as SetRequiredDeep<{readonly a?: [{readonly b?: number}, {c?: string}?]}, 'a' | 'a.0.b' | 'a.1'>,
 );
 
 // Set only specified keys inside array to required
-expectType<{a?: Array<{b: number; c?: string}>}>({} as SetRequiredDeep<{a?: Array<{b?: number; c?: string}>}, `a.${number}.b`>);
-expectType<{a: [{b?: number; readonly c: string}]}>({} as SetRequiredDeep<{a: [{b?: number; readonly c?: string}]}, 'a.0.c'>);
+expectType<{a?: Array<{b: number; c?: string}>}>(
+  {} as SetRequiredDeep<{a?: Array<{b?: number; c?: string}>}, `a.${number}.b`>,
+);
+expectType<{a: [{b?: number; readonly c: string}]}>(
+  {} as SetRequiredDeep<{a: [{b?: number; readonly c?: string}]}, 'a.0.c'>,
+);

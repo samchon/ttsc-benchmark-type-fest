@@ -22,7 +22,9 @@ declare const exampleConditionalPick: ConditionalPick<Example, string>;
 expectType<{a: string}>(exampleConditionalPick);
 
 declare const awesomeConditionalPick: ConditionalPick<Awesome, Primitive>;
-expectType<{name: string; successes: number; failures: bigint}>(awesomeConditionalPick);
+expectType<{name: string; successes: number; failures: bigint}>(
+  awesomeConditionalPick,
+);
 
 declare const exampleConditionalPickWithUndefined: ConditionalPick<Example, string | undefined>;
 expectType<{a: string; c?: string}>(exampleConditionalPickWithUndefined);

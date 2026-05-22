@@ -2,8 +2,12 @@ import {expectType} from 'tsd';
 import type {UnionMember, IsNever, IsEqual} from '../index.d.ts';
 
 expectType<false>({} as boolean extends UnionMember<boolean> ? true : false);
-expectType<false>({} as (1 | 'foo' | 'bar') extends UnionMember<1 | 'foo' | 'bar'> ? true : false);
-expectType<false>({} as ({foo: string} | {bar: number}) extends UnionMember<{foo: string} | {bar: number}> ? true : false);
+expectType<false>(
+  {} as (1 | 'foo' | 'bar') extends UnionMember<1 | 'foo' | 'bar'> ? true : false,
+);
+expectType<false>(
+  {} as ({foo: string} | {bar: number}) extends UnionMember<{foo: string} | {bar: number}> ? true : false,
+);
 
 expectType<number>({} as UnionMember<number>);
 expectType<string>({} as UnionMember<string>);
@@ -23,11 +27,15 @@ type WrapMemberInTuple<T, L = UnionMember<T>> =
 		? WrapMemberInTuple<Exclude<T, L>> | [L]
 		: never;
 expectType<[1] | [2] | [3]>({} as WrapMemberInTuple<1 | 2 | 3>);
-expectType<['foo'] | ['bar'] | ['baz']>({} as WrapMemberInTuple<'foo' | 'bar' | 'baz'>);
-expectType<[1] | ['foo'] | [true] | [100n] | [null] | [undefined]>(
-	{} as WrapMemberInTuple<1 | 'foo' | true | 100n | null | undefined>,
+expectType<['foo'] | ['bar'] | ['baz']>(
+  {} as WrapMemberInTuple<'foo' | 'bar' | 'baz'>,
 );
-expectType<[{a: string}] | [{b: number}]>({} as WrapMemberInTuple<{a: string} | {b: number}>);
+expectType<[1] | ['foo'] | [true] | [100n] | [null] | [undefined]>(
+  {} as WrapMemberInTuple<1 | 'foo' | true | 100n | null | undefined>,
+);
+expectType<[{a: string}] | [{b: number}]>(
+  {} as WrapMemberInTuple<{a: string} | {b: number}>,
+);
 
 type UnionType = {a: 0} | {readonly a: 0};
 type PickedUnionMember = UnionMember<UnionType>;

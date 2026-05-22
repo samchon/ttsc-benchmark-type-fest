@@ -35,8 +35,12 @@ expectType<ExtractRestElement<readonly ['a', 'b']>>({} as never);
 expectType<ExtractRestElement<[]>>({} as never);
 
 // Union
-expectType<ExtractRestElement<[1, ...string[]] | [2, ...number[]]>>({} as string | number);
-expectType<ExtractRestElement<[...boolean[], 'end'] | ['start', ...string[]]>>({} as boolean | string);
+expectType<ExtractRestElement<[1, ...string[]] | [2, ...number[]]>>(
+  {} as string | number,
+);
+expectType<ExtractRestElement<[...boolean[], 'end'] | ['start', ...string[]]>>(
+  {} as boolean | string,
+);
 
 // Readonly
 expectType<ExtractRestElement<readonly [...number[], 'done']>>({} as number);
@@ -55,4 +59,6 @@ type FiftyZeroes = TupleOf<50, '0'>;
 expectType<ExtractRestElement<[...FiftyZeroes, ...number[]]>>({} as number);
 
 type NineHundredNinetyNineZeroes = TupleOf<999, '0'>;
-expectType<ExtractRestElement<[...NineHundredNinetyNineZeroes, ...number[]]>>({} as number);
+expectType<ExtractRestElement<[...NineHundredNinetyNineZeroes, ...number[]]>>(
+  {} as number,
+);

@@ -97,7 +97,7 @@ expectType<'fo#o2bar'>(delimiterFromNumberInTheMiddleNoSplitOnNumbersEdgeCase2);
 
 const delimiterFromNumberInTheMiddleNoSplitOnNumbersEdgeCase3: DelimiterCase<'FOO22Bar', '#'> = 'foo22#bar';
 expectType<'foo22#bar'>(
-	delimiterFromNumberInTheMiddleNoSplitOnNumbersEdgeCase3,
+  delimiterFromNumberInTheMiddleNoSplitOnNumbersEdgeCase3,
 );
 
 declare const unionValue: DelimiterCase<'fooBar' | 'barBaz', '#'>;
@@ -107,7 +107,9 @@ declare const unionDelimiter: DelimiterCase<'fooBarBaz', '#' | '$'>;
 expectType<'foo#bar#baz' | 'foo$bar$baz'>(unionDelimiter);
 
 declare const unionValueAndDelimiter: DelimiterCase<'fooBarBaz' | 'barBazFoo', '#' | '$'>;
-expectType<'foo#bar#baz' | 'bar#baz#foo' | 'foo$bar$baz' | 'bar$baz$foo'>(unionValueAndDelimiter);
+expectType<'foo#bar#baz' | 'bar#baz#foo' | 'foo$bar$baz' | 'bar$baz$foo'>(
+  unionValueAndDelimiter,
+);
 
 const stringPart: DelimiterCase<`foo${string}`, '#'> = 'fooSomeString';
 expectType<`foo${string}`>(stringPart);
@@ -199,7 +201,7 @@ type CliOptions = {
 };
 
 expectAssignable<OddCasedProperties<CliOptions>>({
-	'dry#run': true,
-	'include#file': 'bar.js',
-	foo: 123,
+  'dry#run': true,
+  'include#file': 'bar.js',
+  foo: 123,
 });

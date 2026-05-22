@@ -113,7 +113,9 @@ expectType<IsRequiredKeyOf<A, 'a' | 'c'>>(true);
 type FullKeyUnion = keyof A; // 'a' | 'b' | 'c'
 expectType<IsRequiredKeyOf<A, FullKeyUnion>>(boolean);
 // @ts-expect-error
-expectType<IsRequiredKeyOf<A, 'a' | 'x'>>(boolean); // 'x' is not in A, so filtered as false
+expectType<IsRequiredKeyOf<A, 'a' | 'x'>>(
+  boolean,
+); // 'x' is not in A, so filtered as false
 
 // `never` / `any
 type K = {a: string};

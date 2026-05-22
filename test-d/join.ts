@@ -70,6 +70,9 @@ const joinedSuffixTuple: Join<typeof suffixTuple, '.'> = 'item1.item2.suffix';
 expectType<`${string}.suffix`>(joinedSuffixTuple);
 
 // Tuple with optional elements.
-const optionalTuple: ['hello' | undefined, 'world' | undefined] = ['hello', undefined];
+const optionalTuple: ['hello' | undefined, 'world' | undefined] = [
+  'hello',
+  undefined,
+];
 const joinedOptionalTuple: Join<typeof optionalTuple, '.'> = 'hello.';
 expectType<'hello.'>(joinedOptionalTuple);

@@ -57,13 +57,25 @@ const result: SnakeCasedPropertiesDeep<UserWithFriends> = {
 	],
 };
 expectType<SnakeCasedPropertiesDeep<UserWithFriends>>(result);
-expectType<SnakeCasedPropertiesDeep<UserWithFriendsPunctuated, {splitOnPunctuation: true}>>(result);
+expectType<SnakeCasedPropertiesDeep<UserWithFriendsPunctuated, {splitOnPunctuation: true}>>(
+  result,
+);
 
-expectType<{foo_bar: unknown}>({} as SnakeCasedPropertiesDeep<{fooBar: unknown}>);
-expectType<{foo_bar: {bar_baz: unknown}; biz: unknown}>({} as SnakeCasedPropertiesDeep<{fooBar: {barBaz: unknown}; biz: unknown}>);
+expectType<{foo_bar: unknown}>(
+  {} as SnakeCasedPropertiesDeep<{fooBar: unknown}>,
+);
+expectType<{foo_bar: {bar_baz: unknown}; biz: unknown}>(
+  {} as SnakeCasedPropertiesDeep<{fooBar: {barBaz: unknown}; biz: unknown}>,
+);
 
 expectType<{foo_bar: any}>({} as SnakeCasedPropertiesDeep<{fooBar: any}>);
-expectType<{foo_bar: {bar_baz: any}; biz: any}>({} as SnakeCasedPropertiesDeep<{fooBar: {barBaz: any}; biz: any}>);
+expectType<{foo_bar: {bar_baz: any}; biz: any}>(
+  {} as SnakeCasedPropertiesDeep<{fooBar: {barBaz: any}; biz: any}>,
+);
 
-expectType<{'foo_bar': unknown}>({} as SnakeCasedPropertiesDeep<{'foo::bar': unknown}, {splitOnPunctuation: true}>);
-expectType<{'foo_bar': {'bar_baz': unknown}; biz: unknown}>({} as SnakeCasedPropertiesDeep<{'foo::bar': {'bar@baz': unknown}; biz: unknown}, {splitOnPunctuation: true}>);
+expectType<{'foo_bar': unknown}>(
+  {} as SnakeCasedPropertiesDeep<{'foo::bar': unknown}, {splitOnPunctuation: true}>,
+);
+expectType<{'foo_bar': {'bar_baz': unknown}; biz: unknown}>(
+  {} as SnakeCasedPropertiesDeep<{'foo::bar': {'bar@baz': unknown}; biz: unknown}, {splitOnPunctuation: true}>,
+);

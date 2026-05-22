@@ -10,7 +10,9 @@ expectAssignable<Jsonifiable>([new Date()]);
 expectAssignable<Jsonifiable>({a: undefined});
 expectAssignable<Jsonifiable>([1, 2, 3] as const);
 expectAssignable<Jsonifiable>({a: new Date()} as const);
-expectAssignable<Jsonifiable>({a: {deeply: {nested: {toJsonObject: new Date()}}}});
+expectAssignable<Jsonifiable>({
+  a: {deeply: {nested: {toJsonObject: new Date()}}},
+});
 expectAssignable<Jsonifiable>({toJSON: () => new Date()});
 expectAssignable<Jsonifiable>({
 	toJSON() {

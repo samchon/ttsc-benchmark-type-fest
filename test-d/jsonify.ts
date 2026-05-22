@@ -1,7 +1,14 @@
 /* eslint-disable @typescript-eslint/consistent-type-definitions */
 // TODO: Convert the `interface`'s to `type`s.
 import {expectAssignable, expectNotAssignable, expectType} from 'tsd';
-import type {EmptyObject, Jsonify, JsonObject, JsonValue, NegativeInfinity, PositiveInfinity} from '../index.d.ts';
+import type {
+  EmptyObject,
+  Jsonify,
+  JsonObject,
+  JsonValue,
+  NegativeInfinity,
+  PositiveInfinity,
+} from '../index.d.ts';
 
 interface A {
 	a: number;
@@ -74,8 +81,8 @@ interface Geometry {
 }
 
 const point: Geometry = {
-	type: 'Point',
-	coordinates: [1, 1],
+  type: 'Point',
+  coordinates: [1, 1],
 };
 
 expectNotAssignable<JsonValue>(point);
@@ -102,8 +109,8 @@ class NonJsonWithToJSON {
 
 	public toJSON(): {fixture: Array<[string, number]>} {
 		return {
-			fixture: [...this.fixture.entries()],
-		};
+      fixture: [...this.fixture.entries()],
+    };
 	}
 }
 
@@ -117,15 +124,17 @@ class NonJsonExtendPrimitiveWithToJSON extends Number {
 
 	public toJSON(): {fixture: string} {
 		return {
-			fixture: '42n',
-		};
+      fixture: '42n',
+    };
 	}
 }
 
 const nonJsonExtendPrimitiveWithToJSON = new NonJsonExtendPrimitiveWithToJSON();
 expectNotAssignable<JsonValue>(nonJsonExtendPrimitiveWithToJSON);
 expectAssignable<JsonValue>(nonJsonExtendPrimitiveWithToJSON.toJSON());
-expectAssignable<Jsonify<NonJsonExtendPrimitiveWithToJSON>>(nonJsonExtendPrimitiveWithToJSON.toJSON());
+expectAssignable<Jsonify<NonJsonExtendPrimitiveWithToJSON>>(
+  nonJsonExtendPrimitiveWithToJSON.toJSON(),
+);
 
 class NonJsonWithToJSONWrapper {
 	public inner: NonJsonWithToJSON = nonJsonWithToJSON;
@@ -135,10 +144,10 @@ class NonJsonWithToJSONWrapper {
 		const stringOverride = 'override';
 
 		return {
-			override: stringOverride,
-			inner: this.inner,
-			innerDeep: {inner: this.inner},
-		};
+      override: stringOverride,
+      inner: this.inner,
+      innerDeep: {inner: this.inner},
+    };
 	}
 }
 
@@ -159,8 +168,8 @@ class NonJsonWithInvalidToJSON {
 	// It is invalid because the result is not assignable to `JsonValue`.
 	public toJSON(): {fixture: Map<string, number>} {
 		return {
-			fixture: this.fixture,
-		};
+      fixture: this.fixture,
+    };
 	}
 }
 
@@ -196,7 +205,9 @@ declare const arrayMemberUnionWithUndefined: Jsonify<Array<typeof undefined | ty
 expectType<Array<null | number>>(arrayMemberUnionWithUndefined);
 
 declare const arrayMemberUnionWithUndefinedDeep: Jsonify<Array<Array<typeof undefined | typeof number>> | {foo: Array<typeof undefined | typeof number>}>;
-expectType<Array<Array<null | number>> | {foo: Array<null | number>}>(arrayMemberUnionWithUndefinedDeep);
+expectType<Array<Array<null | number>> | {foo: Array<null | number>}>(
+  arrayMemberUnionWithUndefinedDeep,
+);
 
 declare const arrayMemberFunction: Jsonify<Array<typeof function_>>;
 expectType<null[]>(arrayMemberFunction);
@@ -363,7 +374,7 @@ declare const jsonifiedNestedObjectWithNameProperty: Jsonify<
 >;
 
 expectType<typeof nestedObjectWithNameProperty>(
-	jsonifiedNestedObjectWithNameProperty,
+  jsonifiedNestedObjectWithNameProperty,
 );
 
 // Regression test for https://github.com/sindresorhus/type-fest/issues/629
@@ -392,4 +403,6 @@ expectNotAssignable<Jsonify<{key: unknown}>>({key: new Date()});
 expectAssignable<JsonObject>({} as {a: string});
 expectNotAssignable<JsonObject>({} as {a: string | undefined});
 expectAssignable<JsonObject>({} as {a?: string});
-expectNotAssignable<JsonObject>({} as {a?: string | undefined}); // Requires `exactOptionalPropertyTypes` to be enabled
+expectNotAssignable<JsonObject>(
+  {} as {a?: string | undefined},
+); // Requires `exactOptionalPropertyTypes` to be enabled

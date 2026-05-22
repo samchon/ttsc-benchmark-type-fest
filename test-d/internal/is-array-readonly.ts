@@ -17,7 +17,9 @@ expectType<IsArrayReadonly<readonly [...string[], number, string]>>(true);
 
 // Union
 expectType<IsArrayReadonly<[] | readonly []>>({} as boolean);
-expectType<IsArrayReadonly<[string, number] | readonly [string, number, ...string[]]>>({} as boolean);
+expectType<IsArrayReadonly<[string, number] | readonly [string, number, ...string[]]>>(
+  {} as boolean,
+);
 expectType<IsArrayReadonly<[] | [string, number]>>(false);
 expectType<IsArrayReadonly<readonly [] | readonly [string, number]>>(true);
 

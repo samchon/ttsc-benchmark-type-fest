@@ -93,15 +93,21 @@ expectType<readonly []>(readonlyData.emptyTuple);
 expectType<readonly ['foo']>(readonlyData.singleItemTuple);
 expectType<readonly [string, ...number[]]>(readonlyData.trailingSpreadTuple);
 expectType<readonly [...string[], number]>(readonlyData.leadingSpreadTuple);
-expectType<readonly [{readonly a: string}, {readonly b: number}, {readonly c: string}]>(readonlyData.multiItemTuple);
+expectType<readonly [{readonly a: string}, {readonly b: number}, {readonly c: string}]>(
+  readonlyData.multiItemTuple,
+);
 expectType<Readonly<ReadonlyMap<string, string>>>(readonlyData.readonlyMap);
 expectType<Readonly<ReadonlySet<string>>>(readonlyData.readonlySet);
 expectType<readonly string[]>(readonlyData.readonlyArray);
 expectType<readonly ['foo']>(readonlyData.readonlyTuple);
 expectAssignable<ReadonlyJsonValue>(readonlyData.json);
-expectAssignable<Opaque<ReadonlyDeep<OpaqueObjectData>, ReadonlyDeep<OpaqueObject[typeof tag]>>>(readonlyData.opaqueObj);
+expectAssignable<Opaque<ReadonlyDeep<OpaqueObjectData>, ReadonlyDeep<OpaqueObject[typeof tag]>>>(
+  readonlyData.opaqueObj,
+);
 
-expectType<((foo: number) => string) & _ReadonlyObjectDeep<Namespace>>(readonlyData.namespace);
+expectType<((foo: number) => string) & _ReadonlyObjectDeep<Namespace>>(
+  readonlyData.namespace,
+);
 expectType<string>(readonlyData.namespace(1));
 expectType<readonly boolean[]>(readonlyData.namespace.baz);
 

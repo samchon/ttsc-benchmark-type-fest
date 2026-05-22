@@ -30,8 +30,8 @@ const arrayEntryNumber: Entry<typeof arrayExample> = [1, 1];
 expectAssignable<[number, (string | number)]>(arrayEntryNumber);
 
 const arrayEntries: Entries<typeof arrayExample> = [
-	arrayEntryString,
-	arrayEntryNumber,
+  arrayEntryString,
+  arrayEntryNumber,
 ];
 expectAssignable<Array<[number, (string | number)]>>(arrayEntries);
 
@@ -44,8 +44,5 @@ expectAssignable<[(string | number), (string | number)]>(setEntryString);
 const setEntryNumber: Entry<typeof setExample> = [1, 1];
 expectAssignable<[(string | number), (string | number)]>(setEntryNumber);
 
-const setEntries: Entries<typeof setExample> = [
-	setEntryString,
-	setEntryNumber,
-];
+const setEntries: Entries<typeof setExample> = [setEntryString, setEntryNumber];
 expectAssignable<Array<[(string | number), (string | number)]>>(setEntries);

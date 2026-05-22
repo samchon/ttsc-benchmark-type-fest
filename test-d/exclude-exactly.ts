@@ -8,8 +8,12 @@ expectType<string>({} as ExcludeExactly<string, '1'>);
 expectType<never>({} as ExcludeExactly<string, string>);
 expectType<'0'>({} as ExcludeExactly<'0', string>);
 
-expectType<{a: 0}>({} as ExcludeExactly<{a: 0} | {readonly a: 0}, {readonly a: 0}>);
-expectType<{readonly a: 0}>({} as ExcludeExactly<{a: 0} | {readonly a: 0}, {a: 0}>);
+expectType<{a: 0}>(
+  {} as ExcludeExactly<{a: 0} | {readonly a: 0}, {readonly a: 0}>,
+);
+expectType<{readonly a: 0}>(
+  {} as ExcludeExactly<{a: 0} | {readonly a: 0}, {a: 0}>,
+);
 expectType<never>({} as ExcludeExactly<{readonly a: 0}, {readonly a: 0}>);
 
 // `never` excludes nothing

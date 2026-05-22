@@ -10,7 +10,9 @@ expectType<1 | 2 | 3>({} as ArrayElement<[1, 2, 3]>);
 expectType<'a' | 'b' | 'c'>({} as ArrayElement<['a', 'b', 'c']>);
 
 // Const tuple
-expectType<'foo' | 'bar' | 'baz'>({} as ArrayElement<readonly ['foo', 'bar', 'baz']>);
+expectType<'foo' | 'bar' | 'baz'>(
+  {} as ArrayElement<readonly ['foo', 'bar', 'baz']>,
+);
 expectType<1 | 2 | 3>({} as ArrayElement<readonly [1, 2, 3]>);
 
 // Mixed types
@@ -32,7 +34,9 @@ expectType<1 | 2 | 3 | 4>({} as ArrayElement<[1, 2] | [3, 4]>);
 declare function getRandomElement<T extends readonly unknown[]>(array: T): ArrayElement<T>;
 
 expectType<number>(getRandomElement([1, 2, 3]));
-expectType<'foo' | 'bar' | 'baz'>(getRandomElement(['foo', 'bar', 'baz'] as const));
+expectType<'foo' | 'bar' | 'baz'>(
+  getRandomElement(['foo', 'bar', 'baz'] as const),
+);
 expectType<string>(getRandomElement(['foo', 'bar', 'baz']));
 
 // Edge cases

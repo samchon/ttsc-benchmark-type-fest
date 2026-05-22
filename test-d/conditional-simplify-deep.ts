@@ -20,7 +20,10 @@ type SomeNode = {
 // In your editor, hovering over `SomeNodeSimplified` will show a simplified object with all the properties.
 type SomeNodeSimplified = ConditionalSimplifyDeep<SomeNode>;
 
-const someNode = {parent: positionAndSize, childs: [{parent: positionAndSize}, {parent: positionAndSize}]};
+const someNode = {
+  parent: positionAndSize,
+  childs: [{parent: positionAndSize}, {parent: positionAndSize}],
+};
 expectType<SomeNodeSimplified>(someNode);
 
 // Should simplify interface deeply excluding Function type.
@@ -54,9 +57,9 @@ const movablePosition = {
 };
 
 const movableNode = {
-	position: movablePosition,
-	top: {position: movablePosition, size},
-	left: {position: movablePosition, size},
+  position: movablePosition,
+  top: {position: movablePosition, size},
+  left: {position: movablePosition, size},
 };
 
 expectType<MovableNodeSimplifiedPass>(movableNode);

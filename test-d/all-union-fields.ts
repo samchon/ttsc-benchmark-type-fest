@@ -170,14 +170,24 @@ expectType<{
 }>(mixedKeywords2);
 
 // Non-recursive types
-expectType<Set<string> | Map<string, string>>({} as AllUnionFields<Set<string> | Map<string, string>>);
-expectType<string[] | Set<string>>({} as AllUnionFields<string[] | Set<string>>);
+expectType<Set<string> | Map<string, string>>(
+  {} as AllUnionFields<Set<string> | Map<string, string>>,
+);
+expectType<string[] | Set<string>>(
+  {} as AllUnionFields<string[] | Set<string>>,
+);
 expectType<NonRecursiveType>({} as AllUnionFields<NonRecursiveType>);
 
 // Mix of non-recursive and recursive types
-expectType<{a: string | number; b?: true} | undefined>({} as AllUnionFields<{a: string} | {a: number; b: true} | undefined>);
-expectType<RegExp | {test: string}>({} as AllUnionFields<RegExp | {test: string}>);
-expectType<RegExp | null | {test: string | number; foo?: any}>({} as AllUnionFields<RegExp | null | {test: string} | {test: number; foo: any}>);
+expectType<{a: string | number; b?: true} | undefined>(
+  {} as AllUnionFields<{a: string} | {a: number; b: true} | undefined>,
+);
+expectType<RegExp | {test: string}>(
+  {} as AllUnionFields<RegExp | {test: string}>,
+);
+expectType<RegExp | null | {test: string | number; foo?: any}>(
+  {} as AllUnionFields<RegExp | null | {test: string} | {test: number; foo: any}>,
+);
 
 // Boundary types
 expectType<any>({} as AllUnionFields<any>);

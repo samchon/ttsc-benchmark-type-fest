@@ -22,5 +22,7 @@ expectAssignable<{
 	bar: string;
 }>(fooBar);
 
-expectNotAssignable<FooBarBaz>(fooBar); // Invariance does not accept supertypes.
+expectNotAssignable<FooBarBaz>(
+  fooBar,
+); // Invariance does not accept supertypes.
 expectNotAssignable<FooBar>(fooBarBaz); // Invariance does not accept subtypes.

@@ -24,19 +24,19 @@ type Bar = {
 type FooBar = Spread<Foo, Bar>;
 
 const foo: Foo = {
-	a: 'a1',
-	b: 'b1',
-	c: 'c1',
-	d: 'd1',
-	e: 'e1',
-	f: 'f1',
-	g: 'g1',
+  a: 'a1',
+  b: 'b1',
+  c: 'c1',
+  d: 'd1',
+  e: 'e1',
+  f: 'f1',
+  g: 'g1',
 };
 
 const bar: Bar = {
-	b: 'b2',
-	c: 'c2',
-	h: 'h2',
+  b: 'b2',
+  c: 'c2',
+  h: 'h2',
 };
 
 const foobar = {...foo, ...bar};

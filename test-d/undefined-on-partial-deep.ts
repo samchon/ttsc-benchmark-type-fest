@@ -29,14 +29,14 @@ type MixedType = UndefinedOnPartialDeep<{
 	func?: (arguments0: string, arguments1: number) => boolean;
 }>;
 expectAssignable<MixedType>({
-	required: '',
-	union: undefined,
-	boolean: undefined,
-	string: undefined,
-	symbol: undefined,
-	date: undefined,
-	regExp: undefined,
-	func: undefined,
+  required: '',
+  union: undefined,
+  boolean: undefined,
+  string: undefined,
+  symbol: undefined,
+  date: undefined,
+  regExp: undefined,
+  func: undefined,
 });
 
 // Test object

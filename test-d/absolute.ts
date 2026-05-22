@@ -72,9 +72,15 @@ expectType<Absolute<-2 | -1 | 0>>({} as 2 | 1 | 0);
 expectType<Absolute<2 | -2>>(2);
 expectType<Absolute<-12_345n | 12_345n>>(12_345n);
 expectType<Absolute<2 | 4 | -12_345n>>({} as 2 | 4 | 12_345n);
-expectType<Absolute<2 | 98_765n | 9.8 | 0b11n | 0o77 | 0xFF | 3e8>>({} as 2 | 98_765n | 9.8 | 0b11n | 0o77 | 0xFF | 3e8);
-expectType<Absolute<-2 | -98_765n | -9.8 | -0b11n | -0o77 | -0xFF | -3e8>>({} as 2 | 98_765n | 9.8 | 0b11n | 0o77 | 0xFF | 3e8);
-expectType<Absolute<-2 | -98_765n | 9.8 | 0b11n | 0o77 | -0xFF | 3e8>>({} as 2 | 98_765n | 9.8 | 0b11n | 0o77 | 0xFF | 3e8);
+expectType<Absolute<2 | 98_765n | 9.8 | 0b11n | 0o77 | 0xFF | 3e8>>(
+  {} as 2 | 98_765n | 9.8 | 0b11n | 0o77 | 0xFF | 3e8,
+);
+expectType<Absolute<-2 | -98_765n | -9.8 | -0b11n | -0o77 | -0xFF | -3e8>>(
+  {} as 2 | 98_765n | 9.8 | 0b11n | 0o77 | 0xFF | 3e8,
+);
+expectType<Absolute<-2 | -98_765n | 9.8 | 0b11n | 0o77 | -0xFF | 3e8>>(
+  {} as 2 | 98_765n | 9.8 | 0b11n | 0o77 | 0xFF | 3e8,
+);
 
 // 2. Literal and non-literal members
 expectType<Absolute<bigint | 100>>({} as bigint | 100);

@@ -67,7 +67,9 @@ declare const optional: SharedUnionFields<TestingType | {optional: string; foo: 
 expectType<{optional?: boolean | string | undefined}>(optional);
 
 declare const propertyWithKeyword: SharedUnionFields<TestingType | {readonly propertyWithKeyword: string; foo: any}>;
-expectType<{readonly propertyWithKeyword: boolean | string}>(propertyWithKeyword);
+expectType<{readonly propertyWithKeyword: boolean | string}>(
+  propertyWithKeyword,
+);
 
 declare const map: SharedUnionFields<TestingType | {map: Map<string, {propertyA: string}>; foo: any}>;
 expectType<{map: TestingType['map'] | Map<string, {propertyA: string}>}>(map);
@@ -85,14 +87,24 @@ declare const unionWithOptional: SharedUnionFields<{a?: string; foo: number} | {
 expectType<{a?: string}>(unionWithOptional);
 
 // Non-recursive types
-expectType<Set<string> | Map<string, string>>({} as SharedUnionFields<Set<string> | Map<string, string>>);
-expectType<string[] | Set<string>>({} as SharedUnionFields<string[] | Set<string>>);
+expectType<Set<string> | Map<string, string>>(
+  {} as SharedUnionFields<Set<string> | Map<string, string>>,
+);
+expectType<string[] | Set<string>>(
+  {} as SharedUnionFields<string[] | Set<string>>,
+);
 expectType<NonRecursiveType>({} as SharedUnionFields<NonRecursiveType>);
 
 // Mix of non-recursive and recursive types
-expectType<{a: string | number} | undefined>({} as SharedUnionFields<{a: string} | {a: number; b: true} | undefined>);
-expectType<RegExp | {test: string}>({} as SharedUnionFields<RegExp | {test: string}>);
-expectType<RegExp | null | {test: string | number}>({} as SharedUnionFields<RegExp | null | {test: string} | {test: number; foo: any}>);
+expectType<{a: string | number} | undefined>(
+  {} as SharedUnionFields<{a: string} | {a: number; b: true} | undefined>,
+);
+expectType<RegExp | {test: string}>(
+  {} as SharedUnionFields<RegExp | {test: string}>,
+);
+expectType<RegExp | null | {test: string | number}>(
+  {} as SharedUnionFields<RegExp | null | {test: string} | {test: number; foo: any}>,
+);
 
 // Boundary types
 expectType<any>({} as SharedUnionFields<any>);

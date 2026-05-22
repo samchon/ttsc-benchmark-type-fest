@@ -97,9 +97,13 @@ expectType<Set<string>>(writableData.readonlySet);
 expectType<string[]>(writableData.readonlyArray);
 expectType<['foo']>(writableData.readonlyTuple);
 expectAssignable<ReadonlyJsonValue>(writableData.json);
-expectAssignable<Opaque<WritableDeep<OpaqueObjectData>, WritableDeep<OpaqueObject[typeof tag]>>>(writableData.opaqueObj);
+expectAssignable<Opaque<WritableDeep<OpaqueObjectData>, WritableDeep<OpaqueObject[typeof tag]>>>(
+  writableData.opaqueObj,
+);
 
-expectType<((foo: number) => string) & _WritableObjectDeep<Namespace>>(writableData.namespace);
+expectType<((foo: number) => string) & _WritableObjectDeep<Namespace>>(
+  writableData.namespace,
+);
 expectType<string>(writableData.namespace(1));
 expectType<boolean[]>(writableData.namespace.baz);
 
@@ -120,7 +124,9 @@ const fullyWritableData = {
 		boolean: true,
 	},
 };
-expectAssignable<WritableDeep<ReadonlyDeep<typeof fullyWritableData>>>(fullyWritableData);
+expectAssignable<WritableDeep<ReadonlyDeep<typeof fullyWritableData>>>(
+  fullyWritableData,
+);
 
 // Standalone tests
 

@@ -14,26 +14,36 @@ const arrowFunction = (_a: number) => null;
 
 // Normal case
 declare const test1: SetParameterType<typeof function_, {1: boolean}>;
-expectType<(a: number, b: boolean, c: Object, ...arguments_: boolean[]) => null>(test1);
+expectType<(a: number, b: boolean, c: Object, ...arguments_: boolean[]) => null>(
+  test1,
+);
 test1(1, true, {}, true);
 
 // Test multiple parameters
 declare const test2: SetParameterType<typeof function_, {0: string; 2: boolean}>;
-expectType<(a: string, b: string, c: boolean, ...arguments_: boolean[]) => null>(test2);
+expectType<(a: string, b: string, c: boolean, ...arguments_: boolean[]) => null>(
+  test2,
+);
 test2('1', '2', true, true);
 
 // Test another define way
 declare const test3: SetParameterType<typeof function_, [a: 'a', b: 'b']>;
-expectType<(a: 'a', b: 'b', c: Object, ...arguments_: boolean[]) => null>(test3);
+expectType<(a: 'a', b: 'b', c: Object, ...arguments_: boolean[]) => null>(
+  test3,
+);
 test3('a', 'b', {}, true);
 
 // Test `...args` parameter
 declare const testargs: SetParameterType<typeof function_, {3: string}>;
-expectType<(a: number, b: string, c: Object, ...arguments_: string[]) => null>(testargs);
+expectType<(a: number, b: string, c: Object, ...arguments_: string[]) => null>(
+  testargs,
+);
 testargs(1, '1', {}, '1');
 
 declare const testargs2: SetParameterType<typeof function_, [string, number, number, ...boolean[]]>;
-expectType<(a: string, b: number, c: number, ...arguments_: boolean[]) => null>(testargs2);
+expectType<(a: string, b: number, c: number, ...arguments_: boolean[]) => null>(
+  testargs2,
+);
 testargs2('1', 1, 1, true);
 
 // Test arrow function

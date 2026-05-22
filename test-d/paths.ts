@@ -51,7 +51,9 @@ declare const tuple: Paths<[{foo: string}]>;
 expectType<'0' | '0.foo'>(tuple);
 
 declare const deeplist: Paths<{foo: Array<{bar: boolean[]}>}>;
-expectType<'foo' | `foo.${number}` | `foo.${number}.bar` | `foo.${number}.bar.${number}`>(deeplist);
+expectType<'foo' | `foo.${number}` | `foo.${number}.bar` | `foo.${number}.bar.${number}`>(
+  deeplist,
+);
 
 declare const readonly: Paths<{foo: Readonly<{bar: string}>}>;
 expectType<'foo' | 'foo.bar'>(readonly);
@@ -112,22 +114,34 @@ declare const trailingSpreadTuple: Paths<[{a: string}, ...Array<{b: number}>]>;
 expectType<number | `${number}` | '0.a' | `${number}.b`>(trailingSpreadTuple);
 
 declare const trailingSpreadTuple1: Paths<[{a: string}, {b: number}, ...Array<{c: number}>]>;
-expectType<number | `${number}` | '0.a' | '1.b' | `${number}.c`>(trailingSpreadTuple1);
+expectType<number | `${number}` | '0.a' | '1.b' | `${number}.c`>(
+  trailingSpreadTuple1,
+);
 
 declare const optionalElementsWithTrailingSpreadTuple: Paths<{foo: [{a: string}, ({b: number})?, ...Array<{c: number}>]}>;
-expectType<'foo' | `foo.${number}` | 'foo.0.a' | 'foo.1.b' | `foo.${number}.c`>(optionalElementsWithTrailingSpreadTuple);
+expectType<'foo' | `foo.${number}` | 'foo.0.a' | 'foo.1.b' | `foo.${number}.c`>(
+  optionalElementsWithTrailingSpreadTuple,
+);
 
 declare const optionalElementsWithTrailingSpreadTuple1: Paths<[({a: string})?, ({b: number})?, ...Array<{c: number}>]>;
-expectType<number | `${number}` | '0.a' | '1.b' | `${number}.c`>(optionalElementsWithTrailingSpreadTuple1);
+expectType<number | `${number}` | '0.a' | '1.b' | `${number}.c`>(
+  optionalElementsWithTrailingSpreadTuple1,
+);
 
 declare const leadingSpreadTuple: Paths<[...Array<{a: string}>, {b: number}]>;
-expectType<number | `${number}` | `${number}.b` | `${number}.a`>(leadingSpreadTuple);
+expectType<number | `${number}` | `${number}.b` | `${number}.a`>(
+  leadingSpreadTuple,
+);
 
 declare const leadingSpreadTuple1: Paths<[...Array<{a: string}>, {b: number}, {c: number}]>;
-expectType<number | `${number}` | `${number}.b` | `${number}.c` | `${number}.a`>(leadingSpreadTuple1);
+expectType<number | `${number}` | `${number}.b` | `${number}.c` | `${number}.a`>(
+  leadingSpreadTuple1,
+);
 
 declare const middleSpreadTuple: Paths<[{a: string}, ...Array<{b: number}>, {c: boolean}]>;
-expectType<number | `${number}` | '0.a' | `${number}.b` | `${number}.c`>(middleSpreadTuple);
+expectType<number | `${number}` | '0.a' | `${number}.b` | `${number}.c`>(
+  middleSpreadTuple,
+);
 
 // Circularly references
 type MyEntity = {
@@ -141,7 +155,9 @@ expectAssignable<string>({} as MyEntityPaths);
 
 // By default, the recursion limit should be reasonably long
 type RecursiveFoo = {foo: RecursiveFoo};
-expectAssignable<Paths<RecursiveFoo, {maxRecursionDepth: 10}>>('foo.foo.foo.foo.foo.foo.foo.foo');
+expectAssignable<Paths<RecursiveFoo, {maxRecursionDepth: 10}>>(
+  'foo.foo.foo.foo.foo.foo.foo.foo',
+);
 
 declare const recursion0: Paths<RecursiveFoo, {maxRecursionDepth: 0}>;
 expectType<'foo'>(recursion0);
@@ -153,13 +169,17 @@ expectType<'foo' | 'foo.foo'>(recursion1);
 type Object1 = {
 	arr: [{a: string}];
 };
-expectType<Paths<Object1, {bracketNotation: true}>>({} as 'arr' | 'arr[0]' | 'arr[0].a');
+expectType<Paths<Object1, {bracketNotation: true}>>(
+  {} as 'arr' | 'arr[0]' | 'arr[0].a',
+);
 
 type Object2 = {
 	arr: Array<{a: string}>;
 	arr1: string[];
 };
-expectType<Paths<Object2, {bracketNotation: true}>>({} as 'arr' | 'arr1' | `arr[${number}]` | `arr[${number}].a` | `arr1[${number}]`);
+expectType<Paths<Object2, {bracketNotation: true}>>(
+  {} as 'arr' | 'arr1' | `arr[${number}]` | `arr[${number}].a` | `arr1[${number}]`,
+);
 
 type Object3 = {
 	1: 'foo';
@@ -184,12 +204,18 @@ expectType<Paths<Object5, {bracketNotation: true}>>({} as '[1]' | '[1][2]');
 type deepArray = {
 	arr: Array<Array<Array<{a: string}>>>;
 };
-expectType<Paths<deepArray, {bracketNotation: true}>>({} as 'arr' | `arr[${number}]` | `arr[${number}][${number}]` | `arr[${number}][${number}][${number}]` | `arr[${number}][${number}][${number}].a`);
+expectType<Paths<deepArray, {bracketNotation: true}>>(
+  {} as 'arr' | `arr[${number}]` | `arr[${number}][${number}]` | `arr[${number}][${number}][${number}]` | `arr[${number}][${number}][${number}].a`,
+);
 
 type RecursionArray = RecursionArray[];
 type RecursionArrayPaths = Paths<RecursionArray, {bracketNotation: true; maxRecursionDepth: 3}>;
-expectAssignable<RecursionArrayPaths>({} as `[${number}][${number}][${number}][${number}]`);
-expectNotAssignable<RecursionArrayPaths>({} as `[${number}][${number}][${number}][${number}][${number}]`);
+expectAssignable<RecursionArrayPaths>(
+  {} as `[${number}][${number}][${number}][${number}]`,
+);
+expectNotAssignable<RecursionArrayPaths>(
+  {} as `[${number}][${number}][${number}][${number}][${number}]`,
+);
 
 // -- leavesOnly option --
 
@@ -366,7 +392,9 @@ declare const maxMoreAndLessThanDepth: Paths<RecursionArray, {maxRecursionDepth:
 expectType<`${number}.${number}`>(maxMoreAndLessThanDepth);
 
 declare const maxLessAndSimilarThanDepth: Paths<RecursionArray, {maxRecursionDepth: 1; depth: 0 | 1}>;
-expectType<number | `${number}` | `${number}.${number}`>(maxLessAndSimilarThanDepth);
+expectType<number | `${number}` | `${number}.${number}`>(
+  maxLessAndSimilarThanDepth,
+);
 
 declare const maxSimilarAndMoreThanDepth: Paths<RecursionArray, {maxRecursionDepth: 2; depth: 2 | 3}>;
 expectType<`${number}.${number}.${number}`>(maxSimilarAndMoreThanDepth);
@@ -393,7 +421,9 @@ declare const deepObjectTupleDepth: Paths<{a: {readonly b: [{readonly c: string}
 expectType<'a.b.0.c'>(deepObjectTupleDepth);
 
 declare const nestedArrayDepth: Paths<{a?: Array<Array<Array<{b: string}>>>}, {depth: 1 | 2 | 3}>;
-expectType<`a.${number}` | `a.${number}.${number}` | `a.${number}.${number}.${number}`>(nestedArrayDepth);
+expectType<`a.${number}` | `a.${number}.${number}` | `a.${number}.${number}.${number}`>(
+  nestedArrayDepth,
+);
 
 declare const nestedTupleDepth: Paths<{a: [[[{b: string}]]?]}, {depth: 0 | 4}>;
 expectType<'a' | 'a.0.0.0.b'>(nestedTupleDepth);
@@ -402,7 +432,9 @@ declare const recursiveDepth: Paths<RecursiveFoo, {depth: 4}>;
 expectType<'foo.foo.foo.foo.foo'>(recursiveDepth);
 
 declare const recursiveDepth2: Paths<RecursiveFoo, {depth: 1 | 3 | 8; maxRecursionDepth: 10}>;
-expectType<'foo.foo' | 'foo.foo.foo.foo' | 'foo.foo.foo.foo.foo.foo.foo.foo.foo'>(recursiveDepth2);
+expectType<'foo.foo' | 'foo.foo.foo.foo' | 'foo.foo.foo.foo.foo.foo.foo.foo.foo'>(
+  recursiveDepth2,
+);
 
 // For recursive types, leaves are at `maxRecursionDepth`
 declare const recursiveDepth3: Paths<RecursiveFoo, {leavesOnly: true; depth: 5; maxRecursionDepth: 10}>;
@@ -421,13 +453,17 @@ declare const maxLeavesAndDepth2: Paths<DeepObject, {leavesOnly: true; maxRecurs
 expectType<'a.b3' | 'a.b.c' | `a.b2.${number}`>(maxLeavesAndDepth2);
 
 declare const recursiveBracketDepth: Paths<RecursionArray, {bracketNotation: true; depth: 3}>;
-expectType<`[${number}][${number}][${number}][${number}]`>(recursiveBracketDepth);
+expectType<`[${number}][${number}][${number}][${number}]`>(
+  recursiveBracketDepth,
+);
 
 declare const recursiveBracketDepth2: Paths<RecursionArray, {bracketNotation: true; leavesOnly: true; depth: 3}>; // Leaves are at depth `10`
 expectType<never>(recursiveBracketDepth2);
 
 declare const bracketArrayDepth: Paths<{a: Array<{b: string; c?: string}>}, {bracketNotation: true; depth: 1 | 2}>;
-expectType<`a[${number}]` | `a[${number}].b` | `a[${number}].c`>(bracketArrayDepth);
+expectType<`a[${number}]` | `a[${number}].b` | `a[${number}].c`>(
+  bracketArrayDepth,
+);
 
 declare const bracketTupleDepth: Paths<{a: [{b?: string}, {c: string}]}, {bracketNotation: true; leavesOnly: true; depth: 0 | 2}>;
 expectType<'a[0].b' | 'a[1].c'>(bracketTupleDepth);
@@ -436,13 +472,17 @@ declare const bracketNumericDepth: Paths<{a: {1: string; 2: number}}, {bracketNo
 expectType<'a[1]' | 'a[2]'>(bracketNumericDepth);
 
 declare const bracketNestedArrayDepth: Paths<{a: Array<Array<Array<{b: string}>>>}, {bracketNotation: true; depth: 2 | 4}>;
-expectType<`a[${number}][${number}]` | `a[${number}][${number}][${number}].b`>(bracketNestedArrayDepth);
+expectType<`a[${number}][${number}]` | `a[${number}][${number}][${number}].b`>(
+  bracketNestedArrayDepth,
+);
 
 declare const trailingSpreadDepth: Paths<[{a: string}, ...Array<{b: number}>], {depth: 1}>;
 expectType<'0.a' | `${number}.b`>(trailingSpreadDepth);
 
 declare const leadingSpreadDepth: Paths<[...Array<{a?: string}>, {readonly b: number}], {depth: 0 | 1}>;
-expectType<number | `${number}` | `${number}.b` | `${number}.a`>(leadingSpreadDepth);
+expectType<number | `${number}` | `${number}.b` | `${number}.a`>(
+  leadingSpreadDepth,
+);
 
 declare const negativeDepth: Paths<DeepObject, {depth: -1}>;
 expectType<never>(negativeDepth);
@@ -457,42 +497,58 @@ declare const neverDepth: Paths<DeepObject, {depth: never}>;
 expectType<never>(neverDepth);
 
 declare const anyDepth: Paths<DeepObject, {depth: any}>;
-expectType<'a' | 'a.b.c' | `a.b2.${number}` | 'a.b3' | 'a.b' | 'a.b2' | 'a.b.c.d'>(anyDepth);
+expectType<'a' | 'a.b.c' | `a.b2.${number}` | 'a.b3' | 'a.b' | 'a.b2' | 'a.b.c.d'>(
+  anyDepth,
+);
 
 // Index signatures
 declare const indexSignature: Paths<{[x: string]: {a: string; b: number}}>;
 expectType<string>(indexSignature); // Collapsed union
 
 declare const indexSignature1: Paths<{[x: Lowercase<string>]: {a: string; b: number}}>;
-expectType<Lowercase<string> | `${Lowercase<string>}.a` | `${Lowercase<string>}.b`>(indexSignature1);
+expectType<Lowercase<string> | `${Lowercase<string>}.a` | `${Lowercase<string>}.b`>(
+  indexSignature1,
+);
 
 declare const indexSignature2: Paths<{[x: number]: {0: string; 1: number}}>;
-expectType<number | `${number}` | `${number}.0` | `${number}.1`>(indexSignature2);
+expectType<number | `${number}` | `${number}.0` | `${number}.1`>(
+  indexSignature2,
+);
 
 declare const indexSignature3: Paths<{[x: Uppercase<string>]: {a: string; b: number}}>;
-expectType<Uppercase<string> | `${Uppercase<string>}.a` | `${Uppercase<string>}.b`>(indexSignature3);
+expectType<Uppercase<string> | `${Uppercase<string>}.a` | `${Uppercase<string>}.b`>(
+  indexSignature3,
+);
 
 declare const indexSignature4: Paths<{a: {[x: symbol]: {b: number; c: number}}}>;
 expectType<'a'>(indexSignature4);
 
 declare const indexSignatureWithStaticKeys: Paths<{[x: Uppercase<string>]: {a: string; b: number}; c: number}>;
-expectType<'c' | Uppercase<string> | `${Uppercase<string>}.a` | `${Uppercase<string>}.b`>(indexSignatureWithStaticKeys);
+expectType<'c' | Uppercase<string> | `${Uppercase<string>}.a` | `${Uppercase<string>}.b`>(
+  indexSignatureWithStaticKeys,
+);
 
 declare const indexSignatureWithStaticKeys1: Paths<{[x: Uppercase<string>]: {a: string; b?: number}; C: {a: 'a'}}>;
-expectType<Uppercase<string> | `${Uppercase<string>}.a` | `${Uppercase<string>}.b`>(indexSignatureWithStaticKeys1); // Collapsed union
+expectType<Uppercase<string> | `${Uppercase<string>}.a` | `${Uppercase<string>}.b`>(
+  indexSignatureWithStaticKeys1,
+); // Collapsed union
 
 declare const nonRootIndexSignature: Paths<{a: {[x: string]: {b: string; c: number}}}>;
-expectType<'a' | `a.${string}` | `a.${string}.b` | `a.${string}.c`>(nonRootIndexSignature);
+expectType<'a' | `a.${string}` | `a.${string}.b` | `a.${string}.c`>(
+  nonRootIndexSignature,
+);
 
 declare const nonRootIndexSignature1: Paths<{a: {[x: Lowercase<string>]: {b: string; c: number}}}>;
-expectType<'a' | `a.${Lowercase<string>}` | `a.${Lowercase<string>}.b` | `a.${Lowercase<string>}.c`>(nonRootIndexSignature1);
+expectType<'a' | `a.${Lowercase<string>}` | `a.${Lowercase<string>}.b` | `a.${Lowercase<string>}.c`>(
+  nonRootIndexSignature1,
+);
 
 declare const nestedIndexSignature: Paths<{[x: string]: {[x: Lowercase<string>]: {a: string; b: number}}}>;
 expectType<string>(nestedIndexSignature);
 
 declare const nestedIndexSignature1: Paths<{[x: Uppercase<string>]: {[x: Lowercase<string>]: {a: string; b: number}}}>;
 expectType<Uppercase<string> | `${Uppercase<string>}.${Lowercase<string>}` | `${Uppercase<string>}.${Lowercase<string>}.a` | `${Uppercase<string>}.${Lowercase<string>}.b`>(
-	nestedIndexSignature1,
+  nestedIndexSignature1,
 );
 
 declare const indexSignatureUnion: Paths<{a: {[x: string]: number} | {b: number}}>;
@@ -505,7 +561,9 @@ declare const indexSignatureLeaves: Paths<{[x: string]: {a: string; b: number}},
 expectType<`${string}.a` | `${string}.b`>(indexSignatureLeaves);
 
 declare const indexSignatureLeaves1: Paths<{a: {[x: string]: {b: string; c: number}}; d: string; e: {f: number}}, {leavesOnly: true}>;
-expectType<`a.${string}.b` | `a.${string}.c` | 'd' | 'e.f'>(indexSignatureLeaves1);
+expectType<`a.${string}.b` | `a.${string}.c` | 'd' | 'e.f'>(
+  indexSignatureLeaves1,
+);
 
 declare const indexSignatureLeaves2: Paths<{a: {[x: string]: [] | {b: number}}}, {leavesOnly: true}>;
 expectType<`a.${string}` | `a.${string}.b`>(indexSignatureLeaves2);
@@ -520,7 +578,9 @@ declare const indexSignatureDepth2: Paths<{[x: string]: {a: string; b: number}},
 expectType<string>(indexSignatureDepth2); // Collapsed union
 
 declare const indexSignatureDepth3: Paths<{a: {[x: string]: {b: string; c: number}}; d: string; e: {f: number}}, {depth: 0 | 2}>;
-expectType<'a' | `a.${string}.b` | `a.${string}.c` | 'd' | 'e'>(indexSignatureDepth3);
+expectType<'a' | `a.${string}.b` | `a.${string}.c` | 'd' | 'e'>(
+  indexSignatureDepth3,
+);
 
 declare const indexSignatureDepth4: Paths<{a: {[x: string]: [] | {b: number}}}, {depth: 2}>;
 expectType<`a.${string}.b`>(indexSignatureDepth4);

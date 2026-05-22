@@ -35,7 +35,9 @@ expectType<IsUppercase<`${Uppercase<string>}${Uppercase<string>}`>>(true);
 
 expectType<IsUppercase<`${Lowercase<string>}${Uppercase<string>}`>>(false);
 expectType<IsUppercase<`${Uppercase<string>}${Lowercase<string>}`>>(false);
-expectType<IsUppercase<`${Uppercase<string>}${Lowercase<string>}${Uppercase<string>}`>>(false);
+expectType<IsUppercase<`${Uppercase<string>}${Lowercase<string>}${Uppercase<string>}`>>(
+  false,
+);
 expectType<IsUppercase<`${Uncapitalize<string>}${Uppercase<string>}`>>(false);
 expectType<IsUppercase<`${Uppercase<string>}${Uncapitalize<string>}`>>(false);
 expectType<IsUppercase<`${string}${Uncapitalize<string>}`>>(false);
@@ -43,7 +45,9 @@ expectType<IsUppercase<`${number}${Uncapitalize<string>}`>>(false);
 
 expectType<IsUppercase<`${string}${Uppercase<string>}`>>({} as boolean);
 expectType<IsUppercase<`${string}${string}`>>({} as boolean);
-expectType<IsUppercase<`${Uppercase<string>}${Uppercase<string>}${string}`>>({} as boolean);
+expectType<IsUppercase<`${Uppercase<string>}${Uppercase<string>}${string}`>>(
+  {} as boolean,
+);
 expectType<IsUppercase<`${string}${Capitalize<string>}`>>({} as boolean);
 expectType<IsUppercase<`${number}/${number}`>>({} as boolean);
 expectType<IsUppercase<`${string}${number}`>>({} as boolean);
@@ -51,6 +55,12 @@ expectType<IsUppercase<`${string}${number}`>>({} as boolean);
 // Unions
 expectType<IsUppercase<'ABC' | 'XYZ'>>(true); // Both `true`
 expectType<IsUppercase<'ABc' | 'XyZ'>>(false); // Both `false`
-expectType<IsUppercase<'ABC' | 'aBC'>>({} as boolean); // One `true`, one `false`
-expectType<IsUppercase<'ABC' | `${Capitalize<string>}END`>>({} as boolean); // One `true`, one `boolean`
-expectType<IsUppercase<'XyZ' | `ABC${string}`>>({} as boolean); // One `false`, one `boolean`
+expectType<IsUppercase<'ABC' | 'aBC'>>(
+  {} as boolean,
+); // One `true`, one `false`
+expectType<IsUppercase<'ABC' | `${Capitalize<string>}END`>>(
+  {} as boolean,
+); // One `true`, one `boolean`
+expectType<IsUppercase<'XyZ' | `ABC${string}`>>(
+  {} as boolean,
+); // One `false`, one `boolean`

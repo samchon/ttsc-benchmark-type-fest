@@ -119,7 +119,9 @@ expectType<{a: number; b?: never; c?: never} | {a?: never; b: string; c?: never}
 );
 
 expectType<{}>({} as RequireOneOrNone<{}>);
-expectType<{a: string; b: number}>({} as RequireOneOrNone<{a: string; b: number}, never>);
+expectType<{a: string; b: number}>(
+  {} as RequireOneOrNone<{a: string; b: number}, never>,
+);
 
 expectType<any>({} as RequireOneOrNone<any>);
 expectType<any>({} as RequireOneOrNone<any, 'foo'>);

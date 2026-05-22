@@ -26,8 +26,12 @@ expectType<ExtendsStrict<any, any>>(true);
 expectType<ExtendsStrict<any, never>>(false);
 expectType<ExtendsStrict<never, any>>(true);
 expectType<ExtendsStrict<any, number>>(true);
-expectType<ExtendsStrict<any, unknown>>(true); // `any` is assignable to `unknown`
-expectType<ExtendsStrict<unknown, any>>(true); // `unknown` is assignable to `any`
+expectType<ExtendsStrict<any, unknown>>(
+  true,
+); // `any` is assignable to `unknown`
+expectType<ExtendsStrict<unknown, any>>(
+  true,
+); // `unknown` is assignable to `any`
 expectType<ExtendsStrict<unknown, unknown>>(true);
 expectType<ExtendsStrict<string, unknown>>(true);
 expectType<ExtendsStrict<unknown, string>>(false);
@@ -59,8 +63,12 @@ expectType<ExtendsStrict<string, 'foo'>>(false);
 
 // Arrays
 expectType<ExtendsStrict<string[], string[]>>(true);
-expectType<ExtendsStrict<[string], string[]>>(true); // Tuple is assignable to array
-expectType<ExtendsStrict<string[], [string]>>(false); // Array not assignable to fixed tuple
+expectType<ExtendsStrict<[string], string[]>>(
+  true,
+); // Tuple is assignable to array
+expectType<ExtendsStrict<string[], [string]>>(
+  false,
+); // Array not assignable to fixed tuple
 
 // Branded types
 type UserId = Tagged<string, 'UserId'>;
@@ -80,9 +88,15 @@ expectType<ExtendsStrict<null, unknown>>(true);
 // --- Options ---
 
 // `distributiveUnions`
-expectType<ExtendsStrict<string | number, string, {distributiveUnions: true}>>({} as boolean);
-expectType<ExtendsStrict<string | number, string, {distributiveUnions: false}>>(false);
-expectType<ExtendsStrict<number | bigint, string, {distributiveUnions: true}>>(false);
+expectType<ExtendsStrict<string | number, string, {distributiveUnions: true}>>(
+  {} as boolean,
+);
+expectType<ExtendsStrict<string | number, string, {distributiveUnions: false}>>(
+  false,
+);
+expectType<ExtendsStrict<number | bigint, string, {distributiveUnions: true}>>(
+  false,
+);
 expectType<ExtendsStrict<1 | 2 | 3, number, {distributiveUnions: true}>>(true);
 
 // `strictNever`
@@ -108,15 +122,33 @@ expectType<ExtendsStrict<any, any, {strictAny: false}>>(true);
 expectType<ExtendsStrict<any, unknown, {strictAny: false}>>(true);
 
 // When `strictAny` is `false`, behavior depends on `distributiveUnions`
-expectType<ExtendsStrict<any, string, {strictAny: false; distributiveUnions: true}>>({} as boolean);
-expectType<ExtendsStrict<any, never, {strictAny: false; distributiveUnions: true}>>({} as boolean);
-expectType<ExtendsStrict<any, any, {strictAny: false; distributiveUnions: true}>>(true);
-expectType<ExtendsStrict<any, unknown, {strictAny: false; distributiveUnions: true}>>(true);
+expectType<ExtendsStrict<any, string, {strictAny: false; distributiveUnions: true}>>(
+  {} as boolean,
+);
+expectType<ExtendsStrict<any, never, {strictAny: false; distributiveUnions: true}>>(
+  {} as boolean,
+);
+expectType<ExtendsStrict<any, any, {strictAny: false; distributiveUnions: true}>>(
+  true,
+);
+expectType<ExtendsStrict<any, unknown, {strictAny: false; distributiveUnions: true}>>(
+  true,
+);
 
-expectType<ExtendsStrict<any, string, {strictAny: false; distributiveUnions: false}>>(true);
-expectType<ExtendsStrict<any, never, {strictAny: false; distributiveUnions: false}>>(false);
-expectType<ExtendsStrict<any, any, {strictAny: false; distributiveUnions: false}>>(true);
-expectType<ExtendsStrict<any, unknown, {strictAny: false; distributiveUnions: false}>>(true);
+expectType<ExtendsStrict<any, string, {strictAny: false; distributiveUnions: false}>>(
+  true,
+);
+expectType<ExtendsStrict<any, never, {strictAny: false; distributiveUnions: false}>>(
+  false,
+);
+expectType<ExtendsStrict<any, any, {strictAny: false; distributiveUnions: false}>>(
+  true,
+);
+expectType<ExtendsStrict<any, unknown, {strictAny: false; distributiveUnions: false}>>(
+  true,
+);
 
 // When `strictNever` is `false`, the result will be `true` and not `never` even if `distributiveUnions` is `true`
-expectType<ExtendsStrict<never, string, {strictNever: false; distributiveUnions: true}>>(true);
+expectType<ExtendsStrict<never, string, {strictNever: false; distributiveUnions: true}>>(
+  true,
+);

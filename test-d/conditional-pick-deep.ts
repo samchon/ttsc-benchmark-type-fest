@@ -93,7 +93,9 @@ declare const stringPickOptionalOnly: ConditionalPickDeep<Example, string | unde
 expectType<{object: {subObject: {optional?: string}}}>(stringPickOptionalOnly);
 
 declare const booleanPick: ConditionalPickDeep<Example, boolean | undefined>;
-expectType<{optional?: boolean; optionalWithUndefined?: boolean | undefined; never: never}>(booleanPick);
+expectType<{optional?: boolean; optionalWithUndefined?: boolean | undefined; never: never}>(
+  booleanPick,
+);
 
 declare const numberPick: ConditionalPickDeep<Example, number>;
 expectType<{number: 1; interface: {a: number}; never: never}>(numberPick);
@@ -148,7 +150,9 @@ declare const classPick: ConditionalPickDeep<Example, typeof ClassA>;
 expectType<{ClassA: typeof ClassA; never: never}>(classPick);
 
 declare const functionPick: ConditionalPickDeep<Example, (...arguments_: string[]) => string>;
-expectType<{function: (...arguments_: string[]) => string; never: never}>(functionPick);
+expectType<{function: (...arguments_: string[]) => string; never: never}>(
+  functionPick,
+);
 
 declare const mapPick: ConditionalPickDeep<Example, Map<string, string>>;
 expectType<{map: Map<string, string>; never: never}>(mapPick);

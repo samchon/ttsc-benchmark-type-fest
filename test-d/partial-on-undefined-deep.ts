@@ -57,8 +57,12 @@ expectAssignable<{
 
 declare const indexTypeWithoutRecursion: PartialOnUndefinedDeep<typeof indexType>;
 declare const indexTypeUnknownWithoutRecursion: PartialOnUndefinedDeep<typeof indexTypeUnknown>;
-expectType<{[k: string]: string | undefined; propertyA: string; propertyB?: string | undefined}>(indexTypeWithoutRecursion);
-expectType<{[k: string]: unknown; propertyA: string; propertyB?: number | undefined}>(indexTypeUnknownWithoutRecursion);
+expectType<{[k: string]: string | undefined; propertyA: string; propertyB?: string | undefined}>(
+  indexTypeWithoutRecursion,
+);
+expectType<{[k: string]: unknown; propertyA: string; propertyB?: number | undefined}>(
+  indexTypeUnknownWithoutRecursion,
+);
 
 // With recursion into arrays/tuples activated
 declare const bar: PartialOnUndefinedDeep<TestingType, {recurseIntoArrays: true}>;
@@ -89,5 +93,9 @@ expectAssignable<{
 
 declare const indexTypeWithRecursion: PartialOnUndefinedDeep<typeof indexType, {recurseIntoArrays: true}>;
 declare const indexTypeUnknownWithRecursion: PartialOnUndefinedDeep<typeof indexTypeUnknown, {recurseIntoArrays: true}>;
-expectType<{[k: string]: string | undefined; propertyA: string; propertyB?: string | undefined}>(indexTypeWithRecursion);
-expectType<{[k: string]: unknown; propertyA: string; propertyB?: number | undefined}>(indexTypeUnknownWithRecursion);
+expectType<{[k: string]: string | undefined; propertyA: string; propertyB?: string | undefined}>(
+  indexTypeWithRecursion,
+);
+expectType<{[k: string]: unknown; propertyA: string; propertyB?: number | undefined}>(
+  indexTypeUnknownWithRecursion,
+);

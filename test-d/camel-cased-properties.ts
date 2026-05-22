@@ -23,7 +23,9 @@ declare const fooBarPunctuatedSplit: CamelCasedProperties<{'hello@world1': {'foo
 expectType<{'helloWorld1': {'foo::bar': string}}>(fooBarPunctuatedSplit);
 
 declare const fooBarPunctuatedSplitNumberSplit: CamelCasedProperties<{'hello@world1': {'foo::bar': string}}, {splitOnPunctuation: true; splitOnNumbers: true}>;
-expectType<{'helloWorld1': {'foo::bar': string}}>(fooBarPunctuatedSplitNumberSplit);
+expectType<{'helloWorld1': {'foo::bar': string}}>(
+  fooBarPunctuatedSplitNumberSplit,
+);
 
 // Verify example
 type User = {
@@ -37,11 +39,13 @@ type UserPunctuated = {
 };
 
 const result: CamelCasedProperties<User> = {
-	userId: 1,
-	userName: 'Tom',
+  userId: 1,
+  userName: 'Tom',
 };
 expectType<CamelCasedProperties<User>>(result);
-expectType<CamelCasedProperties<UserPunctuated, {splitOnPunctuation: true}>>(result);
+expectType<CamelCasedProperties<UserPunctuated, {splitOnPunctuation: true}>>(
+  result,
+);
 
 declare const withLeadingUnderscores: CamelCasedProperties<{_foo_bar: string; __baz_qux: number}, {preserveLeadingUnderscores: true}>;
 expectType<{_fooBar: string; __bazQux: number}>(withLeadingUnderscores);

@@ -35,7 +35,9 @@ expectType<IsLowercase<`${Lowercase<string>}${Lowercase<string>}`>>(true);
 
 expectType<IsLowercase<`${Uppercase<string>}${Lowercase<string>}`>>(false);
 expectType<IsLowercase<`${Lowercase<string>}${Uppercase<string>}`>>(false);
-expectType<IsLowercase<`${Lowercase<string>}${Uppercase<string>}${Lowercase<string>}`>>(false);
+expectType<IsLowercase<`${Lowercase<string>}${Uppercase<string>}${Lowercase<string>}`>>(
+  false,
+);
 expectType<IsLowercase<`${Capitalize<string>}${Lowercase<string>}`>>(false);
 expectType<IsLowercase<`${Lowercase<string>}${Capitalize<string>}`>>(false);
 expectType<IsLowercase<`${string}${Capitalize<string>}`>>(false);
@@ -43,7 +45,9 @@ expectType<IsLowercase<`${number}${Capitalize<string>}`>>(false);
 
 expectType<IsLowercase<`${string}${Lowercase<string>}`>>({} as boolean);
 expectType<IsLowercase<`${string}${string}`>>({} as boolean);
-expectType<IsLowercase<`${Lowercase<string>}${Lowercase<string>}${string}`>>({} as boolean);
+expectType<IsLowercase<`${Lowercase<string>}${Lowercase<string>}${string}`>>(
+  {} as boolean,
+);
 expectType<IsLowercase<`${string}${Uncapitalize<string>}`>>({} as boolean);
 expectType<IsLowercase<`${number}/${number}`>>({} as boolean);
 expectType<IsLowercase<`${string}${number}`>>({} as boolean);
@@ -51,6 +55,12 @@ expectType<IsLowercase<`${string}${number}`>>({} as boolean);
 // Unions
 expectType<IsLowercase<'abc' | 'xyz'>>(true); // Both `true`
 expectType<IsLowercase<'abC' | 'xYz'>>(false); // Both `false`
-expectType<IsLowercase<'abc' | 'Abc'>>({} as boolean); // One `true`, one `false`
-expectType<IsLowercase<'abc' | `${Uncapitalize<string>}end`>>({} as boolean); // One `true`, one `boolean`
-expectType<IsLowercase<'xYz' | `abc${string}`>>({} as boolean); // One `false`, one `boolean`
+expectType<IsLowercase<'abc' | 'Abc'>>(
+  {} as boolean,
+); // One `true`, one `false`
+expectType<IsLowercase<'abc' | `${Uncapitalize<string>}end`>>(
+  {} as boolean,
+); // One `true`, one `boolean`
+expectType<IsLowercase<'xYz' | `abc${string}`>>(
+  {} as boolean,
+); // One `false`, one `boolean`

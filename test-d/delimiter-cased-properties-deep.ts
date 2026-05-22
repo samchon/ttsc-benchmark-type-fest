@@ -11,7 +11,9 @@ declare const bar: DelimiterCasedPropertiesDeep<Set<{fooBar: string}>, '-'>;
 expectType<Set<{'foo-bar': string}>>(bar);
 
 declare const withOptions: DelimiterCasedPropertiesDeep<Set<{helloWorld: {p2p: Array<{addressLine1: string}>}}>, '.', {splitOnNumbers: true}>;
-expectType<Set<{'hello.world': {'p.2.p': Array<{'address.line.1': string}>}}>>(withOptions);
+expectType<Set<{'hello.world': {'p.2.p': Array<{'address.line.1': string}>}}>>(
+  withOptions,
+);
 
 declare const withPunctuation: DelimiterCasedPropertiesDeep<{'hello@World1': {'foo::Bar': string}}, '.'>;
 expectType<{'hello@.world1': {'foo::.bar': string}}>(withPunctuation);
@@ -20,22 +22,30 @@ declare const withPunctuationSplit: DelimiterCasedPropertiesDeep<{'hello@World1'
 expectType<{'hello.world1': {'foo.bar': string}}>(withPunctuationSplit);
 
 declare const withPunctuationSplitAndNumbers: DelimiterCasedPropertiesDeep<{'hello@World1': {'foo::Bar1': string}}, '.', {splitOnPunctuation: true; splitOnNumbers: true}>;
-expectType<{'hello.world.1': {'foo.bar.1': string}}>(withPunctuationSplitAndNumbers);
+expectType<{'hello.world.1': {'foo.bar.1': string}}>(
+  withPunctuationSplitAndNumbers,
+);
 
 declare const startsWithPunctuation: DelimiterCasedPropertiesDeep<{'^fooBarBaz': {'^foo_bar_baz': string}}, ':'>;
 expectType<{'^foo:bar:baz': {'^foo:bar:baz': string}}>(startsWithPunctuation);
 
 declare const startsWithPunctuationSameAsDelimiter: DelimiterCasedPropertiesDeep<{'#fooBarBaz': {'#foo_bar_baz': string}}, '#'>;
-expectType<{'#foo#bar#baz': {'#foo#bar#baz': string}}>(startsWithPunctuationSameAsDelimiter);
+expectType<{'#foo#bar#baz': {'#foo#bar#baz': string}}>(
+  startsWithPunctuationSameAsDelimiter,
+);
 
 declare const emptyStringDelimiter: DelimiterCasedPropertiesDeep<{'fooBarBaz': {'foo_bar_baz': string}}, ''>;
 expectType<{'foobarbaz': {'foobarbaz': string}}>(emptyStringDelimiter);
 
 declare const moreThanOneLengthDelimiter: DelimiterCasedPropertiesDeep<{'fooBarBaz': {'foo_bar_baz': string}}, '__'>;
-expectType<{'foo__bar__baz': {'foo__bar__baz': string}}>(moreThanOneLengthDelimiter);
+expectType<{'foo__bar__baz': {'foo__bar__baz': string}}>(
+  moreThanOneLengthDelimiter,
+);
 
 declare const moreThanOneLengthDelimiter1: DelimiterCasedPropertiesDeep<{'fooBarBaz': {'foo_bar_baz': string}}, '-->'>;
-expectType<{'foo-->bar-->baz': {'foo-->bar-->baz': string}}>(moreThanOneLengthDelimiter1);
+expectType<{'foo-->bar-->baz': {'foo-->bar-->baz': string}}>(
+  moreThanOneLengthDelimiter1,
+);
 
 // Verify example
 type User = {
@@ -85,7 +95,9 @@ const result: DelimiterCasedPropertiesDeep<UserWithFriends, '-'> = {
 	],
 };
 expectType<DelimiterCasedPropertiesDeep<UserWithFriends, '-'>>(result);
-expectType<DelimiterCasedPropertiesDeep<UserWithFriendsPunctuated, '-', {splitOnPunctuation: true}>>(result);
+expectType<DelimiterCasedPropertiesDeep<UserWithFriendsPunctuated, '-', {splitOnPunctuation: true}>>(
+  result,
+);
 
 // Test object key properties
 declare const key: DelimiterCasedPropertiesDeep<{readonly userId?: number}, '-'>;
@@ -94,24 +106,34 @@ expectType<{readonly 'user-id'?: number}>(key);
 /** Test Array */
 // Test for tuple
 declare const tuple: DelimiterCasedPropertiesDeep<[User], '-'>;
-expectType<[{'user-id': number; 'user-name': string; date: Date; 'reg-exp': RegExp}]>(tuple);
+expectType<[{'user-id': number; 'user-name': string; date: Date; 'reg-exp': RegExp}]>(
+  tuple,
+);
 declare const tuple2: DelimiterCasedPropertiesDeep<['UserId', 'UserAge', string], '-'>;
 expectType<['UserId', 'UserAge', string]>(tuple2);
 // Test for readonly tuple
 declare const readonlyTuple: DelimiterCasedPropertiesDeep<readonly [{userId: string}, {userName: number}], '-'>;
-expectType<readonly [{'user-id': string}, {'user-name': number}]>(readonlyTuple);
+expectType<readonly [{'user-id': string}, {'user-name': number}]>(
+  readonlyTuple,
+);
 // Test for array
 declare const array: DelimiterCasedPropertiesDeep<User[], '-'>;
-expectType<Array<{'user-id': number; 'user-name': string; date: Date; 'reg-exp': RegExp}>>(array);
+expectType<Array<{'user-id': number; 'user-name': string; date: Date; 'reg-exp': RegExp}>>(
+  array,
+);
 // Test for readonly array
 declare const readonlyArray: DelimiterCasedPropertiesDeep<ReadonlyArray<{userId: string}>, '-'>;
 expectType<ReadonlyArray<{'user-id': string}>>(readonlyArray);
 // Test for tailing spread array
 declare const tailingSpreadArray: DelimiterCasedPropertiesDeep<[{userId: string}, {userName: number}, ...Array<{userAge: number}>], '-'>;
-expectType<[{'user-id': string}, {'user-name': number}, ...Array<{'user-age': number}>]>(tailingSpreadArray);
+expectType<[{'user-id': string}, {'user-name': number}, ...Array<{'user-age': number}>]>(
+  tailingSpreadArray,
+);
 // Test for leading spread array
 declare const leadingSpreadArray: DelimiterCasedPropertiesDeep<[...Array<{userId: string}>, {userName: number}, {userAge: number}], '-'>;
-expectType<[...Array<{'user-id': string}>, {'user-name': number}, {'user-age': number}]>(leadingSpreadArray);
+expectType<[...Array<{'user-id': string}>, {'user-name': number}, {'user-age': number}]>(
+  leadingSpreadArray,
+);
 // Test for enum
 enum UserType {
 	AdminUser = 'adminUser',
@@ -121,11 +143,23 @@ declare const enumTest: DelimiterCasedPropertiesDeep<{userType: UserType}, '-'>;
 expectType<{['user-type']: UserType}>(enumTest);
 enumTest['user-type'] = UserType.AdminUser;
 
-expectType<{'foo-bar': unknown}>({} as DelimiterCasedPropertiesDeep<{fooBar: unknown}, '-'>);
-expectType<{'foo_bar': {'bar_baz': unknown}; biz: unknown}>({} as DelimiterCasedPropertiesDeep<{fooBar: {barBaz: unknown}; biz: unknown}, '_'>);
+expectType<{'foo-bar': unknown}>(
+  {} as DelimiterCasedPropertiesDeep<{fooBar: unknown}, '-'>,
+);
+expectType<{'foo_bar': {'bar_baz': unknown}; biz: unknown}>(
+  {} as DelimiterCasedPropertiesDeep<{fooBar: {barBaz: unknown}; biz: unknown}, '_'>,
+);
 
-expectType<{'foo-bar': any}>({} as DelimiterCasedPropertiesDeep<{fooBar: any}, '-'>);
-expectType<{'foo_bar': {'bar_baz': any}; biz: any}>({} as DelimiterCasedPropertiesDeep<{fooBar: {barBaz: any}; biz: any}, '_'>);
+expectType<{'foo-bar': any}>(
+  {} as DelimiterCasedPropertiesDeep<{fooBar: any}, '-'>,
+);
+expectType<{'foo_bar': {'bar_baz': any}; biz: any}>(
+  {} as DelimiterCasedPropertiesDeep<{fooBar: {barBaz: any}; biz: any}, '_'>,
+);
 
-expectType<{'foo-bar': unknown}>({} as DelimiterCasedPropertiesDeep<{'foo::bar': unknown}, '-', {splitOnPunctuation: true}>);
-expectType<{'foo_bar': {'bar_baz': unknown}; biz: unknown}>({} as DelimiterCasedPropertiesDeep<{'foo::bar': {'bar@baz': unknown}; biz: unknown}, '_', {splitOnPunctuation: true}>);
+expectType<{'foo-bar': unknown}>(
+  {} as DelimiterCasedPropertiesDeep<{'foo::bar': unknown}, '-', {splitOnPunctuation: true}>,
+);
+expectType<{'foo_bar': {'bar_baz': unknown}; biz: unknown}>(
+  {} as DelimiterCasedPropertiesDeep<{'foo::bar': {'bar@baz': unknown}; biz: unknown}, '_', {splitOnPunctuation: true}>,
+);

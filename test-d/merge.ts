@@ -31,12 +31,12 @@ type BarType = {
 type FooBar = Merge<FooInterface, BarType>;
 
 const fooBar: FooBar = {
-	'foo-string': 'foo',
-	42: 24,
-	[Symbol(42)]: true,
-	foo: 'foo',
-	bar: new Date(),
-	baz: true,
+  'foo-string': 'foo',
+  42: 24,
+  [Symbol(42)]: true,
+  foo: 'foo',
+  bar: new Date(),
+  baz: true,
 };
 
 expectType<{
@@ -52,10 +52,10 @@ declare function setFooBar(fooBar: FooBar): void;
 
 // @ts-expect-error
 setFooBar({
-	[Symbol(42)]: 'life',
-	foo: 'foo',
-	bar: new Date(),
-	baz: true,
+  [Symbol(42)]: 'life',
+  foo: 'foo',
+  bar: new Date(),
+  baz: true,
 });
 
 // Checks that a property can be replaced by another property that is not of the same type. This issue was encountered in `MergeDeep' with the default options.
@@ -168,13 +168,13 @@ expectType<{
 
 // Unions
 expectType<{foo: number} | {foo: string; bar: boolean}>(
-	{} as Merge<{foo: string}, {foo: number} | {bar: boolean}>,
+  {} as Merge<{foo: string}, {foo: number} | {bar: boolean}>,
 );
 expectType<{foo: string} | {bar: boolean; foo: string}>(
-	{} as Merge<{foo: number} | {bar: boolean}, {foo: string}>,
+  {} as Merge<{foo: number} | {bar: boolean}, {foo: string}>,
 );
 expectType<{foo: number} | {foo: string; baz: boolean} | {bar: number; foo: number} | {bar: number; baz: boolean}>(
-	{} as Merge<{foo: string} | {bar: number}, {foo: number} | {baz: boolean}>,
+  {} as Merge<{foo: string} | {bar: number}, {foo: number} | {baz: boolean}>,
 );
 expectType<
 	| {[x: number]: number; foo: number; bar: string}
@@ -192,8 +192,14 @@ expectType<
 type TestIntersectionObject = {a: string} & {b: string};
 // Note: If `Merge` simplified `TestIntersectionObject` to `{a: string; b: string}` then the following test would fail,
 // because `expectType` doesn't consider `{a: string; b: string}` equal to `{a: string} & {b: string}`.
-expectType<TestIntersectionObject>({} as Merge<TestIntersectionObject, TestIntersectionObject>);
+expectType<TestIntersectionObject>(
+  {} as Merge<TestIntersectionObject, TestIntersectionObject>,
+);
 
 // Idempotency: Unions
-expectType<TestIntersectionObject | {a: string; b: string; c: string}>({} as Merge<TestIntersectionObject | {c: string}, TestIntersectionObject>);
-expectType<TestIntersectionObject | {a: string; b: string; c: string}>({} as Merge<TestIntersectionObject, TestIntersectionObject | {c: string}>);
+expectType<TestIntersectionObject | {a: string; b: string; c: string}>(
+  {} as Merge<TestIntersectionObject | {c: string}, TestIntersectionObject>,
+);
+expectType<TestIntersectionObject | {a: string; b: string; c: string}>(
+  {} as Merge<TestIntersectionObject, TestIntersectionObject | {c: string}>,
+);

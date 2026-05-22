@@ -109,7 +109,9 @@ expectType<IsReadonlyKeyOf<A, 'a' | 'c'>>(false);
 type FullKeyUnion = keyof A; // 'a' | 'b' | 'c'
 expectType<IsReadonlyKeyOf<A, FullKeyUnion>>(boolean);
 // @ts-expect-error
-expectType<IsReadonlyKeyOf<A, 'b' | 'x'>>(boolean); // 'x' is not in A, so filtered as false
+expectType<IsReadonlyKeyOf<A, 'b' | 'x'>>(
+  boolean,
+); // 'x' is not in A, so filtered as false
 
 // `never` / `any
 type L = {readonly a: string};

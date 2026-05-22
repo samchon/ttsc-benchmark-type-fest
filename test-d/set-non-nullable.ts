@@ -26,5 +26,7 @@ type Variation6Config = {a: boolean | null; b: boolean | null};
 const variant6Function = <TProperty extends keyof Variation6Config>(
 	config: Variation6Config,
 	property: TProperty,
-): config is SetNonNullable<Variation6Config, TProperty> => Boolean(config[property]);
+): config is SetNonNullable<Variation6Config, TProperty> => Boolean(
+  config[property],
+);
 expectNotAssignable<never>(variant6Function); // Just to prevent unused error.
