@@ -58,6 +58,8 @@
 	"devDependencies": {
 		"@eslint/markdown": "^8.0.1",
 		"@sindresorhus/tsconfig": "^8.0.1",
+		"@ttsc/lint": "file:/tmp/ttsc-tgz/ttsc-lint-0.12.4.tgz",
+		"@ttsc/linux-x64": "file:/tmp/ttsc-tgz/ttsc-linux-x64-0.12.4.tgz",
 		"@types/node": "^25.5.0",
 		"@typescript-eslint/parser": "^8.44.0",
 		"@typescript/native-preview": "7.0.0-dev.20260517.1",
@@ -68,7 +70,6 @@
 		"npm-run-all2": "^8.0.4",
 		"tsd": "^0.33.0",
 		"ttsc": "file:/tmp/ttsc-tgz/ttsc-0.12.4.tgz",
-		"@ttsc/lint": "file:/tmp/ttsc-tgz/ttsc-lint-0.12.4.tgz",
 		"typescript": "^5.9.2",
 		"typescript-eslint": "^8.47.0",
 		"xo": "^2.0.2"
