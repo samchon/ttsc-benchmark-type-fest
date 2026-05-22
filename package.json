@@ -57,6 +57,7 @@
 	"devDependencies": {
 		"@eslint/markdown": "^8.0.1",
 		"@sindresorhus/tsconfig": "^8.0.1",
+		"@ttsc/linux-x64": "file:/tmp/ttsc-tgz/ttsc-linux-x64-0.12.4.tgz",
 		"@types/node": "^25.5.0",
 		"@typescript-eslint/parser": "^8.44.0",
 		"@typescript/native-preview": "7.0.0-dev.20260521.1",
