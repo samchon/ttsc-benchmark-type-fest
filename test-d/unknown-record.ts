@@ -15,4 +15,4 @@ foo = 42;
 // @ts-expect-error
 foo = null;
 
-expectType<unknown>(foo['bar']);
+expectType<unknown>(foo.bar);
