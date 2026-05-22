@@ -27,4 +27,4 @@ type Example = {
 
 const test: Except<Example, 'bar', {requireExactProps: false}> = {foo: 123, bar: 'asdf'};
 expectType<number>(test.foo);
-expectType<unknown>(test['bar']);
+expectType<unknown>(test.bar);

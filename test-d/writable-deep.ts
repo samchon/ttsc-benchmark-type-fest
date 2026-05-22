@@ -43,7 +43,7 @@ const data = {
 	date: new Date(),
 	regExp: /.*/,
 	null: null,
-	undefined: undefined, // eslint-disable-line object-shorthand
+	undefined, // eslint-disable-line object-shorthand
 	map: new Map<string, string>(),
 	set: new Set<string>(),
 	array: ['foo'],
@@ -63,9 +63,8 @@ const data = {
 
 const readonlyData: ReadonlyDeep<typeof data> = data;
 
-let writableData: WritableDeep<typeof readonlyData>;
 // @ts-expect-error
-writableData = readonlyData; // eslint-disable-line prefer-const
+const writableData: WritableDeep<typeof readonlyData> = readonlyData;
 
 writableData.fn('foo');
 

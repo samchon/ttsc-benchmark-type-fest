@@ -3,7 +3,7 @@ import {expectType} from 'tsd';
 import type {FindGlobalInstanceType, FindGlobalType} from '../index.d.ts';
 
 declare class NonGlobalES6Class {}
-declare var nonGlobalVar: number;
+declare let nonGlobalVar: number;
 declare let nonGlobalLet: number;
 declare const nonGlobalConst: number;
 
