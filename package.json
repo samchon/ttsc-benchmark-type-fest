@@ -25,7 +25,9 @@
 		"node": ">=20"
 	},
 	"scripts": {
-		"test:tsc": "node --max-old-space-size=6144 ./node_modules/.bin/tsc",
+		"check": "ttsc",
+		"prepare": "ttsc prepare",
+		"test:tsc": "ttsc",
 		"test:tsd": "node --max-old-space-size=6144 ./node_modules/.bin/tsd",
 		"test:xo": "node --max-old-space-size=6144 ./node_modules/.bin/xo --ignores=lint-processors/fixtures/**/*.d.ts '**/*.{js,ts,md}'",
 		"test:linter": "node --test",
@@ -63,9 +65,16 @@
 		"expect-type": "^1.2.2",
 		"npm-run-all2": "^8.0.4",
 		"tsd": "^0.33.0",
+		"ttsc": "file:/tmp/ttsc-tgz/ttsc-0.12.4.tgz",
 		"typescript": "^5.9.2",
 		"typescript-eslint": "^8.47.0",
 		"xo": "^2.0.2"
+	},
+	"packageManager": "pnpm@10.10.0",
+	"pnpm": {
+		"overrides": {
+			"@ttsc/linux-x64": "file:/tmp/ttsc-tgz/ttsc-linux-x64-0.12.4.tgz"
+		}
 	},
 	"tsd": {
 		"compilerOptions": {
