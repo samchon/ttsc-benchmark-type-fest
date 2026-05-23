@@ -80,9 +80,18 @@ expectType<AllExtend<[...(readonly boolean[])], string>>(false);
 // Unions
 expectType<AllExtend<[1, 2, 3] | [4, 5, 6], number>>(true); // Both `true`
 expectType<AllExtend<[1, 2, '3'] | [4, 5, '6'], number>>(false); // Both `false`
-expectType<AllExtend<[1, 2, 3] | ['1', '2', 3], number>>({} as boolean); // One `true`, one `false`
-expectType<AllExtend<[true, true] | [true, boolean], true>>({} as boolean); // One `true`, one `boolean`
-expectType<AllExtend<[true, false] | [true, boolean], true>>({} as boolean); // One `false`, one `boolean`
+// prettier-ignore
+expectType<AllExtend<[1, 2, 3] | ['1', '2', 3], number>>(
+  {} as boolean,
+); // One `true`, one `false`
+// prettier-ignore
+expectType<AllExtend<[true, true] | [true, boolean], true>>(
+  {} as boolean,
+); // One `true`, one `boolean`
+// prettier-ignore
+expectType<AllExtend<[true, false] | [true, boolean], true>>(
+  {} as boolean,
+); // One `false`, one `boolean`
 
 expectType<
   AllExtend<

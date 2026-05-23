@@ -493,8 +493,6 @@ import type { Exact, Opaque } from '../index.d.ts';
   ) => arguments_;
 
   onlyAcceptNameImproved({
-    // The error before the workaround:
-    // Error: Type 'SpecialName' is not assignable to type 'never'
     name: 'name' as SpecialName,
   });
 }
@@ -513,8 +511,6 @@ import type { Exact, Opaque } from '../index.d.ts';
     arguments_;
 
   function_({
-    // The error before the workaround:
-    // Error: Type 'SpecialName' is not assignable to type 'never'
     name: 1 as SpecialName,
   });
 }

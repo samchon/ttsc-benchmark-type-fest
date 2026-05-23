@@ -55,6 +55,15 @@ expectType<IsLowercase<`${string}${number}`>>({} as boolean);
 // Unions
 expectType<IsLowercase<'abc' | 'xyz'>>(true); // Both `true`
 expectType<IsLowercase<'abC' | 'xYz'>>(false); // Both `false`
-expectType<IsLowercase<'abc' | 'Abc'>>({} as boolean); // One `true`, one `false`
-expectType<IsLowercase<'abc' | `${Uncapitalize<string>}end`>>({} as boolean); // One `true`, one `boolean`
-expectType<IsLowercase<'xYz' | `abc${string}`>>({} as boolean); // One `false`, one `boolean`
+// prettier-ignore
+expectType<IsLowercase<'abc' | 'Abc'>>(
+  {} as boolean,
+); // One `true`, one `false`
+// prettier-ignore
+expectType<IsLowercase<'abc' | `${Uncapitalize<string>}end`>>(
+  {} as boolean,
+); // One `true`, one `boolean`
+// prettier-ignore
+expectType<IsLowercase<'xYz' | `abc${string}`>>(
+  {} as boolean,
+); // One `false`, one `boolean`

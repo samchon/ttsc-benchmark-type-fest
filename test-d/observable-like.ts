@@ -6,7 +6,7 @@ expectAssignable<symbol>(Symbol.observable);
 const observable = null as any as ObservableLike;
 
 const subscription = observable.subscribe({
-  next() {}, // eslint-disable-line @typescript-eslint/no-empty-function
+  next() {},
 });
 expectType<{ unsubscribe(): void }>(subscription);
 
@@ -19,7 +19,7 @@ observable.subscribe({
 const observable2 = null as any as ObservableLike<string>;
 
 observable2.subscribe({
-  next() {}, // eslint-disable-line @typescript-eslint/no-empty-function
+  next() {},
 });
 observable2.subscribe({
   next(value) {

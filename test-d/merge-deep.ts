@@ -97,10 +97,10 @@ class ClassA {
 class ClassB {
   public foo = 'foo';
 }
-const mergedClass = mergeDeep(
-  { ClassConstructor: ClassA },
-  { ClassConstructor: ClassB },
-);
+// prettier-ignore
+const mergedClass = mergeDeep({ ClassConstructor: ClassA }, {
+  ClassConstructor: ClassB,
+});
 const instance = new mergedClass.ClassConstructor();
 expectType<{ ClassConstructor: typeof ClassB }>(mergedClass);
 expectType<ClassB>(instance);

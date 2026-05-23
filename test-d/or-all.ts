@@ -19,12 +19,24 @@ expectType<OrAll<[false, boolean, true]>>(true);
 expectType<OrAll<[boolean, boolean, boolean]>>(boolean);
 
 // Unions
-expectType<OrAll<[false, false, true] | [false, false, false]>>(boolean); // `true` | `false`
+// prettier-ignore
+expectType<OrAll<[false, false, true] | [false, false, false]>>(
+  boolean,
+); // `true` | `false`
 expectType<OrAll<[false, true, false] | [true]>>(true); // `true` | `true`
 expectType<OrAll<[false] | [false, false, false]>>(false); // `false` | `false`
-expectType<OrAll<[true, false] | [false, boolean]>>(boolean); // `true` | `boolean`
-expectType<OrAll<[false, false] | [false, false, boolean]>>(boolean); // `false` | `boolean`
-expectType<OrAll<[boolean, false, false] | [boolean]>>(boolean); // `boolean` | `boolean`
+// prettier-ignore
+expectType<OrAll<[true, false] | [false, boolean]>>(
+  boolean,
+); // `true` | `boolean`
+// prettier-ignore
+expectType<OrAll<[false, false] | [false, false, boolean]>>(
+  boolean,
+); // `false` | `boolean`
+// prettier-ignore
+expectType<OrAll<[boolean, false, false] | [boolean]>>(
+  boolean,
+); // `boolean` | `boolean`
 
 // Tuples with rest element
 expectType<OrAll<[false, ...Array<false>]>>(false);

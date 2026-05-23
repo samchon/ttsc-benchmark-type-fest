@@ -26,8 +26,14 @@ expectType<ExtendsStrict<any, any>>(true);
 expectType<ExtendsStrict<any, never>>(false);
 expectType<ExtendsStrict<never, any>>(true);
 expectType<ExtendsStrict<any, number>>(true);
-expectType<ExtendsStrict<any, unknown>>(true); // `any` is assignable to `unknown`
-expectType<ExtendsStrict<unknown, any>>(true); // `unknown` is assignable to `any`
+// prettier-ignore
+expectType<ExtendsStrict<any, unknown>>(
+  true,
+); // `any` is assignable to `unknown`
+// prettier-ignore
+expectType<ExtendsStrict<unknown, any>>(
+  true,
+); // `unknown` is assignable to `any`
 expectType<ExtendsStrict<unknown, unknown>>(true);
 expectType<ExtendsStrict<string, unknown>>(true);
 expectType<ExtendsStrict<unknown, string>>(false);
@@ -59,8 +65,14 @@ expectType<ExtendsStrict<string, 'foo'>>(false);
 
 // Arrays
 expectType<ExtendsStrict<string[], string[]>>(true);
-expectType<ExtendsStrict<[string], string[]>>(true); // Tuple is assignable to array
-expectType<ExtendsStrict<string[], [string]>>(false); // Array not assignable to fixed tuple
+// prettier-ignore
+expectType<ExtendsStrict<[string], string[]>>(
+  true,
+); // Tuple is assignable to array
+// prettier-ignore
+expectType<ExtendsStrict<string[], [string]>>(
+  false,
+); // Array not assignable to fixed tuple
 
 // Branded types
 type UserId = Tagged<string, 'UserId'>;

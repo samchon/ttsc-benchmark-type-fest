@@ -115,7 +115,10 @@ type Config = ExclusifyUnion<FileConfig | InlineConfig>;
 declare function loadConfig(options: Config): void;
 
 // @ts-expect-error
-loadConfig({ filePath: './config.json', content: '{ "name": "app" }' }); // Cannot provide both properties
+loadConfig({
+  filePath: './config.json',
+  content: '{ "name": "app" }',
+}); // Cannot provide both properties
 loadConfig({ filePath: './config.json' }); // Ok
 loadConfig({ content: '{ "name": "app" }' }); // Ok
 

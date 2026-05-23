@@ -124,10 +124,8 @@ expectNotAssignable<StructuredCloneable>(new CustomTypeWithProperties());
 expectAssignable<StructuredCloneable>([]);
 expectAssignable<StructuredCloneable>([1, 2, 3]);
 expectAssignable<StructuredCloneable>([1, 2, 3] as const);
-expectAssignable<StructuredCloneable>([
-  [1, 2],
-  [3, 4],
-]);
+// prettier-ignore
+expectAssignable<StructuredCloneable>([[1, 2], [3, 4]]);
 expectAssignable<StructuredCloneable>([{ x: 1 }, { x: 2 }]);
 
 // Map
