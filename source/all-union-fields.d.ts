@@ -92,8 +92,8 @@ export type AllUnionFields<Union> =
                     RelevantMembers,
                     P & KeysOfUnion<RelevantMembers>
                   >;
-                } & // Include remaining fields that are neither common nor readonly
-              {
+                } & {
+                // Include remaining fields that are neither common nor readonly
                 [P in Exclude<
                   KeysOfUnion<RelevantMembers>,
                   ReadonlyKeysOfUnion<RelevantMembers> | keyof RelevantMembers

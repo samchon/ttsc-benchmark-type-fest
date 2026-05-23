@@ -62,13 +62,13 @@ type DoMergeDeepRecord<
     [Key in keyof Destination as Key extends keyof Source
       ? never
       : Key]: Destination[Key];
-  } & // Case in rule 2: The source contains the key but the destination doesn't.
-  {
+  } & {
+    // Case in rule 2: The source contains the key but the destination doesn't.
     [Key in keyof Source as Key extends keyof Destination
       ? never
       : Key]: Source[Key];
-  } & // Case in rule 3: Both the source and the destination contain the key.
-  {
+  } & {
+    // Case in rule 3: Both the source and the destination contain the key.
     [Key in keyof Source as Key extends keyof Destination
       ? Key
       : never]: MergeDeepRecordProperty<
