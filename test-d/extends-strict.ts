@@ -26,9 +26,11 @@ expectType<ExtendsStrict<any, any>>(true);
 expectType<ExtendsStrict<any, never>>(false);
 expectType<ExtendsStrict<never, any>>(true);
 expectType<ExtendsStrict<any, number>>(true);
+// prettier-ignore
 expectType<ExtendsStrict<any, unknown>>(
   true,
 ); // `any` is assignable to `unknown`
+// prettier-ignore
 expectType<ExtendsStrict<unknown, any>>(
   true,
 ); // `unknown` is assignable to `any`
@@ -63,9 +65,11 @@ expectType<ExtendsStrict<string, 'foo'>>(false);
 
 // Arrays
 expectType<ExtendsStrict<string[], string[]>>(true);
+// prettier-ignore
 expectType<ExtendsStrict<[string], string[]>>(
   true,
 ); // Tuple is assignable to array
+// prettier-ignore
 expectType<ExtendsStrict<string[], [string]>>(
   false,
 ); // Array not assignable to fixed tuple

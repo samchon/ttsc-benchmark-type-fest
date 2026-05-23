@@ -113,6 +113,7 @@ expectType<IsOptionalKeyOf<A, 'a' | 'c'>>(false);
 type FullKeyUnion = keyof A; // 'a' | 'b' | 'c'
 expectType<IsOptionalKeyOf<A, FullKeyUnion>>(boolean);
 // @ts-expect-error
+// prettier-ignore
 expectType<IsOptionalKeyOf<A, 'b' | 'x'>>(
   boolean,
 ); // 'x' is not in A, so filtered as false

@@ -20,17 +20,21 @@ expectType<AndAll<[true, boolean, false]>>(false);
 expectType<AndAll<[boolean, boolean, boolean]>>(boolean);
 
 // Unions
+// prettier-ignore
 expectType<AndAll<[true, true, true] | [true, true, false]>>(
   boolean,
 ); // `true` | `false`
 expectType<AndAll<[true, true] | [true]>>(true); // `true` | `true`
 expectType<AndAll<[false] | [true, false, true]>>(false); // `false` | `false`
+// prettier-ignore
 expectType<AndAll<[true, true] | [true, boolean]>>(
   boolean,
 ); // `true` | `boolean`
+// prettier-ignore
 expectType<AndAll<[false, true] | [true, true, boolean]>>(
   boolean,
 ); // `false` | `boolean`
+// prettier-ignore
 expectType<AndAll<[boolean, true, true] | [boolean]>>(
   boolean,
 ); // `boolean` | `boolean`

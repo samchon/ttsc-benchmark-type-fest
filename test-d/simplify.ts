@@ -42,6 +42,7 @@ expectType<SomeInterfaceAsTypeWrittenByHand>(valueAsInterface);
 // The following demonstrates one reason a type may be preferred over an interface is that it can be assigned to alternate types. In this example the interface cannot be because it is not sealed and elsewhere a non-string property could be added.
 expectAssignable<Record<string, unknown>>(valueAsLiteral);
 expectAssignable<Record<string, unknown>>(valueAsSimplifiedInterface);
+// prettier-ignore
 expectNotAssignable<Record<string, unknown>>(
   valueAsInterface,
 ); // Index signature is missing in interface

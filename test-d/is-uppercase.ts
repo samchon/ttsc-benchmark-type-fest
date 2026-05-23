@@ -55,12 +55,15 @@ expectType<IsUppercase<`${string}${number}`>>({} as boolean);
 // Unions
 expectType<IsUppercase<'ABC' | 'XYZ'>>(true); // Both `true`
 expectType<IsUppercase<'ABc' | 'XyZ'>>(false); // Both `false`
+// prettier-ignore
 expectType<IsUppercase<'ABC' | 'aBC'>>(
   {} as boolean,
 ); // One `true`, one `false`
+// prettier-ignore
 expectType<IsUppercase<'ABC' | `${Capitalize<string>}END`>>(
   {} as boolean,
 ); // One `true`, one `boolean`
+// prettier-ignore
 expectType<IsUppercase<'XyZ' | `ABC${string}`>>(
   {} as boolean,
 ); // One `false`, one `boolean`

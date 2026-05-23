@@ -109,6 +109,7 @@ expectType<IsWritableKeyOf<A, 'a' | 'c'>>(true);
 type FullKeyUnion = keyof A; // 'a' | 'b' | 'c'
 expectType<IsWritableKeyOf<A, FullKeyUnion>>(boolean);
 // @ts-expect-error
+// prettier-ignore
 expectType<IsWritableKeyOf<A, 'b' | 'x'>>(
   false,
 ); // 'x' is not in A, so filtered as false

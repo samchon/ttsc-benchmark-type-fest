@@ -5,6 +5,7 @@ declare const x: unknown;
 
 expectType<true>(x as IsInteger<0>);
 expectType<true>(x as IsInteger<1>);
+// prettier-ignore
 expectType<true>(
   x as IsInteger<1.0>,
 ); // eslint-disable-line unicorn/no-zero-fractions

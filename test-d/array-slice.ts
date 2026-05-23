@@ -125,20 +125,25 @@ expectType<ArraySlice<[0, 1, 2] | ['a', 'b', 'c', 'd'], 1, -1>>(
 ); // Positive start, negative end
 
 // Start is union
+// prettier-ignore
 expectType<ArraySlice<[0, 1, 2, 3], 1 | -2>>(
   {} as [1, 2, 3] | [2, 3],
 ); // Positive/Negative start, no end
+// prettier-ignore
 expectType<ArraySlice<[0, 1, 2, 3], 2 | -3, 3>>(
   {} as [2] | [1, 2],
 ); // Positive/Negative start, positive end
+// prettier-ignore
 expectType<ArraySlice<[0, 1, 2, 3], 0 | -2, -1>>(
   {} as [2] | [0, 1, 2],
 ); // Positive/Negative start, negative end
 
 // End is union
+// prettier-ignore
 expectType<ArraySlice<[0, 1, 2, 3], 0, 1 | -2>>(
   {} as [0] | [0, 1],
 ); // Positive start, positive/negative end
+// prettier-ignore
 expectType<ArraySlice<[0, 1, 2, 3], -2, 2 | -1>>(
   {} as [] | [2],
 ); // Negative start, positive/negative end

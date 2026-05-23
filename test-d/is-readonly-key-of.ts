@@ -109,6 +109,7 @@ expectType<IsReadonlyKeyOf<A, 'a' | 'c'>>(false);
 type FullKeyUnion = keyof A; // 'a' | 'b' | 'c'
 expectType<IsReadonlyKeyOf<A, FullKeyUnion>>(boolean);
 // @ts-expect-error
+// prettier-ignore
 expectType<IsReadonlyKeyOf<A, 'b' | 'x'>>(
   boolean,
 ); // 'x' is not in A, so filtered as false

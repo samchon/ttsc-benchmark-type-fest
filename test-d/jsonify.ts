@@ -105,6 +105,7 @@ expectAssignable<JsonValue>(parsedStringifiedX);
 expectAssignable<string>(parsedStringifiedX.a);
 
 class NonJsonWithToJSON {
+  // prettier-ignore
   public fixture = new Map<string, number>([['a', 1], ['b', 2]]);
 
   public toJSON(): { fixture: Array<[string, number]> } {
@@ -162,6 +163,7 @@ expectType<{
 }>({} as Jsonify<NonJsonWithToJSONWrapper>);
 
 class NonJsonWithInvalidToJSON {
+  // prettier-ignore
   public fixture = new Map<string, number>([['a', 1], ['b', 2]]);
 
   // This is intentionally invalid `.toJSON()`.
@@ -420,6 +422,8 @@ expectNotAssignable<Jsonify<{ key: unknown }>>({ key: new Date() });
 expectAssignable<JsonObject>({} as { a: string });
 expectNotAssignable<JsonObject>({} as { a: string | undefined });
 expectAssignable<JsonObject>({} as { a?: string });
+// prettier-ignore
 expectNotAssignable<JsonObject>(
   {} as { a?: string | undefined },
 ); // Requires `exactOptionalPropertyTypes` to be enabled
+// prettier-ignore

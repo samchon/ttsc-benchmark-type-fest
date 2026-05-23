@@ -22,6 +22,7 @@ expectAssignable<{
   bar: string;
 }>(fooBar);
 
+// prettier-ignore
 expectNotAssignable<FooBarBaz>(
   fooBar,
 ); // Invariance does not accept supertypes.

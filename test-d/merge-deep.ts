@@ -97,6 +97,7 @@ class ClassA {
 class ClassB {
   public foo = 'foo';
 }
+// prettier-ignore
 const mergedClass = mergeDeep({ ClassConstructor: ClassA }, {
   ClassConstructor: ClassB,
 });

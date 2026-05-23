@@ -10,6 +10,7 @@ expectType<true>(x as IsFloat<-1e-7>);
 
 expectType<false>(x as IsFloat<0>);
 expectType<false>(x as IsFloat<1>);
+// prettier-ignore
 expectType<false>(
   x as IsFloat<1.0>,
 ); // eslint-disable-line unicorn/no-zero-fractions

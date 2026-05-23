@@ -6,21 +6,26 @@ expectType<SomeExtend<[], number>>(false);
 expectType<SomeExtend<[1, '2', '3'], number>>(true); // First element matches
 expectType<SomeExtend<['1', '2', 3], number>>(true); // Last element matches
 expectType<SomeExtend<['1', 2, '3'], number>>(true); // Mid element matches
+// prettier-ignore
 expectType<SomeExtend<[number, '1', 2, `${number}`], string>>(
   true,
 ); // Multiple elements match
 expectType<SomeExtend<[1, 2, 3], number>>(true); // All elements match
 // Trailing rest element
+// prettier-ignore
 expectType<SomeExtend<['2', 1, ...string[]], number>>(
   true,
 ); // Non-rest element matches
+// prettier-ignore
 expectType<SomeExtend<['2', '1', ...number[]], number>>(
   true,
 ); // Rest element matches
 // Leading rest element
+// prettier-ignore
 expectType<SomeExtend<[...Array<1 | -1>, number, string], string>>(
   true,
 ); // Non-rest element matches
+// prettier-ignore
 expectType<SomeExtend<[...Array<1 | -1>, string, string], number>>(
   true,
 ); // Rest element matches
@@ -31,6 +36,7 @@ expectType<SomeExtend<[string, number, ...string[], string, string], number>>(
 expectType<SomeExtend<[string, string, ...string[], number, string], number>>(
   true,
 ); // Non-rest element after rest element matches
+// prettier-ignore
 expectType<SomeExtend<[string, ...number[], string, string], number>>(
   true,
 ); // Rest element matches
@@ -96,18 +102,23 @@ expectType<SomeExtend<ReadonlyArray<string | undefined>, string>>(
 expectType<SomeExtend<[...(readonly boolean[])], string>>(false);
 
 // Unions
+// prettier-ignore
 expectType<SomeExtend<['1', '2', 3] | ['4', 5, '6'], number>>(
   true,
 ); // Both `true`
+// prettier-ignore
 expectType<SomeExtend<[1, 2, 3] | ['4', '5', '6'], bigint>>(
   false,
 ); // Both `false`
+// prettier-ignore
 expectType<SomeExtend<['1', '2', '3'] | ['1', '2', 3], number>>(
   {} as boolean,
 ); // One `true`, one `false`
+// prettier-ignore
 expectType<SomeExtend<[true, false] | [false, boolean], true>>(
   {} as boolean,
 ); // One `true`, one `boolean`
+// prettier-ignore
 expectType<SomeExtend<[false, false] | [boolean, false], true>>(
   {} as boolean,
 ); // One `false`, one `boolean`
