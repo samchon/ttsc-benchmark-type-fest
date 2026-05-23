@@ -1,6 +1,6 @@
-import type {ConditionalSimplifyDeep} from './conditional-simplify-deep.d.ts';
-import type {MapsSetsOrArrays, NonRecursiveType} from './internal/index.d.ts';
-import type {UnknownArray} from './unknown-array.d.ts';
+import type { ConditionalSimplifyDeep } from './conditional-simplify-deep.d.ts';
+import type { MapsSetsOrArrays, NonRecursiveType } from './internal/index.d.ts';
+import type { UnknownArray } from './unknown-array.d.ts';
 
 /**
 Deeply simplifies an object type.
@@ -107,11 +107,10 @@ type SimplifyDeepProperties = SimplifyDeep<Properties1 & Properties2, ComplexTyp
 @see {@link Simplify}
 @category Object
 */
-export type SimplifyDeep<Type, ExcludeType = never> =
-	ConditionalSimplifyDeep<
-		Type,
-	ExcludeType | NonRecursiveType | Exclude<MapsSetsOrArrays, UnknownArray>,
-	object
-	>;
+export type SimplifyDeep<Type, ExcludeType = never> = ConditionalSimplifyDeep<
+  Type,
+  ExcludeType | NonRecursiveType | Exclude<MapsSetsOrArrays, UnknownArray>,
+  object
+>;
 
 export {};

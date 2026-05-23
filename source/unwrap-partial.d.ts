@@ -22,12 +22,10 @@ Note: If the provided type isn’t of `Partial<T>`, `UnwrapPartial` has no effec
 @category Object
 */
 export type UnwrapPartial<PartialObjectType> =
-	PartialObjectType extends Partial<infer ObjectType>
-		? (
-			Partial<ObjectType> extends PartialObjectType
-				? ObjectType
-				: PartialObjectType
-		)
-		: PartialObjectType;
+  PartialObjectType extends Partial<infer ObjectType>
+    ? Partial<ObjectType> extends PartialObjectType
+      ? ObjectType
+      : PartialObjectType
+    : PartialObjectType;
 
 export {};

@@ -1,5 +1,5 @@
-import {expectType} from 'tsd';
-import type {Includes} from '../index.d.ts';
+import { expectType } from 'tsd';
+import type { Includes } from '../index.d.ts';
 
 const includesEmptyArray: Includes<[], 'abc'> = false;
 expectType<false>(includesEmptyArray);
@@ -11,25 +11,28 @@ const readonlyArray = ['a', 'b', 'c'] as const;
 const includesReadonlyArray: Includes<typeof readonlyArray, 'a'> = true;
 expectType<true>(includesReadonlyArray);
 
-const includesComplexMultiTypeArray: Includes<[
-	{
-		prop: 'value';
-		num: 5;
-		anotherArr: [1, '5', false];
-	},
-	true,
-	null,
-	'abcd',
-], 'abc'> = false;
+const includesComplexMultiTypeArray: Includes<
+  [
+    {
+      prop: 'value';
+      num: 5;
+      anotherArr: [1, '5', false];
+    },
+    true,
+    null,
+    'abcd',
+  ],
+  'abc'
+> = false;
 expectType<false>(includesComplexMultiTypeArray);
 
 const noExtendsProblem: Includes<[boolean], true> = false;
 expectType<false>(noExtendsProblem);
 
-const objectIncludes: Includes<[{}], {a: 1}> = false;
+const objectIncludes: Includes<[{}], { a: 1 }> = false;
 expectType<false>(objectIncludes);
 
-const objectIncludesPass: Includes<[{a: 1}], {a: 1}> = true;
+const objectIncludesPass: Includes<[{ a: 1 }], { a: 1 }> = true;
 expectType<true>(objectIncludesPass);
 
 const nullIncludesUndefined: Includes<[null], undefined> = false;
@@ -54,4 +57,4 @@ type A2 = Includes<'why a string?', 5>;
 
 // Value generic parameter is an object not an array.
 // @ts-expect-error
-type A3 = Includes<{key: 'value'}, 7>;
+type A3 = Includes<{ key: 'value' }, 7>;

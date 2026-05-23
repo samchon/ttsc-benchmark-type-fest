@@ -1,5 +1,5 @@
-import {expectType} from 'tsd';
-import type {ExtractRestElement, TupleOf} from '../index.d.ts';
+import { expectType } from 'tsd';
+import type { ExtractRestElement, TupleOf } from '../index.d.ts';
 
 // Leading rest element
 expectType<ExtractRestElement<[...string[], 1]>>({} as string);

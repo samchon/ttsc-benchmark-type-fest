@@ -1,4 +1,4 @@
-import type {OrAll} from './or-all.d.ts';
+import type { OrAll } from './or-all.d.ts';
 
 /**
 Returns a boolean for whether either of two given types is `true`.

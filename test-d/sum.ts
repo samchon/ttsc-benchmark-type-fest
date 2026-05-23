@@ -1,6 +1,9 @@
-import {expectType} from 'tsd';
-import type {Sum} from '../index.d.ts';
-import type {NegativeInfinity, PositiveInfinity} from '../source/numeric.d.ts';
+import { expectType } from 'tsd';
+import type { Sum } from '../index.d.ts';
+import type {
+  NegativeInfinity,
+  PositiveInfinity,
+} from '../source/numeric.d.ts';
 
 // Positive result
 expectType<0>({} as Sum<-999, 999>);

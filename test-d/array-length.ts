@@ -1,5 +1,5 @@
-import {expectType} from 'tsd';
-import type {ArrayLength, Primitive} from '../index.d.ts';
+import { expectType } from 'tsd';
+import type { ArrayLength, Primitive } from '../index.d.ts';
 
 // Non-tuples
 expectType<number>({} as ArrayLength<unknown[]>);
@@ -56,4 +56,4 @@ type DisallowedSet = ArrayLength<Set<number>>;
 // @ts-expect-error
 type DisallowedRecord = ArrayLength<Record<string, unknown>>;
 // @ts-expect-error
-type DisallowedObjectWithLength = ArrayLength<{length: number}>;
+type DisallowedObjectWithLength = ArrayLength<{ length: number }>;

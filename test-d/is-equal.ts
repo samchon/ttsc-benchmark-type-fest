@@ -1,5 +1,5 @@
-import {expectType} from 'tsd';
-import type {IsEqual, TupleOf} from '../index.d.ts';
+import { expectType } from 'tsd';
+import type { IsEqual, TupleOf } from '../index.d.ts';
 
 expectType<false>({} as IsEqual<number, string>);
 expectType<true>({} as IsEqual<1, 1>);
@@ -28,9 +28,9 @@ expectType<false>({} as IsEqual<1 | 2, 2 | 3>);
 expectType<true>({} as IsEqual<1 | 2, 2 | 1>);
 expectType<false>({} as IsEqual<boolean, true>);
 
-expectType<true>({} as IsEqual<{a: 1}, {a: 1}>);
-expectType<false>({} as IsEqual<{a: 1}, {a?: 1}>);
-expectType<false>({} as IsEqual<{a: 1}, {readonly a: 1}>);
+expectType<true>({} as IsEqual<{ a: 1 }, { a: 1 }>);
+expectType<false>({} as IsEqual<{ a: 1 }, { a?: 1 }>);
+expectType<false>({} as IsEqual<{ a: 1 }, { readonly a: 1 }>);
 
 expectType<true>({} as IsEqual<[], []>);
 expectType<true>({} as IsEqual<readonly [], readonly []>);
@@ -61,31 +61,57 @@ type A = IsEqual;
 type B = IsEqual<number>;
 
 // Test for issue https://github.com/sindresorhus/type-fest/issues/537
-type UnionType = IsEqual<{a: 1} | {a: 1}, {a: 1}>; // eslint-disable-line @typescript-eslint/no-duplicate-type-constituents
+type UnionType = IsEqual<{ a: 1 } | { a: 1 }, { a: 1 }>; // eslint-disable-line @typescript-eslint/no-duplicate-type-constituents
 expectType<UnionType>(true);
 
-type IntersectionType = IsEqual<{a: 1} & {a: 1}, {a: 1}>; // eslint-disable-line @typescript-eslint/no-duplicate-type-constituents
+type IntersectionType = IsEqual<{ a: 1 } & { a: 1 }, { a: 1 }>; // eslint-disable-line @typescript-eslint/no-duplicate-type-constituents
 expectType<IntersectionType>(true);
 
 // Test for PR https://github.com/sindresorhus/type-fest/pull/1231
-type BranchOnWrappedTupleMatches<Tpl> = (Tpl extends [[0, 2]] ? 'Foo' : 'Bar');
-type BranchOnWrappedTupleDoesNotMatch<Tpl> = (Tpl extends [[0, 1]] ? 'Foo' : 'Bar');
-type BranchOnTupleMatches<Tpl> = (Tpl extends [0, 2] ? 'Foo' : 'Bar');
-type BranchOnTupleDoesNotMatch<Tpl> = (Tpl extends [0, 1] ? 'Foo' : 'Bar');
+type BranchOnWrappedTupleMatches<Tpl> = Tpl extends [[0, 2]] ? 'Foo' : 'Bar';
+type BranchOnWrappedTupleDoesNotMatch<Tpl> = Tpl extends [[0, 1]]
+  ? 'Foo'
+  : 'Bar';
+type BranchOnTupleMatches<Tpl> = Tpl extends [0, 2] ? 'Foo' : 'Bar';
+type BranchOnTupleDoesNotMatch<Tpl> = Tpl extends [0, 1] ? 'Foo' : 'Bar';
 
-declare const equalWrappedTupleIntersectionToBeNeverAndNever: IsEqual<(BranchOnWrappedTupleMatches<[[0, 2]]> & BranchOnWrappedTupleDoesNotMatch<[[0, 2]]>), never>;
+declare const equalWrappedTupleIntersectionToBeNeverAndNever: IsEqual<
+  BranchOnWrappedTupleMatches<[[0, 2]]> &
+    BranchOnWrappedTupleDoesNotMatch<[[0, 2]]>,
+  never
+>;
 expectType<true>(equalWrappedTupleIntersectionToBeNeverAndNever);
 
-declare const equalWrappedTupleIntersectionToBeNeverAndNeverExpanded: [0, 2] extends infer Tpl ? IsEqual<(BranchOnWrappedTupleMatches<[Tpl]> & BranchOnWrappedTupleDoesNotMatch<[Tpl]>), never> : never;
+declare const equalWrappedTupleIntersectionToBeNeverAndNeverExpanded: [
+  0,
+  2,
+] extends infer Tpl
+  ? IsEqual<
+      BranchOnWrappedTupleMatches<[Tpl]> &
+        BranchOnWrappedTupleDoesNotMatch<[Tpl]>,
+      never
+    >
+  : never;
 expectType<true>(equalWrappedTupleIntersectionToBeNeverAndNeverExpanded);
 
-declare const equalTupleIntersectionToBeNeverAndNever: IsEqual<(BranchOnTupleMatches<[0, 2]> & BranchOnTupleDoesNotMatch<[0, 2]>), never>;
+declare const equalTupleIntersectionToBeNeverAndNever: IsEqual<
+  BranchOnTupleMatches<[0, 2]> & BranchOnTupleDoesNotMatch<[0, 2]>,
+  never
+>;
 expectType<true>(equalTupleIntersectionToBeNeverAndNever);
 
-declare const equalTupleIntersectionToBeNeverAndNeverExpanded: [0, 2] extends infer Tpl ? IsEqual<(BranchOnTupleMatches<Tpl> & BranchOnTupleDoesNotMatch<Tpl>), never> : never;
+declare const equalTupleIntersectionToBeNeverAndNeverExpanded: [
+  0,
+  2,
+] extends infer Tpl
+  ? IsEqual<BranchOnTupleMatches<Tpl> & BranchOnTupleDoesNotMatch<Tpl>, never>
+  : never;
 expectType<true>(equalTupleIntersectionToBeNeverAndNeverExpanded);
 
-declare const equalTupleIntersectionAndTuple: IsEqual<[{a: 1}] & [{a: 1}], [{a: 1}]>; // eslint-disable-line @typescript-eslint/no-duplicate-type-constituents
+declare const equalTupleIntersectionAndTuple: IsEqual<
+  [{ a: 1 }] & [{ a: 1 }],
+  [{ a: 1 }]
+>; // eslint-disable-line @typescript-eslint/no-duplicate-type-constituents
 expectType<true>(equalTupleIntersectionAndTuple);
 
 // Test for Issue https://github.com/sindresorhus/type-fest/issues/1305

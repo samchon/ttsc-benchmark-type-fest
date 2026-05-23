@@ -1,5 +1,5 @@
-import {expectType} from 'tsd';
-import type {IsFloat, PositiveInfinity} from '../index.d.ts';
+import { expectType } from 'tsd';
+import type { IsFloat, PositiveInfinity } from '../index.d.ts';
 
 declare const x: unknown;
 
@@ -20,8 +20,8 @@ expectType<false>(x as IsFloat<1n>);
 expectType<false>(x as IsFloat<0n>);
 expectType<false>(x as IsFloat<0b10>);
 expectType<false>(x as IsFloat<0x10>);
-expectType<false>(x as IsFloat<1e+100>);
-expectType<false>(x as IsFloat<1.23e+21>);
-expectType<false>(x as IsFloat<-1.23e+21>);
+expectType<false>(x as IsFloat<1e100>);
+expectType<false>(x as IsFloat<1.23e21>);
+expectType<false>(x as IsFloat<-1.23e21>);
 expectType<false>(x as IsFloat<'1.23'>);
 expectType<false>(x as IsFloat<PositiveInfinity>);

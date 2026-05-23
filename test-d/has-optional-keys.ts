@@ -1,19 +1,19 @@
-import {expectType} from 'tsd';
-import type {HasOptionalKeys} from '../index.d.ts';
+import { expectType } from 'tsd';
+import type { HasOptionalKeys } from '../index.d.ts';
 
 type TestType1 = {
-	a: string;
-	b?: boolean;
+  a: string;
+  b?: boolean;
 };
 
 type TestType2 = {
-	a?: string;
-	b?: boolean;
+  a?: string;
+  b?: boolean;
 };
 
 type TestType3 = {
-	a: string;
-	b: boolean;
+  a: string;
+  b: boolean;
 };
 
 type HasOptionalKeys1 = HasOptionalKeys<TestType1>;

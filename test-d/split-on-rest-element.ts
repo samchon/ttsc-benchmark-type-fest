@@ -1,5 +1,5 @@
-import {expectType} from 'tsd';
-import type {SplitOnRestElement, TupleOf, UnknownArray} from '../index.d.ts';
+import { expectType } from 'tsd';
+import type { SplitOnRestElement, TupleOf, UnknownArray } from '../index.d.ts';
 
 // Fixed tuples (No rest element)
 expectType<SplitOnRestElement<[]>>({} as [[], [], []]);
@@ -33,8 +33,8 @@ expectType<SplitOnRestElement<[void, ...never[], 1]>>(
 expectType<SplitOnRestElement<[null, ...any[], null]>>(
   {} as [[null], any[], [null]],
 );
-expectType<SplitOnRestElement<[...Array<{id: string}>, number]>>(
-  {} as [[], Array<{id: string}>, [number]],
+expectType<SplitOnRestElement<[...Array<{ id: string }>, number]>>(
+  {} as [[], Array<{ id: string }>, [number]],
 );
 expectType<SplitOnRestElement<[1, ...Array<readonly [string, number]>, 2]>>(
   {} as [[1], Array<readonly [string, number]>, [2]],
@@ -69,15 +69,24 @@ expectType<SplitOnRestElement<[number, boolean?, ...string[]]>>(
 );
 
 // Remove optional
-expectType<SplitOnRestElement<[0, 1?, 2?, ...never[]], {preserveOptionalModifier: false}>>(
-  {} as [[0, 1, 2], never[], []],
-);
-expectType<SplitOnRestElement<[number?, ...string[]], {preserveOptionalModifier: false}>>(
-  {} as [[number], string[], []],
-);
-expectType<SplitOnRestElement<[number, boolean?, ...string[]], {preserveOptionalModifier: false}>>(
-  {} as [[number, boolean], string[], []],
-);
+expectType<
+  SplitOnRestElement<
+    [0, 1?, 2?, ...never[]],
+    { preserveOptionalModifier: false }
+  >
+>({} as [[0, 1, 2], never[], []]);
+expectType<
+  SplitOnRestElement<
+    [number?, ...string[]],
+    { preserveOptionalModifier: false }
+  >
+>({} as [[number], string[], []]);
+expectType<
+  SplitOnRestElement<
+    [number, boolean?, ...string[]],
+    { preserveOptionalModifier: false }
+  >
+>({} as [[number, boolean], string[], []]);
 
 // Readonly
 expectType<SplitOnRestElement<readonly []>>({} as readonly [[], [], []]);
@@ -87,9 +96,11 @@ expectType<SplitOnRestElement<readonly [number] | [string]>>(
 expectType<SplitOnRestElement<readonly [...number[], 2]>>(
   {} as readonly [[], number[], [2]],
 );
-expectType<SplitOnRestElement<readonly [1, ...string[], 2] | readonly ['foo'?, ...string[]]>>(
-  {} as readonly [[1], string[], [2]] | readonly [['foo'?], string[], []],
-);
+expectType<
+  SplitOnRestElement<
+    readonly [1, ...string[], 2] | readonly ['foo'?, ...string[]]
+  >
+>({} as readonly [[1], string[], [2]] | readonly [['foo'?], string[], []]);
 expectType<SplitOnRestElement<readonly [1, 2, 3]>>(
   {} as readonly [[1, 2, 3], [], []],
 );
@@ -105,10 +116,18 @@ expectType<SplitOnRestElement<[...FiftyZeroes, ...number[], ...FiftyZeroes]>>(
 );
 
 type FourHundredNinetyNineZeroes = TupleOf<499, '0'>;
-expectType<SplitOnRestElement<[...FourHundredNinetyNineZeroes, ...number[], ...FourHundredNinetyNineZeroes]>>(
-  {} as [FourHundredNinetyNineZeroes, number[], FourHundredNinetyNineZeroes],
-);
+expectType<
+  SplitOnRestElement<
+    [
+      ...FourHundredNinetyNineZeroes,
+      ...number[],
+      ...FourHundredNinetyNineZeroes,
+    ]
+  >
+>({} as [FourHundredNinetyNineZeroes, number[], FourHundredNinetyNineZeroes]);
 
 // Generic instantiations
 type Assignability<_T extends UnknownArray> = unknown;
-type TestAssignability<T extends UnknownArray> = Assignability<SplitOnRestElement<T>>;
+type TestAssignability<T extends UnknownArray> = Assignability<
+  SplitOnRestElement<T>
+>;

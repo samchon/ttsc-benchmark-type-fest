@@ -1,5 +1,5 @@
-import {expectType} from 'tsd';
-import type {AndAll} from '../source/and-all.d.ts';
+import { expectType } from 'tsd';
+import type { AndAll } from '../source/and-all.d.ts';
 
 declare const boolean: boolean;
 

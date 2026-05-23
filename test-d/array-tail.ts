@@ -1,7 +1,9 @@
-import {expectType} from 'tsd';
-import type {ArrayTail} from '../index.d.ts';
+import { expectType } from 'tsd';
+import type { ArrayTail } from '../index.d.ts';
 
-declare const getArrayTail: <T extends readonly unknown[]>(array: T) => ArrayTail<T>;
+declare const getArrayTail: <T extends readonly unknown[]>(
+  array: T,
+) => ArrayTail<T>;
 
 expectType<[]>(getArrayTail([] as []));
 expectType<[]>(getArrayTail(['a'] as ['a']));
@@ -56,7 +58,9 @@ expectType<[...rest: boolean[], foo: number, bar: string]>(
 // Union of tuples
 expectType<[] | ['b']>({} as ArrayTail<[] | ['a', 'b']>);
 expectType<readonly ['y'?] | ['b', ...string[]] | readonly string[]>(
-  {} as ArrayTail<readonly ['x'?, 'y'?] | ['a', 'b', ...string[]] | readonly string[]>,
+  {} as ArrayTail<
+    readonly ['x'?, 'y'?] | ['a', 'b', ...string[]] | readonly string[]
+  >,
 );
 expectType<[number] | readonly [boolean, string?]>(
   {} as ArrayTail<[string, number] | readonly [number, boolean, string?]>,

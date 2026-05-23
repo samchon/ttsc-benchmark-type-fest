@@ -1,34 +1,34 @@
-import {expectAssignable, expectNotAssignable, expectType} from 'tsd';
-import type {Simplify} from '../index.d.ts';
+import { expectAssignable, expectNotAssignable, expectType } from 'tsd';
+import type { Simplify } from '../index.d.ts';
 
 type PositionProperties = {
-	top: number;
-	left: number;
+  top: number;
+  left: number;
 };
 
 type SizeProperties = {
-	width: number;
-	height: number;
+  width: number;
+  height: number;
 };
 
 // Flatten the type output to improve type hints shown in editors.
-const flattenProperties = {top: 120, left: 240, width: 480, height: 600};
+const flattenProperties = { top: 120, left: 240, width: 480, height: 600 };
 expectType<Simplify<PositionProperties & SizeProperties>>(flattenProperties);
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 interface SomeInterface {
-	foo: number;
-	bar?: string;
-	baz: number | undefined;
+  foo: number;
+  bar?: string;
+  baz: number | undefined;
 }
 
 type SomeInterfaceAsTypeWrittenByHand = {
-	foo: number;
-	bar?: string;
-	baz: number | undefined;
+  foo: number;
+  bar?: string;
+  baz: number | undefined;
 };
 
-const valueAsLiteral = {foo: 123, bar: 'hello', baz: 456};
+const valueAsLiteral = { foo: 123, bar: 'hello', baz: 456 };
 const valueAsSimplifiedInterface: Simplify<SomeInterface> = valueAsLiteral;
 const valueAsInterface: SomeInterface = valueAsLiteral;
 

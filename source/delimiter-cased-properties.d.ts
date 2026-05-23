@@ -1,6 +1,9 @@
-import type {_DefaultDelimiterCaseOptions, DelimiterCase} from './delimiter-case.d.ts';
-import type {ApplyDefaultOptions} from './internal/index.d.ts';
-import type {WordsOptions} from './words.d.ts';
+import type {
+  _DefaultDelimiterCaseOptions,
+  DelimiterCase,
+} from './delimiter-case.d.ts';
+import type { ApplyDefaultOptions } from './internal/index.d.ts';
+import type { WordsOptions } from './words.d.ts';
 
 /**
 Convert object properties to a custom string delimiter casing.
@@ -38,15 +41,23 @@ const splitOnPunctuation: DelimiterCasedProperties<{'foo::bar': string}, '-', {s
 @category Object
 */
 export type DelimiterCasedProperties<
-	Value,
-	Delimiter extends string,
-	Options extends WordsOptions = {},
+  Value,
+  Delimiter extends string,
+  Options extends WordsOptions = {},
 > = Value extends Function
-	? Value
-	: Value extends Array<infer U>
-		? Value
-		: {[K in keyof Value as
-			DelimiterCase<K, Delimiter, ApplyDefaultOptions<WordsOptions, _DefaultDelimiterCaseOptions, Options>>
-			]: Value[K]};
+  ? Value
+  : Value extends Array<infer U>
+    ? Value
+    : {
+        [K in keyof Value as DelimiterCase<
+          K,
+          Delimiter,
+          ApplyDefaultOptions<
+            WordsOptions,
+            _DefaultDelimiterCaseOptions,
+            Options
+          >
+        >]: Value[K];
+      };
 
 export {};

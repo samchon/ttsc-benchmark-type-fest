@@ -1,5 +1,5 @@
-import {expectType} from 'tsd';
-import type {Words} from '../source/words.d.ts';
+import { expectType } from 'tsd';
+import type { Words } from '../source/words.d.ts';
 
 expectType<Words<''>>([]);
 expectType<Words<'a'>>(['a']);
@@ -116,26 +116,26 @@ expectType<Words<'hello:world'>>(['hello', ':world']);
 expectType<Words<'hello::world'>>(['hello', ':', ':world']);
 expectType<Words<'hello-braveNew:world'>>(['hello', 'brave', 'New', ':world']);
 
-expectType<Words<':', {splitOnPunctuation: true}>>([]);
-expectType<Words<'::', {splitOnPunctuation: true}>>([]);
-expectType<Words<'hello::', {splitOnPunctuation: true}>>(['hello']);
-expectType<Words<'hello:world', {splitOnPunctuation: true}>>([
+expectType<Words<':', { splitOnPunctuation: true }>>([]);
+expectType<Words<'::', { splitOnPunctuation: true }>>([]);
+expectType<Words<'hello::', { splitOnPunctuation: true }>>(['hello']);
+expectType<Words<'hello:world', { splitOnPunctuation: true }>>([
   'hello',
   'world',
 ]);
-expectType<Words<'hello::world', {splitOnPunctuation: true}>>([
+expectType<Words<'hello::world', { splitOnPunctuation: true }>>([
   'hello',
   'world',
 ]);
-expectType<Words<'hello-braveNew:world', {splitOnPunctuation: true}>>([
+expectType<Words<'hello-braveNew:world', { splitOnPunctuation: true }>>([
   'hello',
   'brave',
   'New',
   'world',
 ]);
-expectType<Words<'item::01', {splitOnPunctuation: true; splitOnNumbers: false}>>(
-  ['item', '01'],
-);
-expectType<Words<'item::01', {splitOnPunctuation: true; splitOnNumbers: true}>>(
-  ['item', '01'],
-);
+expectType<
+  Words<'item::01', { splitOnPunctuation: true; splitOnNumbers: false }>
+>(['item', '01']);
+expectType<
+  Words<'item::01', { splitOnPunctuation: true; splitOnNumbers: true }>
+>(['item', '01']);

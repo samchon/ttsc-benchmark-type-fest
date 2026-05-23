@@ -1,6 +1,9 @@
-import type {CamelCaseOptions, _DefaultCamelCaseOptions} from './camel-case.d.ts';
-import type {ApplyDefaultOptions} from './internal/index.d.ts';
-import type {PascalCase} from './pascal-case.d.ts';
+import type {
+  CamelCaseOptions,
+  _DefaultCamelCaseOptions,
+} from './camel-case.d.ts';
+import type { ApplyDefaultOptions } from './internal/index.d.ts';
+import type { PascalCase } from './pascal-case.d.ts';
 
 /**
 Convert top-level object properties to pascal case.
@@ -37,10 +40,22 @@ const splitOnPunctuation: PascalCasedProperties<{'foo::bar': string}, {splitOnPu
 @category Template literal
 @category Object
 */
-export type PascalCasedProperties<Value, Options extends CamelCaseOptions = {}> = Value extends Function
-	? Value
-	: Value extends Array<infer U>
-		? Value
-		: {[K in keyof Value as PascalCase<K, ApplyDefaultOptions<CamelCaseOptions, _DefaultCamelCaseOptions, Options>>]: Value[K]};
+export type PascalCasedProperties<
+  Value,
+  Options extends CamelCaseOptions = {},
+> = Value extends Function
+  ? Value
+  : Value extends Array<infer U>
+    ? Value
+    : {
+        [K in keyof Value as PascalCase<
+          K,
+          ApplyDefaultOptions<
+            CamelCaseOptions,
+            _DefaultCamelCaseOptions,
+            Options
+          >
+        >]: Value[K];
+      };
 
 export {};

@@ -1,5 +1,9 @@
-import type {CamelCase, CamelCaseOptions, _DefaultCamelCaseOptions} from './camel-case.d.ts';
-import type {ApplyDefaultOptions} from './internal/index.d.ts';
+import type {
+  CamelCase,
+  CamelCaseOptions,
+  _DefaultCamelCaseOptions,
+} from './camel-case.d.ts';
+import type { ApplyDefaultOptions } from './internal/index.d.ts';
 
 /**
 Convert top-level object properties to camel case.
@@ -36,14 +40,22 @@ const splitOnPunctuation: CamelCasedProperties<{'foo::bar': string}, {splitOnPun
 @category Template literal
 @category Object
 */
-export type CamelCasedProperties<Value, Options extends CamelCaseOptions = {}> = Value extends Function
-	? Value
-	: Value extends Array<infer U>
-		? Value
-		: {
-			[K in keyof Value as
-			CamelCase<K, ApplyDefaultOptions<CamelCaseOptions, _DefaultCamelCaseOptions, Options>>
-			]: Value[K];
-		};
+export type CamelCasedProperties<
+  Value,
+  Options extends CamelCaseOptions = {},
+> = Value extends Function
+  ? Value
+  : Value extends Array<infer U>
+    ? Value
+    : {
+        [K in keyof Value as CamelCase<
+          K,
+          ApplyDefaultOptions<
+            CamelCaseOptions,
+            _DefaultCamelCaseOptions,
+            Options
+          >
+        >]: Value[K];
+      };
 
 export {};

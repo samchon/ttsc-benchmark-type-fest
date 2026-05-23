@@ -1,9 +1,9 @@
-import {expectType} from 'tsd';
-import type {Optional} from '../index.d.ts';
+import { expectType } from 'tsd';
+import type { Optional } from '../index.d.ts';
 
 // Basic
 expectType<string | undefined>({} as Optional<string>);
-expectType<{foo: string} | undefined>({} as Optional<{foo: string}>);
+expectType<{ foo: string } | undefined>({} as Optional<{ foo: string }>);
 expectType<'foo' | undefined>({} as Optional<'foo'>);
 expectType<42 | undefined>({} as Optional<42>);
 expectType<boolean | undefined>({} as Optional<boolean>);

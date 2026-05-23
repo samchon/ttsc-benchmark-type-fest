@@ -1,5 +1,5 @@
-import {expectType} from 'tsd';
-import type {CollapseLiterals} from '../../source/internal/object.d.ts';
+import { expectType } from 'tsd';
+import type { CollapseLiterals } from '../../source/internal/object.d.ts';
 
 declare const sym1: unique symbol;
 declare const sym2: unique symbol;
@@ -18,7 +18,9 @@ expectType<'change' | 'click' | `on${string}`>(
   {} as CollapseLiterals<'change' | 'click' | (`on${string}` & {})>,
 );
 expectType<'drag' | `on${string}`>(
-  {} as CollapseLiterals<'drag' | 'onChange' | 'onClick' | (`on${string}` & {})>,
+  {} as CollapseLiterals<
+    'drag' | 'onChange' | 'onClick' | (`on${string}` & {})
+  >,
 );
 
 expectType<null | undefined | string>(
@@ -45,8 +47,8 @@ expectType<unknown>({} as CollapseLiterals<unknown>);
 expectType<string[] | [string, string]>(
   {} as CollapseLiterals<string[] | [string, string]>,
 );
-expectType<Record<string, string> | {a: string; b: number}>(
-  {} as CollapseLiterals<Record<string, string> | {a: string; b: number}>,
+expectType<Record<string, string> | { a: string; b: number }>(
+  {} as CollapseLiterals<Record<string, string> | { a: string; b: number }>,
 );
 
 // Boundary types

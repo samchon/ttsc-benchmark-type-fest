@@ -1,5 +1,5 @@
-import {expectType} from 'tsd';
-import type {IsLowercase} from '../index.d.ts';
+import { expectType } from 'tsd';
+import type { IsLowercase } from '../index.d.ts';
 
 // Literals
 expectType<IsLowercase<'abc'>>(true);
@@ -35,9 +35,9 @@ expectType<IsLowercase<`${Lowercase<string>}${Lowercase<string>}`>>(true);
 
 expectType<IsLowercase<`${Uppercase<string>}${Lowercase<string>}`>>(false);
 expectType<IsLowercase<`${Lowercase<string>}${Uppercase<string>}`>>(false);
-expectType<IsLowercase<`${Lowercase<string>}${Uppercase<string>}${Lowercase<string>}`>>(
-  false,
-);
+expectType<
+  IsLowercase<`${Lowercase<string>}${Uppercase<string>}${Lowercase<string>}`>
+>(false);
 expectType<IsLowercase<`${Capitalize<string>}${Lowercase<string>}`>>(false);
 expectType<IsLowercase<`${Lowercase<string>}${Capitalize<string>}`>>(false);
 expectType<IsLowercase<`${string}${Capitalize<string>}`>>(false);

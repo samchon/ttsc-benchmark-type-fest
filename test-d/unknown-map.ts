@@ -1,9 +1,9 @@
-import {expectAssignable, expectNotAssignable} from 'tsd';
-import type {UnknownMap} from '../index.d.ts';
+import { expectAssignable, expectNotAssignable } from 'tsd';
+import type { UnknownMap } from '../index.d.ts';
 
 declare const foo: ReadonlyMap<string, number>;
 declare const bar: {
-	readonly map: ReadonlyMap<number, string>;
+  readonly map: ReadonlyMap<number, string>;
 };
 
 expectAssignable<UnknownMap>(foo);
@@ -15,5 +15,5 @@ expectNotAssignable<UnknownMap>(null);
 expectNotAssignable<UnknownMap>(undefined);
 expectNotAssignable<UnknownMap>({});
 expectNotAssignable<UnknownMap>([]);
-expectNotAssignable<UnknownMap>({0: 1});
+expectNotAssignable<UnknownMap>({ 0: 1 });
 expectNotAssignable<UnknownMap>(1);

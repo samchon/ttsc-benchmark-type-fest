@@ -1,5 +1,5 @@
-import {expectType} from 'tsd';
-import type {ExcludeRestElement, TupleOf, UnknownArray} from '../index.d.ts';
+import { expectType } from 'tsd';
+import type { ExcludeRestElement, TupleOf, UnknownArray } from '../index.d.ts';
 
 // Basic static tuples (No rest element)
 expectType<ExcludeRestElement<[]>>({} as []);
@@ -18,7 +18,7 @@ expectType<ExcludeRestElement<[...unknown[], 2, 3]>>({} as [2, 3]);
 expectType<ExcludeRestElement<['a', ...string[], 'z']>>({} as ['a', 'z']);
 expectType<ExcludeRestElement<['x', ...boolean[], true]>>({} as ['x', true]);
 expectType<ExcludeRestElement<['x', ...any[], 'y']>>({} as ['x', 'y']);
-expectType<ExcludeRestElement<['x', ...readonly number[], 'y']>>(
+expectType<ExcludeRestElement<['x', ...(readonly number[]), 'y']>>(
   {} as ['x', 'y'],
 );
 
@@ -83,4 +83,6 @@ expectType<ExcludeRestElement<[...NineHundredNinetyNineZeroes, ...number[]]>>(
 
 // Generic instantiations
 type Assignability<_T extends UnknownArray> = unknown;
-type TestAssignability<T extends UnknownArray> = Assignability<ExcludeRestElement<T>>;
+type TestAssignability<T extends UnknownArray> = Assignability<
+  ExcludeRestElement<T>
+>;

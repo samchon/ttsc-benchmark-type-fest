@@ -1,11 +1,11 @@
-import {expectType} from 'tsd';
-import type {EnforceOptional} from '../../source/internal/index.d.ts';
+import { expectType } from 'tsd';
+import type { EnforceOptional } from '../../source/internal/index.d.ts';
 
 type Foo = {
-	a: string;
-	b?: string;
-	c: undefined;
-	d: number | undefined;
+  a: string;
+  b?: string;
+  c: undefined;
+  d: number | undefined;
 };
 
 type EnforcedOptionalFoo = EnforceOptional<Foo>;
@@ -13,8 +13,8 @@ type EnforcedOptionalFoo = EnforceOptional<Foo>;
 declare const enforcedOptionalFoo: EnforcedOptionalFoo;
 
 expectType<{
-	a: string;
-	b?: string;
-	c: undefined;
-	d?: number;
+  a: string;
+  b?: string;
+  c: undefined;
+  d?: number;
 }>(enforcedOptionalFoo);

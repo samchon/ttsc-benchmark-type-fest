@@ -1,14 +1,20 @@
-import {expectNotAssignable, expectType} from 'tsd';
-import type {Join} from '../index.d.ts';
+import { expectNotAssignable, expectType } from 'tsd';
+import type { Join } from '../index.d.ts';
 
 // General use.
 const generalTestVariantMixed: Join<['foo', 0, 'baz'], '.'> = 'foo.0.baz';
-const generalTestVariantOnlyStrings: Join<['foo', 'bar', 'baz'], '.'> = 'foo.bar.baz';
+const generalTestVariantOnlyStrings: Join<['foo', 'bar', 'baz'], '.'> =
+  'foo.bar.baz';
 const generalTestVariantOnlyNumbers: Join<[1, 2, 3], '.'> = '1.2.3';
 const generalTestVariantOnlyBigints: Join<[1n, 2n, 3n], '.'> = '1.2.3';
-const generalTestVariantOnlyBooleans: Join<[true, false, true], '.'> = 'true.false.true';
-const generalTestVariantOnlyNullish: Join<[undefined, null, undefined], '.'> = '..';
-const generalTestVariantNullish: Join<['foo', undefined, 'baz', null, 'xyz'], '.'> = 'foo..baz..xyz';
+const generalTestVariantOnlyBooleans: Join<[true, false, true], '.'> =
+  'true.false.true';
+const generalTestVariantOnlyNullish: Join<[undefined, null, undefined], '.'> =
+  '..';
+const generalTestVariantNullish: Join<
+  ['foo', undefined, 'baz', null, 'xyz'],
+  '.'
+> = 'foo..baz..xyz';
 expectType<'foo.0.baz'>(generalTestVariantMixed);
 expectType<'foo.bar.baz'>(generalTestVariantOnlyStrings);
 expectType<'1.2.3'>(generalTestVariantOnlyNumbers);

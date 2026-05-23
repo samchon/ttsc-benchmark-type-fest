@@ -1,9 +1,9 @@
-import {expectAssignable, expectNotAssignable, expectType} from 'tsd';
-import type {UnknownArray} from '../index.d.ts';
+import { expectAssignable, expectNotAssignable, expectType } from 'tsd';
+import type { UnknownArray } from '../index.d.ts';
 
 declare const foo: readonly [];
 declare const bar: {
-	readonly array: unknown[];
+  readonly array: unknown[];
 };
 
 expectAssignable<UnknownArray>(foo);
@@ -14,7 +14,7 @@ expectAssignable<UnknownArray>(['foo']);
 expectNotAssignable<UnknownArray>(null);
 expectNotAssignable<UnknownArray>(undefined);
 expectNotAssignable<UnknownArray>({});
-expectNotAssignable<UnknownArray>({0: 1});
+expectNotAssignable<UnknownArray>({ 0: 1 });
 expectNotAssignable<UnknownArray>(1);
 expectNotAssignable<UnknownArray>(Date);
 

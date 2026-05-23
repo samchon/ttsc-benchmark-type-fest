@@ -1,4 +1,4 @@
-import type {StringToNumber} from './internal/string.d.ts';
+import type { StringToNumber } from './internal/string.d.ts';
 
 /**
 Returns the absolute value of the specified number or bigint.
@@ -42,11 +42,11 @@ type C = Absolute<number | bigint>;
 @category Numeric
 */
 export type Absolute<N extends number | bigint> = N extends bigint // Also, distributes `N`
-	? `${N}` extends `-${infer Magnitude extends bigint}`
-		? Magnitude
-		: N
-	: `${N}` extends `-${infer Magnitude}` // This doesn't use the `extends number` constraint approach because that fails with the `-Infinity` case
-		? StringToNumber<Magnitude>
-		: N;
+  ? `${N}` extends `-${infer Magnitude extends bigint}`
+    ? Magnitude
+    : N
+  : `${N}` extends `-${infer Magnitude}` // This doesn't use the `extends number` constraint approach because that fails with the `-Infinity` case
+    ? StringToNumber<Magnitude>
+    : N;
 
 export {};

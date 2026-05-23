@@ -1,4 +1,4 @@
-import type {WritableKeysOf} from './writable-keys-of.d.ts';
+import type { WritableKeysOf } from './writable-keys-of.d.ts';
 
 /**
 Returns a boolean for whether the given type has any writable fields.
@@ -18,6 +18,7 @@ type UpdateService<Entity extends object> = {
 
 @category Utilities
 */
-export type HasWritableKeys<BaseType extends object> = WritableKeysOf<BaseType> extends never ? false : true;
+export type HasWritableKeys<BaseType extends object> =
+  WritableKeysOf<BaseType> extends never ? false : true;
 
 export {};

@@ -1,5 +1,5 @@
-import {expectType} from 'tsd';
-import type {RemovePrefix} from '../source/remove-prefix.d.ts';
+import { expectType } from 'tsd';
+import type { RemovePrefix } from '../source/remove-prefix.d.ts';
 
 expectType<'change'>({} as RemovePrefix<'on-change', 'on-'>);
 expectType<'Click'>({} as RemovePrefix<'handleClick', 'handle'>);
@@ -91,7 +91,10 @@ expectType<'name' | 'get-name' | 'age' | 'set-age' | 'other'>(
   {} as RemovePrefix<'get-name' | 'set-age' | 'other', 'get-' | 'set-'>,
 );
 expectType<string>(
-  {} as RemovePrefix<`id:${Uppercase<string>}` | `id/${number}`, `${string}:` | `${string}/`>,
+  {} as RemovePrefix<
+    `id:${Uppercase<string>}` | `id/${number}`,
+    `${string}:` | `${string}/`
+  >,
 );
 
 // Boundary types
@@ -103,44 +106,63 @@ expectType<'on-change'>({} as RemovePrefix<'on-change', never>);
 // === strict: false ===
 
 // No effect if `Prefix` is a literal
-expectType<'change'>({} as RemovePrefix<'on-change', 'on-', {strict: false}>);
+expectType<'change'>({} as RemovePrefix<'on-change', 'on-', { strict: false }>);
 expectType<'change' | 'hover'>(
-  {} as RemovePrefix<'on-change' | 'on-hover', 'on-', {strict: false}>,
+  {} as RemovePrefix<'on-change' | 'on-hover', 'on-', { strict: false }>,
 );
 expectType<Capitalize<string>>(
-  {} as RemovePrefix<`handle${Capitalize<string>}`, 'handle', {strict: false}>,
+  {} as RemovePrefix<
+    `handle${Capitalize<string>}`,
+    'handle',
+    { strict: false }
+  >,
 );
 expectType<'foo:bar:baz'>(
-  {} as RemovePrefix<':foo:bar:baz', any, {strict: false}>,
+  {} as RemovePrefix<':foo:bar:baz', any, { strict: false }>,
 );
 
 expectType<'click'>(
-  {} as RemovePrefix<'on-click', `${string}-`, {strict: false}>,
+  {} as RemovePrefix<'on-click', `${string}-`, { strict: false }>,
 );
 expectType<'over:flex'>(
-  {} as RemovePrefix<'hover:flex', string, {strict: false}>,
+  {} as RemovePrefix<'hover:flex', string, { strict: false }>,
 );
 expectType<`${number}`>(
-  {} as RemovePrefix<`${string}/${number}`, `${string}/`, {strict: false}>,
+  {} as RemovePrefix<`${string}/${number}`, `${string}/`, { strict: false }>,
 );
 expectType<'change' | '-change'>(
-  {} as RemovePrefix<'on-change', `${string}-` | 'on', {strict: false}>,
+  {} as RemovePrefix<'on-change', `${string}-` | 'on', { strict: false }>,
 );
 expectType<'on:change' | 'change'>(
-  {} as RemovePrefix<'on:change' | 'on-change', `${string}-`, {strict: false}>,
+  {} as RemovePrefix<
+    'on:change' | 'on-change',
+    `${string}-`,
+    { strict: false }
+  >,
 );
-expectType<Uppercase<string> | `id:${Uppercase<string>}` | `${number}` | `id/${number}`>(
-  {} as RemovePrefix<`id:${Uppercase<string>}` | `id/${number}`, `${string}:` | `${string}/`, {strict: false}>,
+expectType<
+  Uppercase<string> | `id:${Uppercase<string>}` | `${number}` | `id/${number}`
+>(
+  {} as RemovePrefix<
+    `id:${Uppercase<string>}` | `id/${number}`,
+    `${string}:` | `${string}/`,
+    { strict: false }
+  >,
 );
 expectType<`foo${any}bar`>(
-  {} as RemovePrefix<`${any}foo${any}bar`, any, {strict: false}>,
+  {} as RemovePrefix<`${any}foo${any}bar`, any, { strict: false }>,
 );
 expectType<`foo${string}bar`>(
-  {} as RemovePrefix<`${string}foo${string}bar`, any, {strict: false}>,
+  {} as RemovePrefix<`${string}foo${string}bar`, any, { strict: false }>,
 );
 
 // Generic assignability test
 type Assignability<S extends string> = S;
 // Output of `RemovePrefix` should be assignable to `string`.
-type Test1<S extends string, Prefix extends string> = Assignability<RemovePrefix<S, Prefix>>;
-type Test2<S extends Uppercase<string>, Prefix extends '-' | '/' | '#'> = Assignability<RemovePrefix<S, Prefix>>;
+type Test1<S extends string, Prefix extends string> = Assignability<
+  RemovePrefix<S, Prefix>
+>;
+type Test2<
+  S extends Uppercase<string>,
+  Prefix extends '-' | '/' | '#',
+> = Assignability<RemovePrefix<S, Prefix>>;

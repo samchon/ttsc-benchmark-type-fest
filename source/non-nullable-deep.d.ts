@@ -1,6 +1,6 @@
-import type {BuiltIns, HasMultipleCallSignatures} from './internal/type.d.ts';
-import type {IsNever} from './is-never.d.ts';
-import type {Simplify} from './simplify.d.ts';
+import type { BuiltIns, HasMultipleCallSignatures } from './internal/type.d.ts';
+import type { IsNever } from './is-never.d.ts';
+import type { Simplify } from './simplify.d.ts';
 
 /**
 Recursively removes `null` and `undefined` from the specified type.
@@ -71,32 +71,35 @@ type FunctionExample = NonNullableDeep<(a: string | null) => number | undefined>
 @category Set
 @category Map
 */
-export type NonNullableDeep<T> =
-	T extends BuiltIns | (new (...arguments_: any[]) => unknown)
-		? Exclude<T, null | undefined> // `Exclude` is used instead of `NonNullable` because `NonNullable<void>` results in `void & {}`.
-		: T extends Map<infer KeyType, infer ValueType>
-			? Map<NonNullableDeep<KeyType>, NonNullableDeep<ValueType>>
-			: T extends Set<infer ItemType>
-				? Set<NonNullableDeep<ItemType>>
-				: T extends ReadonlyMap<infer KeyType, infer ValueType>
-					? ReadonlyMap<NonNullableDeep<KeyType>, NonNullableDeep<ValueType>>
-					: T extends ReadonlySet<infer ItemType>
-						? ReadonlySet<NonNullableDeep<ItemType>>
-						: T extends WeakMap<infer KeyType, infer ValueType>
-							? WeakMap<NonNullableDeep<KeyType>, NonNullableDeep<ValueType>>
-							: T extends WeakSet<infer ItemType>
-								? WeakSet<NonNullableDeep<ItemType>>
-								: T extends Promise<infer ValueType>
-									? Promise<NonNullableDeep<ValueType>>
-									: T extends (...arguments_: any[]) => unknown
-										? HasMultipleCallSignatures<T> extends true
-											? T
-											: ((...arguments_: NonNullableDeep<Parameters<T>>) => NonNullableDeep<ReturnType<T>>)
-												& (IsNever<keyof T> extends true
-													? unknown
-													: NonNullableDeep<Simplify<T>>) // `Simplify` removes the call signature
-										: T extends object
-											? {[P in keyof T]: NonNullableDeep<T[P]>}
-											: unknown;
+export type NonNullableDeep<T> = T extends
+  | BuiltIns
+  | (new (...arguments_: any[]) => unknown)
+  ? Exclude<T, null | undefined> // `Exclude` is used instead of `NonNullable` because `NonNullable<void>` results in `void & {}`.
+  : T extends Map<infer KeyType, infer ValueType>
+    ? Map<NonNullableDeep<KeyType>, NonNullableDeep<ValueType>>
+    : T extends Set<infer ItemType>
+      ? Set<NonNullableDeep<ItemType>>
+      : T extends ReadonlyMap<infer KeyType, infer ValueType>
+        ? ReadonlyMap<NonNullableDeep<KeyType>, NonNullableDeep<ValueType>>
+        : T extends ReadonlySet<infer ItemType>
+          ? ReadonlySet<NonNullableDeep<ItemType>>
+          : T extends WeakMap<infer KeyType, infer ValueType>
+            ? WeakMap<NonNullableDeep<KeyType>, NonNullableDeep<ValueType>>
+            : T extends WeakSet<infer ItemType>
+              ? WeakSet<NonNullableDeep<ItemType>>
+              : T extends Promise<infer ValueType>
+                ? Promise<NonNullableDeep<ValueType>>
+                : T extends (...arguments_: any[]) => unknown
+                  ? HasMultipleCallSignatures<T> extends true
+                    ? T
+                    : ((
+                        ...arguments_: NonNullableDeep<Parameters<T>>
+                      ) => NonNullableDeep<ReturnType<T>>) &
+                        (IsNever<keyof T> extends true
+                          ? unknown
+                          : NonNullableDeep<Simplify<T>>) // `Simplify` removes the call signature
+                  : T extends object
+                    ? { [P in keyof T]: NonNullableDeep<T[P]> }
+                    : unknown;
 
 export {};

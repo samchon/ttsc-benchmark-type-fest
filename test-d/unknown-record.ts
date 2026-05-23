@@ -1,12 +1,12 @@
-import {expectAssignable, expectType} from 'tsd';
-import type {UnknownRecord} from '../index.d.ts';
+import { expectAssignable, expectType } from 'tsd';
+import type { UnknownRecord } from '../index.d.ts';
 
 declare let foo: UnknownRecord;
 
 expectAssignable<UnknownRecord>(foo);
-expectAssignable<UnknownRecord>(foo = {});
-expectAssignable<UnknownRecord>(foo = {bar: 'baz'});
-expectAssignable<UnknownRecord>(foo = {bar: {baz: 'hello'}});
+expectAssignable<UnknownRecord>((foo = {}));
+expectAssignable<UnknownRecord>((foo = { bar: 'baz' }));
+expectAssignable<UnknownRecord>((foo = { bar: { baz: 'hello' } }));
 
 // @ts-expect-error
 foo = [];

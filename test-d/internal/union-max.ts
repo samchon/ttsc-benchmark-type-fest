@@ -1,6 +1,6 @@
-import {expectType} from 'tsd';
-import type {UnionMax} from '../../source/internal/numeric.d.ts';
-import type {NegativeInfinity, PositiveInfinity} from '../../index.d.ts';
+import { expectType } from 'tsd';
+import type { UnionMax } from '../../source/internal/numeric.d.ts';
+import type { NegativeInfinity, PositiveInfinity } from '../../index.d.ts';
 
 expectType<UnionMax<1 | 3 | 2>>(3);
 expectType<UnionMax<10 | 5 | 2>>(10);
@@ -16,7 +16,7 @@ expectType<UnionMax<1 | 2 | 5 | 3 | 7 | 9 | 0>>(9);
 expectType<UnionMax<any>>({} as any);
 expectType<UnionMax<never>>({} as never);
 expectType<UnionMax<number>>({} as number);
-expectType<UnionMax<(number & {})>>({} as number);
+expectType<UnionMax<number & {}>>({} as number);
 expectType<UnionMax<(number & {}) | 1 | 5>>({} as number);
 expectType<UnionMax<PositiveInfinity>>({} as PositiveInfinity);
 expectType<UnionMax<NegativeInfinity>>({} as NegativeInfinity);

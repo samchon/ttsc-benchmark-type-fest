@@ -1,16 +1,18 @@
-import {expectType} from 'tsd';
-import type {MultidimensionalArray} from '../index.d.ts';
+import { expectType } from 'tsd';
+import type { MultidimensionalArray } from '../index.d.ts';
 
-function createArray<T extends number>(dimensions: T): MultidimensionalArray<unknown, T> {
-	const root: unknown[] = [];
+function createArray<T extends number>(
+  dimensions: T,
+): MultidimensionalArray<unknown, T> {
+  const root: unknown[] = [];
 
-	let array = root;
-	for (let dimension = 1; dimension < dimensions; ++dimension) {
-		array[0] = [];
-		array = array[0] as unknown[];
-	}
+  let array = root;
+  for (let dimension = 1; dimension < dimensions; ++dimension) {
+    array[0] = [];
+    array = array[0] as unknown[];
+  }
 
-	return root as MultidimensionalArray<unknown, T>;
+  return root as MultidimensionalArray<unknown, T>;
 }
 
 const a: MultidimensionalArray<number, 3> = [];

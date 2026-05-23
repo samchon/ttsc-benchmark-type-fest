@@ -1,60 +1,105 @@
-import {expectNotAssignable, expectType} from 'tsd';
-import type {SetRequired, Simplify} from '../index.d.ts';
+import { expectNotAssignable, expectType } from 'tsd';
+import type { SetRequired, Simplify } from '../index.d.ts';
 
 // Update one required and one optional to required.
-declare const variation1: SetRequired<{a?: number; b: string; c?: boolean}, 'b' | 'c'>;
-expectType<{a?: number; b: string; c: boolean}>(variation1);
+declare const variation1: SetRequired<
+  { a?: number; b: string; c?: boolean },
+  'b' | 'c'
+>;
+expectType<{ a?: number; b: string; c: boolean }>(variation1);
 
 // Update two optional to required.
-declare const variation2: SetRequired<{a?: number; b?: string; c?: boolean}, 'a' | 'b'>;
-expectType<{a: number; b: string; c?: boolean}>(variation2);
+declare const variation2: SetRequired<
+  { a?: number; b?: string; c?: boolean },
+  'a' | 'b'
+>;
+expectType<{ a: number; b: string; c?: boolean }>(variation2);
 
 // Three required remain required.
-declare const variation3: SetRequired<{a: number; b: string; c: boolean}, 'a' | 'b' | 'c'>;
-expectType<{a: number; b: string; c: boolean}>(variation3);
+declare const variation3: SetRequired<
+  { a: number; b: string; c: boolean },
+  'a' | 'b' | 'c'
+>;
+expectType<{ a: number; b: string; c: boolean }>(variation3);
 
 // Fail if type changes even if optional is right.
-declare const variation4: SetRequired<{a?: number; b: string; c?: boolean}, 'b' | 'c'>;
-expectNotAssignable<{a?: boolean; b: string; c: boolean}>(variation4);
+declare const variation4: SetRequired<
+  { a?: number; b: string; c?: boolean },
+  'b' | 'c'
+>;
+expectNotAssignable<{ a?: boolean; b: string; c: boolean }>(variation4);
 
 // Update one required and one optional to required in a union.
-declare const variation5: SetRequired<{a?: '1'; b: string; c?: boolean} | {a?: '2'; b: string; c?: boolean}, 'a' | 'b'>;
-expectType<{a: '1'; b: string; c?: boolean} | {a: '2'; b: string; c?: boolean}>(
-  variation5,
-);
+declare const variation5: SetRequired<
+  { a?: '1'; b: string; c?: boolean } | { a?: '2'; b: string; c?: boolean },
+  'a' | 'b'
+>;
+expectType<
+  { a: '1'; b: string; c?: boolean } | { a: '2'; b: string; c?: boolean }
+>(variation5);
 
 // Preserves readonly modifier.
-declare const variation6: SetRequired<{readonly a?: number; readonly b: string; c?: boolean}, 'b' | 'c'>;
-expectType<{readonly a?: number; readonly b: string; c: boolean}>(variation6);
+declare const variation6: SetRequired<
+  { readonly a?: number; readonly b: string; c?: boolean },
+  'b' | 'c'
+>;
+expectType<{ readonly a?: number; readonly b: string; c: boolean }>(variation6);
 
 // Works with unions.
-declare const variation7: SetRequired<{readonly a?: number; b?: number; c?: boolean} | {a?: string; readonly b?: string; d?: boolean}, 'a' | 'b'>;
-expectType<{readonly a: number; b: number; c?: boolean} | {a: string; readonly b: string; d?: boolean}>(
-  variation7,
-);
+declare const variation7: SetRequired<
+  | { readonly a?: number; b?: number; c?: boolean }
+  | { a?: string; readonly b?: string; d?: boolean },
+  'a' | 'b'
+>;
+expectType<
+  | { readonly a: number; b: number; c?: boolean }
+  | { a: string; readonly b: string; d?: boolean }
+>(variation7);
 
 // Marks all keys as required, if `Keys` is `any`.
-declare const variation8: SetRequired<{readonly a?: number; b?: string; c?: boolean}, any>;
-expectType<{readonly a: number; b: string; c: boolean}>(variation8);
+declare const variation8: SetRequired<
+  { readonly a?: number; b?: string; c?: boolean },
+  any
+>;
+expectType<{ readonly a: number; b: string; c: boolean }>(variation8);
 
 // Does nothing, if `Keys` is `never`.
-declare const variation9: SetRequired<{a?: number; readonly b?: string; readonly c: boolean}, never>;
-expectType<{a?: number; readonly b?: string; readonly c: boolean}>(variation9);
+declare const variation9: SetRequired<
+  { a?: number; readonly b?: string; readonly c: boolean },
+  never
+>;
+expectType<{ a?: number; readonly b?: string; readonly c: boolean }>(
+  variation9,
+);
 
 // Works with index signatures
-declare const variation10: SetRequired<{[k: string]: unknown; a?: number; b: string}, 'a' | 'b'>;
-expectType<{[k: string]: unknown; a: number; b: string}>(variation10);
+declare const variation10: SetRequired<
+  { [k: string]: unknown; a?: number; b: string },
+  'a' | 'b'
+>;
+expectType<{ [k: string]: unknown; a: number; b: string }>(variation10);
 
 // Works with functions containing properties
-declare const variation11: SetRequired<{(a1: string, a2: number): boolean; p1?: string; readonly p2: number}, 'p1'>;
+declare const variation11: SetRequired<
+  { (a1: string, a2: number): boolean; p1?: string; readonly p2: number },
+  'p1'
+>;
 expectType<boolean>(variation11('foo', 1));
-expectType<{p1: string; readonly p2: number}>(
+expectType<{ p1: string; readonly p2: number }>(
   {} as Simplify<typeof variation11>,
 );
 
-declare const variation12: SetRequired<{(a1: boolean, ...a2: string[]): number; p1?: string; readonly p2?: number; p3?: boolean}, 'p1' | 'p2'>;
+declare const variation12: SetRequired<
+  {
+    (a1: boolean, ...a2: string[]): number;
+    p1?: string;
+    readonly p2?: number;
+    p3?: boolean;
+  },
+  'p1' | 'p2'
+>;
 expectType<number>(variation12(true, 'foo', 'bar', 'baz'));
-expectType<{p1: string; readonly p2: number; p3?: boolean}>(
+expectType<{ p1: string; readonly p2: number; p3?: boolean }>(
   {} as Simplify<typeof variation12>,
 );
 
@@ -75,7 +120,7 @@ expectType<[string, number?]>({} as SetRequired<[string?, number?], '0'>);
 expectType<[string, number, boolean]>(
   {} as SetRequired<[string?, number?, boolean?], '0' | '1' | '2'>,
 );
-expectType<[(string | number)]>({} as SetRequired<[(string | number)?], '0'>);
+expectType<[string | number]>({} as SetRequired<[(string | number)?], '0'>);
 
 // Works with number `Keys`, string `Keys`, and union of them.
 expectType<[string, number, boolean?]>(
@@ -113,14 +158,17 @@ expectType<[string, number, boolean, ...string[]]>(
 );
 
 // Works with readonly arrays
-expectType<readonly [(string | number)]>(
+expectType<readonly [string | number]>(
   {} as SetRequired<readonly [(string | number)?], '0'>,
 );
 expectType<readonly [string, number, boolean?]>(
   {} as SetRequired<readonly [string, number?, boolean?], '1'>,
 );
 expectType<readonly [string, number, boolean, ...number[]]>(
-  {} as SetRequired<readonly [string?, number?, boolean?, ...number[]], '0' | '1' | 2>,
+  {} as SetRequired<
+    readonly [string?, number?, boolean?, ...number[]],
+    '0' | '1' | 2
+  >,
 );
 expectType<readonly [string, number, boolean, ...string[]]>(
   {} as SetRequired<readonly [string, number?, boolean?, ...string[]], '1' | 2>,
@@ -196,10 +244,16 @@ expectType<[boolean, ...string[], string, number]>(
 
 // Preserves `| undefined`, similar to how built-in `Required` works.
 expectType<[string | undefined, number | undefined, boolean]>(
-  {} as SetRequired<[string | undefined, (number | undefined)?, boolean?], 0 | 1 | 2>,
+  {} as SetRequired<
+    [string | undefined, (number | undefined)?, boolean?],
+    0 | 1 | 2
+  >,
 );
 expectType<readonly [string | undefined, (number | undefined)?, boolean?]>(
-  {} as SetRequired<readonly [(string | undefined)?, (number | undefined)?, boolean?], 0>,
+  {} as SetRequired<
+    readonly [(string | undefined)?, (number | undefined)?, boolean?],
+    0
+  >,
 );
 
 // Optional elements cannot appear after required ones, `Keys` leading to such situations are ignored.
@@ -207,28 +261,65 @@ expectType<[string?, number?, boolean?]>(
   {} as SetRequired<[string?, number?, boolean?], 1 | 2>,
 ); // `1` and `2` can't be required when `0` is optional
 expectType<[string, number, boolean?, string?, string?]>(
-	{} as SetRequired<[string?, number?, boolean?, string?, string?], 0 | 1 | 3>, // `3` can't be required when `2` is optional
+  {} as SetRequired<[string?, number?, boolean?, string?, string?], 0 | 1 | 3>, // `3` can't be required when `2` is optional
 );
 expectType<readonly [string | undefined, number?, boolean?, ...string[]]>(
-	{} as SetRequired<readonly [string | undefined, number?, boolean?, ...string[]], 2>, // `2` can't be required when `1` is optional
+  {} as SetRequired<
+    readonly [string | undefined, number?, boolean?, ...string[]],
+    2
+  >, // `2` can't be required when `1` is optional
 );
 
 // Works with unions of arrays
 expectType<readonly [] | []>({} as SetRequired<readonly [] | [], never>);
-expectType<[] | readonly [(string | number)]>(
+expectType<[] | readonly [string | number]>(
   {} as SetRequired<[] | readonly [(string | number)?], 0>,
 );
-expectType<[string] | [string, number, boolean?, ...number[]] | readonly [string, number, boolean?]>(
-  {} as SetRequired<[string?] | [string, number?, boolean?, ...number[]] | readonly [string, number?, boolean?], 0 | 1>,
+expectType<
+  | [string]
+  | [string, number, boolean?, ...number[]]
+  | readonly [string, number, boolean?]
+>(
+  {} as SetRequired<
+    | [string?]
+    | [string, number?, boolean?, ...number[]]
+    | readonly [string, number?, boolean?],
+    0 | 1
+  >,
 );
-expectType<readonly [number, string] | [string, boolean, ...number[]] | readonly [string, number | undefined, boolean?, string?]>(
-  {} as SetRequired<readonly [number, string] | [string, boolean?, ...number[]] | readonly [string, (number | undefined)?, boolean?, string?], 1 | 3>,
+expectType<
+  | readonly [number, string]
+  | [string, boolean, ...number[]]
+  | readonly [string, number | undefined, boolean?, string?]
+>(
+  {} as SetRequired<
+    | readonly [number, string]
+    | [string, boolean?, ...number[]]
+    | readonly [string, (number | undefined)?, boolean?, string?],
+    1 | 3
+  >,
 );
-expectType<readonly [...number[], number] | [string, boolean, ...number[]] | readonly [string, number | undefined, boolean, string]>(
-  {} as SetRequired<readonly [...number[], number] | [string, boolean?, ...number[]] | readonly [string, (number | undefined)?, boolean?, string?], any>,
+expectType<
+  | readonly [...number[], number]
+  | [string, boolean, ...number[]]
+  | readonly [string, number | undefined, boolean, string]
+>(
+  {} as SetRequired<
+    | readonly [...number[], number]
+    | [string, boolean?, ...number[]]
+    | readonly [string, (number | undefined)?, boolean?, string?],
+    any
+  >,
 );
-expectType<readonly string[] | [x: number, y: number] | [string, number, ...string[]]>(
-  {} as SetRequired<readonly string[] | [x: number, y?: number] | [string?, number?, ...string[]], number>,
+expectType<
+  readonly string[] | [x: number, y: number] | [string, number, ...string[]]
+>(
+  {} as SetRequired<
+    | readonly string[]
+    | [x: number, y?: number]
+    | [string?, number?, ...string[]],
+    number
+  >,
 );
 
 // Works with labelled tuples
@@ -239,7 +330,10 @@ expectType<readonly [x: number, y: number, z?: number]>(
   {} as SetRequired<readonly [x?: number, y?: number, z?: number], 0 | 1>,
 );
 expectType<readonly [x: number, y: number, z?: number, ...rest: number[]]>(
-  {} as SetRequired<readonly [x?: number, y?: number, z?: number, ...rest: number[]], 0 | 1>,
+  {} as SetRequired<
+    readonly [x?: number, y?: number, z?: number, ...rest: number[]],
+    0 | 1
+  >,
 );
 
 // Non tuple arrays are left unchanged

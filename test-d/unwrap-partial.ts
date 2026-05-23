@@ -1,23 +1,23 @@
-import {expectType} from 'tsd';
-import type {EmptyObject, UnwrapPartial} from '../index.d.ts';
+import { expectType } from 'tsd';
+import type { EmptyObject, UnwrapPartial } from '../index.d.ts';
 
 type TestType = {
-	a: string;
-	b: number;
+  a: string;
+  b: number;
 };
 
 expectType<TestType>({} as UnwrapPartial<Partial<TestType>>);
-expectType<TestType>({} as UnwrapPartial<{a?: string; b?: number}>);
+expectType<TestType>({} as UnwrapPartial<{ a?: string; b?: number }>);
 expectType<Partial<TestType>>({} as UnwrapPartial<Partial<Partial<TestType>>>);
 
 // `UnwrapPartial` preserves optional properties
 type TestTypeWithOptionalProp = TestType & {
-	c?: boolean;
+  c?: boolean;
 };
 
 type AnotherTestType = {
-	c: boolean;
-	d: 'literal';
+  c: boolean;
+  d: 'literal';
 };
 
 type TestTypeWithOptionalProps = TestType & Partial<AnotherTestType>;
@@ -31,7 +31,7 @@ expectType<TestTypeWithOptionalProps>(
 
 // `UnwrapPartial` preserves nested `Partial` properties
 type TestTypeWithPartialProp = TestType & {
-	c: Partial<TestType>;
+  c: Partial<TestType>;
 };
 
 expectType<TestTypeWithPartialProp>(
@@ -40,7 +40,7 @@ expectType<TestTypeWithPartialProp>(
 
 // `UnwrapPartial` preserves readonly properties
 type TestTypeWithReadonlyProps = Readonly<TestType> & {
-	readonly c: boolean;
+  readonly c: boolean;
 };
 
 expectType<TestTypeWithReadonlyProps>(
@@ -49,7 +49,7 @@ expectType<TestTypeWithReadonlyProps>(
 
 // `UnwrapPartial` works with methods
 type TestTypeWithMethod = {
-	c(): void;
+  c(): void;
 };
 
 expectType<TestTypeWithMethod>(
@@ -66,11 +66,11 @@ expectType<TestType | AnotherTestType>(
 
 // `UnwrapPartial` works with index signatures
 type ArrayLikeTestType = {
-	[index: number]: string;
+  [index: number]: string;
 };
 
 type PlainObjectTestType = {
-	readonly [key: string]: number | undefined;
+  readonly [key: string]: number | undefined;
 };
 
 expectType<ArrayLikeTestType>({} as UnwrapPartial<Partial<ArrayLikeTestType>>);

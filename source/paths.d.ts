@@ -1,10 +1,16 @@
-import type {NonRecursiveType, ToString, IsNumberLike, ApplyDefaultOptions, MapsSetsOrArrays} from './internal/index.d.ts';
-import type {IsAny} from './is-any.d.ts';
-import type {UnknownArray} from './unknown-array.d.ts';
-import type {GreaterThan} from './greater-than.d.ts';
-import type {IsNever} from './is-never.d.ts';
-import type {Sum} from './sum.d.ts';
-import type {And} from './and.d.ts';
+import type {
+  NonRecursiveType,
+  ToString,
+  IsNumberLike,
+  ApplyDefaultOptions,
+  MapsSetsOrArrays,
+} from './internal/index.d.ts';
+import type { IsAny } from './is-any.d.ts';
+import type { UnknownArray } from './unknown-array.d.ts';
+import type { GreaterThan } from './greater-than.d.ts';
+import type { IsNever } from './is-never.d.ts';
+import type { Sum } from './sum.d.ts';
+import type { And } from './and.d.ts';
 
 /**
 Paths options.
@@ -12,14 +18,14 @@ Paths options.
 @see {@link Paths}
 */
 export type PathsOptions = {
-	/**
+  /**
 	The maximum depth to recurse when searching for paths. Range: 0 ~ 10.
 
 	@default 5
 	*/
-	maxRecursionDepth?: number;
+  maxRecursionDepth?: number;
 
-	/**
+  /**
 	Use bracket notation for array indices and numeric object keys.
 
 	@default false
@@ -54,9 +60,9 @@ export type PathsOptions = {
 	//=> '[1]' | '[1][0]'
 	```
 	*/
-	bracketNotation?: boolean;
+  bracketNotation?: boolean;
 
-	/**
+  /**
 	Only include leaf paths in the output.
 
 	@default false
@@ -99,9 +105,9 @@ export type PathsOptions = {
 	//=> `array.${number}.foo` | 'tuple.0' | 'tuple.1.bar'
 	```
 	*/
-	leavesOnly?: boolean;
+  leavesOnly?: boolean;
 
-	/**
+  /**
 	Only include paths at the specified depth. By default all paths up to {@link PathsOptions.maxRecursionDepth | `maxRecursionDepth`} are included.
 
 	Note: Depth starts at `0` for root properties.
@@ -136,14 +142,14 @@ export type PathsOptions = {
 	//=> 'author.id'
 	```
 	*/
-	depth?: number;
+  depth?: number;
 };
 
 type DefaultPathsOptions = {
-	maxRecursionDepth: 5;
-	bracketNotation: false;
-	leavesOnly: false;
-	depth: number;
+  maxRecursionDepth: 5;
+  bracketNotation: false;
+  leavesOnly: false;
+  depth: number;
 };
 
 /**
@@ -189,53 +195,71 @@ open('listB.1'); // TypeError. Because listB only has one element.
 @category Object
 @category Array
 */
-export type Paths<T, Options extends PathsOptions = {}> = _Paths<T, ApplyDefaultOptions<PathsOptions, DefaultPathsOptions, Options>>;
+export type Paths<T, Options extends PathsOptions = {}> = _Paths<
+  T,
+  ApplyDefaultOptions<PathsOptions, DefaultPathsOptions, Options>
+>;
 
-type _Paths<T, Options extends Required<PathsOptions>, CurrentDepth extends number = 0> =
-	T extends NonRecursiveType | Exclude<MapsSetsOrArrays, UnknownArray>
-		? never
-		: IsAny<T> extends true
-			? never
-			: T extends object
-				? InternalPaths<Required<T>, Options, CurrentDepth>
-				: never;
+type _Paths<
+  T,
+  Options extends Required<PathsOptions>,
+  CurrentDepth extends number = 0,
+> = T extends NonRecursiveType | Exclude<MapsSetsOrArrays, UnknownArray>
+  ? never
+  : IsAny<T> extends true
+    ? never
+    : T extends object
+      ? InternalPaths<Required<T>, Options, CurrentDepth>
+      : never;
 
-type InternalPaths<T, Options extends Required<PathsOptions>, CurrentDepth extends number> =
-	{[Key in keyof T]: Key extends string | number // Limit `Key` to `string | number`
-		? (
-			And<Options['bracketNotation'], IsNumberLike<Key>> extends true
-				? `[${Key}]`
-				: CurrentDepth extends 0
-					// Return both `Key` and `ToString<Key>` because for number keys, like `1`, both `1` and `'1'` are valid keys.
-					? Key | ToString<Key>
-					: `.${(Key | ToString<Key>)}`
-		) extends infer TransformedKey extends string | number
-			? ((Options['leavesOnly'] extends true
-				? Options['maxRecursionDepth'] extends CurrentDepth
-					? TransformedKey
-					: IsNever<T[Key]> extends true
-						? TransformedKey
-						: T[Key] extends infer Value // For distributing `T[Key]`
-							? (Value extends readonly [] | NonRecursiveType | Exclude<MapsSetsOrArrays, UnknownArray>
-								? TransformedKey
-								: IsNever<keyof Value> extends true // Check for empty object & `unknown`, because `keyof unknown` is `never`.
-									? TransformedKey
-									: never)
-							: never // Should never happen
-				: TransformedKey
-			) extends infer _TransformedKey
-				// If `depth` is provided, the condition becomes truthy only when it matches `CurrentDepth`.
-				// Otherwise, since `depth` defaults to `number`, the condition is always truthy, returning paths at all depths.
-				? CurrentDepth extends Options['depth']
-					? _TransformedKey
-					: never
-				: never)
-			// Recursively generate paths for the current key
-			| (GreaterThan<Options['maxRecursionDepth'], CurrentDepth> extends true // Limit the depth to prevent infinite recursion
-				? `${TransformedKey}${_Paths<T[Key], Options, Sum<CurrentDepth, 1>> & (string | number)}`
-				: never)
-			: never
-		: never
-	}[keyof T & (T extends UnknownArray ? number : unknown)];
+type InternalPaths<
+  T,
+  Options extends Required<PathsOptions>,
+  CurrentDepth extends number,
+> = {
+  [Key in keyof T]: Key extends string | number // Limit `Key` to `string | number`
+    ? (
+        And<Options['bracketNotation'], IsNumberLike<Key>> extends true
+          ? `[${Key}]`
+          : CurrentDepth extends 0
+            ? // Return both `Key` and `ToString<Key>` because for number keys, like `1`, both `1` and `'1'` are valid keys.
+                Key | ToString<Key>
+            : `.${Key | ToString<Key>}`
+      ) extends infer TransformedKey extends string | number
+      ?
+          | ((
+              Options['leavesOnly'] extends true
+                ? Options['maxRecursionDepth'] extends CurrentDepth
+                  ? TransformedKey
+                  : IsNever<T[Key]> extends true
+                    ? TransformedKey
+                    : T[Key] extends infer Value // For distributing `T[Key]`
+                      ? Value extends
+                          | readonly []
+                          | NonRecursiveType
+                          | Exclude<MapsSetsOrArrays, UnknownArray>
+                        ? TransformedKey
+                        : IsNever<keyof Value> extends true // Check for empty object & `unknown`, because `keyof unknown` is `never`.
+                          ? TransformedKey
+                          : never
+                      : never // Should never happen
+                : TransformedKey
+            ) extends infer _TransformedKey
+              ? // If `depth` is provided, the condition becomes truthy only when it matches `CurrentDepth`.
+                // Otherwise, since `depth` defaults to `number`, the condition is always truthy, returning paths at all depths.
+                CurrentDepth extends Options['depth']
+                ? _TransformedKey
+                : never
+              : never)
+          // Recursively generate paths for the current key
+          | (GreaterThan<
+              Options['maxRecursionDepth'],
+              CurrentDepth
+            > extends true // Limit the depth to prevent infinite recursion
+              ? `${TransformedKey}${_Paths<T[Key], Options, Sum<CurrentDepth, 1>> & (string | number)}`
+              : never)
+      : never
+    : never;
+}[keyof T & (T extends UnknownArray ? number : unknown)];
 
 export {};

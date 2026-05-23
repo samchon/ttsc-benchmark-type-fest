@@ -1,5 +1,5 @@
-import {expectType} from 'tsd';
-import type {ArraySlice} from '../index.d.ts';
+import { expectType } from 'tsd';
+import type { ArraySlice } from '../index.d.ts';
 
 expectType<ArraySlice<[0, 1, 2, 3]>>([0, 1, 2, 3]);
 expectType<ArraySlice<[0, 1, 2] | [0, 1, 2, 3], 0>>(
@@ -26,13 +26,13 @@ expectType<ArraySlice<[]>>([]);
 expectType<ArraySlice<[...string[], 1, 2]>>([...(null! as string[]), 1, 2]);
 expectType<ArraySlice<[...string[], 1, 2], 0>>([...(null! as string[]), 1, 2]);
 expectType<ArraySlice<[...string[], 1, 2], 0, 2>>([
-  null! as (string | 1 | 2),
-  null! as (string | 1 | 2),
+  null! as string | 1 | 2,
+  null! as string | 1 | 2,
 ]);
 expectType<ArraySlice<[...string[], 1, 2], 1, 4>>([
-  null! as (string | 1 | 2),
-  null! as (string | 1 | 2),
-  null! as (string | 1 | 2),
+  null! as string | 1 | 2,
+  null! as string | 1 | 2,
+  null! as string | 1 | 2,
 ]);
 
 expectType<ArraySlice<[1, 2, 3, ...string[]]>>([
@@ -74,8 +74,8 @@ expectType<ArraySlice<[1, 2, 3, ...string[], 4, 5], 0>>([
 expectType<ArraySlice<[1, 2, 3, ...string[], 4, 5], 1, 5>>([
   2,
   3,
-  null! as (string | 4 | 5),
-  null! as (string | 4 | 5),
+  null! as string | 4 | 5,
+  null! as string | 4 | 5,
 ]);
 expectType<ArraySlice<[1, 2, 3, ...string[], 4, 5], 0>>([
   1,
@@ -164,10 +164,18 @@ expectType<ArraySlice<[0, 1, 2] | ['a', 'b', 'c', 'd'], -3, 3 | -2>>(
 
 // Start and end are unions
 expectType<ArraySlice<[0, 1, 2, 3], -5 | 0 | 1, -2 | 0 | 3>>( // Positive/Negative start, positive/negative end
-	{} as [0, 1] | [0, 1, 2] | [] | [1] | [1, 2],
+  {} as [0, 1] | [0, 1, 2] | [] | [1] | [1, 2],
 );
 
 // Array, start and end are unions
 expectType<ArraySlice<[0, 1, 2] | ['a', 'b', 'c', 'd'], 1 | -4, 4 | -1>>( // Positive/Negative start, positive/negative end
-	{} as [1] | [1, 2] | [0, 1] | [0, 1, 2] | ['a', 'b', 'c', 'd'] | ['a', 'b', 'c'] | ['b', 'c'] | ['b', 'c', 'd'],
+  {} as
+    | [1]
+    | [1, 2]
+    | [0, 1]
+    | [0, 1, 2]
+    | ['a', 'b', 'c', 'd']
+    | ['a', 'b', 'c']
+    | ['b', 'c']
+    | ['b', 'c', 'd'],
 );

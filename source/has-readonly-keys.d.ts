@@ -1,4 +1,4 @@
-import type {ReadonlyKeysOf} from './readonly-keys-of.d.ts';
+import type { ReadonlyKeysOf } from './readonly-keys-of.d.ts';
 
 /**
 Returns a boolean for whether the given type has any readonly fields.
@@ -18,6 +18,7 @@ type UpdateService<Entity extends object> = {
 
 @category Utilities
 */
-export type HasReadonlyKeys<BaseType extends object> = ReadonlyKeysOf<BaseType> extends never ? false : true;
+export type HasReadonlyKeys<BaseType extends object> =
+  ReadonlyKeysOf<BaseType> extends never ? false : true;
 
 export {};

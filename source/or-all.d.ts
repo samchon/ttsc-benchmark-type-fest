@@ -1,4 +1,4 @@
-import type {SomeExtend} from './some-extend.d.ts';
+import type { SomeExtend } from './some-extend.d.ts';
 
 /**
 Returns a boolean for whether any of the given elements is `true`.

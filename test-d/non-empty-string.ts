@@ -1,5 +1,5 @@
-import {expectType} from 'tsd';
-import type {NonEmptyString} from '../index.d.ts';
+import { expectType } from 'tsd';
+import type { NonEmptyString } from '../index.d.ts';
 
 expectType<never>({} as NonEmptyString<''>);
 
@@ -22,6 +22,9 @@ type Assignability1<_S extends string> = unknown;
 type Test1<S extends string> = Assignability1<NonEmptyString<S>>;
 
 // `string` should NOT be assignable to `NonEmptyString<S>`
-type Assignability2<_S extends string, _SS extends NonEmptyString<_S>> = unknown;
+type Assignability2<
+  _S extends string,
+  _SS extends NonEmptyString<_S>,
+> = unknown;
 // @ts-expect-error
 type Test2<S extends string> = Assignability2<S, S>;

@@ -1,5 +1,5 @@
-import {expectType} from 'tsd';
-import type {StringSlice} from '../index.d.ts';
+import { expectType } from 'tsd';
+import type { StringSlice } from '../index.d.ts';
 
 expectType<StringSlice<'abcde'>>('abcde');
 expectType<StringSlice<'abcde'>>('abcde');
@@ -77,10 +77,10 @@ expectType<StringSlice<'012' | 'abcd', -3, 3 | -2>>(
 
 // Start and end are unions
 expectType<StringSlice<'0123', -5 | 0 | 1, -2 | 0 | 3>>( // Positive/Negative start, positive/negative end
-	{} as '01' | '012' | '' | '1' | '12',
+  {} as '01' | '012' | '' | '1' | '12',
 );
 
 // Array, start and end are unions
 expectType<StringSlice<'012' | 'abcd', 1 | -4, 4 | -1>>( // Positive/Negative start, positive/negative end
-	{} as '1' | '12' | '01' | '012' | 'abcd' | 'abc' | 'bc' | 'bcd',
+  {} as '1' | '12' | '01' | '012' | 'abcd' | 'abc' | 'bc' | 'bcd',
 );

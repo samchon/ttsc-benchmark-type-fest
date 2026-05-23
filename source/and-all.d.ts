@@ -1,4 +1,4 @@
-import type {AllExtend} from './all-extend.d.ts';
+import type { AllExtend } from './all-extend.d.ts';
 
 /**
 Returns a boolean for whether all of the given elements are `true`.

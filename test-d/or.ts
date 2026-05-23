@@ -1,5 +1,5 @@
-import {expectType} from 'tsd';
-import type {Or} from '../source/or.d.ts';
+import { expectType } from 'tsd';
+import type { Or } from '../source/or.d.ts';
 
 declare const boolean: boolean;
 

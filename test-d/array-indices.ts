@@ -1,5 +1,5 @@
-import {expectNotAssignable, expectType, expectAssignable} from 'tsd';
-import type {ArrayIndices} from '../index.d.ts';
+import { expectNotAssignable, expectType, expectAssignable } from 'tsd';
+import type { ArrayIndices } from '../index.d.ts';
 
 const values = ['a', 'b', 'c'] as const;
 type ValueKeys = ArrayIndices<typeof values>;

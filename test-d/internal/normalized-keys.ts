@@ -1,5 +1,5 @@
-import {expectType} from 'tsd';
-import type {NormalizedKeys} from '../../source/internal/object.d.ts';
+import { expectType } from 'tsd';
+import type { NormalizedKeys } from '../../source/internal/object.d.ts';
 
 declare const sym: unique symbol;
 
