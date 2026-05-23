@@ -13,17 +13,13 @@ expectType<LargeShirtSize>(largeShirtSizes);
 declare const smallShirtSizes: ExtractStrict<ShirtSize, SmallShirtSize>;
 expectType<SmallShirtSize>(smallShirtSizes);
 
+// prettier-ignore
 // @ts-expect-error
-declare const allInvalidShirtSizes: ExtractStrict<
-  ShirtSize,
-  'skyscraper-large' | 'atom-small'
->;
+declare const allInvalidShirtSizes: ExtractStrict<ShirtSize, 'skyscraper-large' | 'atom-small'>;
 
+// prettier-ignore
 // @ts-expect-error
-declare const someInvalidShirtSizes: ExtractStrict<
-  ShirtSize,
-  'm' | 'atom-small'
->;
+declare const someInvalidShirtSizes: ExtractStrict<ShirtSize, 'm' | 'atom-small'>;
 
 // Object union tests
 
@@ -60,15 +56,15 @@ declare const foobarByUnionBC: ExtractStrict<
 >;
 expectType<Foobar>(foobarByUnionBC);
 
+// prettier-ignore
 // @ts-expect-error
-declare const invalidLoneField: ExtractStrict<Foobar, { d: string }>;
+declare const invalidLoneField: ExtractStrict<Foobar, {d: string}>;
 
+// prettier-ignore
 // @ts-expect-error
-declare const invalidMixedFields: ExtractStrict<
-  Foobar,
-  { kind: 'foo'; d: string }
->;
+declare const invalidMixedFields: ExtractStrict<Foobar, {kind: 'foo'; d: string}>;
 
+// prettier-ignore
 // @ts-expect-error
 declare const undefinedField: ExtractStrict<Foobar, undefined>;
 
@@ -81,8 +77,10 @@ expectType<'bar' | 'baz'>(
   {} as ExtractStrict<'foo' | 'bar' | 'baz', `b${string}`>,
 );
 
+// prettier-ignore
 // @ts-expect-error
 type invalid1 = ExtractStrict<string | number | boolean, number | bigint>;
+// prettier-ignore
 // @ts-expect-error
 type invalid2 = ExtractStrict<string, Uppercase<string>>;
 
@@ -92,8 +90,10 @@ expectType<{ a: string; b: number }>(
 );
 expectType<string[]>({} as ExtractStrict<string[], readonly string[]>);
 
+// prettier-ignore
 // @ts-expect-error
-type invalid3 = ExtractStrict<{ a?: string; b: number }, { a: string }>;
+type invalid3 = ExtractStrict<{a?: string; b: number}, {a: string}>;
+// prettier-ignore
 // @ts-expect-error
 type invalid4 = ExtractStrict<readonly string[], string[]>;
 
@@ -105,11 +105,9 @@ expectType<{ c: true; d: false }>(
   >,
 );
 
+// prettier-ignore
 // @ts-expect-error
-type invalid5 = ExtractStrict<
-  { a: string; b: number } | { c: true; d: false },
-  Record<string, string>
->;
+type invalid5 = ExtractStrict<{a: string; b: number} | {c: true; d: false}, Record<string, string>>;
 
 // `any` and `never`
 expectType<string | { a: string; b: number } | string[]>(

@@ -26,6 +26,7 @@ function withBar<T extends AbstractConstructor<object>>(Ctor: T) {
 }
 
 // This lacks `barMethod`.
+// prettier-ignore
 // @ts-expect-error
 class WrongConcreteExtendedBar extends withBar(Bar) {}
 
@@ -47,6 +48,7 @@ function assertWithBar() {
 }
 
 functionReceivingAbsClass(Foo);
+// prettier-ignore
 // @ts-expect-error
 functionReceivingAbsClass<Bar>(Foo);
 assertWithBar();
@@ -57,6 +59,7 @@ expectAssignable<AbstractClass<{ barMethod(): void }, []>>(Bar);
 // Prototype test
 expectAssignable<{ barMethod(): void }>(Bar.prototype);
 expectNotAssignable<{ fooMethod(): void }>(Bar.prototype);
+// prettier-ignore
 // @ts-expect-error
 const _a = new CorrectConcreteExtendedBar(12);
 expectAssignable<{ barMethod(): void }>(new CorrectConcreteExtendedBar(12, 15));

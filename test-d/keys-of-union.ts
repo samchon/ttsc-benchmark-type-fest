@@ -47,6 +47,7 @@ expectType<'a' | 'b'>(actual3);
 
 // `KeysOfUnion<T>` should NOT be assignable to `keyof T`
 type Assignability1<T, _K extends keyof T> = unknown;
+// prettier-ignore
 // @ts-expect-error
 type Test1<T> = Assignability1<T, KeysOfUnion<T>>;
 
@@ -60,6 +61,7 @@ type Test3<T> = Assignability3<T, KeysOfUnion<T>>;
 
 // `PropertyKey` should NOT be assignable to `KeysOfUnion<T>`
 type Assignability4<T, _K extends KeysOfUnion<T>> = unknown;
+// prettier-ignore
 // @ts-expect-error
 type Test4<T> = Assignability4<T, PropertyKey>;
 
@@ -86,14 +88,13 @@ type Assignability8<
   T extends Record<string, unknown>,
   _K extends keyof T,
 > = unknown;
+// prettier-ignore
 // @ts-expect-error
-type Test8<T extends Record<string, unknown>> = Assignability8<
-  T,
-  KeysOfUnion<T>
->;
+type Test8<T extends Record<string, unknown>> = Assignability8<T, KeysOfUnion<T>>;
 
 // `KeysOfUnion<T>` should NOT be assignable to `keyof T` even when `T` is constrained to `object`
 type Assignability9<T extends object, _K extends keyof T> = unknown;
+// prettier-ignore
 // @ts-expect-error
 type Test9<T extends object> = Assignability9<T, KeysOfUnion<T>>;
 

@@ -10,9 +10,10 @@ function function_(
   return null;
 }
 
+// prettier-ignore
 // @ts-ignore Global requires @types/node
 function functionWithThis(this: Global, _a: number) {
-  return null;
+	return null;
 }
 
 const arrowFunction = (_a: number) => null;

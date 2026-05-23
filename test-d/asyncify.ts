@@ -19,6 +19,7 @@ declare const getFooWithThisArgumentAsync1: Asyncify<
 const callResult = getFooWithThisArgumentAsync1.call(new Date(), 'foo');
 expectType<Promise<RegExp>>(callResult);
 
+// prettier-ignore
 // @ts-expect-error
 // eslint-disable-next-line @typescript-eslint/no-floating-promises
 getFooWithThisArgumentAsync1.call('not-date', 'foo');

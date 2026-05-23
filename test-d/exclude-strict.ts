@@ -13,17 +13,13 @@ expectType<'m' | SmallShirtSize>(nonLargeShirtSizes);
 declare const nonSmallShirtSizes: ExcludeStrict<ShirtSize, SmallShirtSize>;
 expectType<LargeShirtSize | 'm'>(nonSmallShirtSizes);
 
+// prettier-ignore
 // @ts-expect-error
-declare const allInvalidShirtSizes: ExcludeStrict<
-  ShirtSize,
-  'skyscraper-large' | 'atom-small'
->;
+declare const allInvalidShirtSizes: ExcludeStrict<ShirtSize, 'skyscraper-large' | 'atom-small'>;
 
+// prettier-ignore
 // @ts-expect-error
-declare const someInvalidShirtSizes: ExcludeStrict<
-  ShirtSize,
-  'm' | 'atom-small'
->;
+declare const someInvalidShirtSizes: ExcludeStrict<ShirtSize, 'm' | 'atom-small'>;
 
 // Object union tests
 
@@ -48,15 +44,15 @@ expectType<Bar>({} as ExcludeStrict<Foobar, { b: string }>);
 expectType<Foo>({} as ExcludeStrict<Foobar, { c: boolean }>);
 expectType<never>({} as ExcludeStrict<Foobar, { b: string } | { c: boolean }>);
 
+// prettier-ignore
 // @ts-expect-error
-declare const invalidLoneField: ExcludeStrict<Foobar, { d: string }>;
+declare const invalidLoneField: ExcludeStrict<Foobar, {d: string}>;
 
+// prettier-ignore
 // @ts-expect-error
-declare const invalidMixedFields: ExcludeStrict<
-  Foobar,
-  { kind: 'foo'; d: string }
->;
+declare const invalidMixedFields: ExcludeStrict<Foobar, {kind: 'foo'; d: string}>;
 
+// prettier-ignore
 // @ts-expect-error
 declare const undefinedField: ExcludeStrict<Foobar, undefined>;
 
@@ -67,8 +63,10 @@ expectType<string>(
 );
 expectType<'foo'>({} as ExcludeStrict<'foo' | 'bar' | 'baz', `b${string}`>);
 
+// prettier-ignore
 // @ts-expect-error
 type invalid1 = ExcludeStrict<string | number | boolean, number | bigint>;
+// prettier-ignore
 // @ts-expect-error
 type invalid2 = ExcludeStrict<string, Uppercase<string>>;
 
@@ -84,8 +82,10 @@ expectType<{ c: string; d: number }>(
 );
 expectType<never>({} as ExcludeStrict<string[], readonly string[]>);
 
+// prettier-ignore
 // @ts-expect-error
-type invalid3 = ExcludeStrict<{ a?: string; b: number }, { a: string }>;
+type invalid3 = ExcludeStrict<{a?: string; b: number}, {a: string}>;
+// prettier-ignore
 // @ts-expect-error
 type invalid4 = ExcludeStrict<readonly string[], string[]>;
 
@@ -97,11 +97,9 @@ expectType<{ a: string; b: number }>(
   >,
 );
 
+// prettier-ignore
 // @ts-expect-error
-type invalid5 = ExcludeStrict<
-  { a: string; b: number } | { c: true; d: false },
-  Record<string, string>
->;
+type invalid5 = ExcludeStrict<{a: string; b: number} | {c: true; d: false}, Record<string, string>>;
 
 // `any` and `never`
 expectType<never>(

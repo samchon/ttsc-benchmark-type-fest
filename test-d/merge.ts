@@ -50,6 +50,7 @@ expectType<{
 
 declare function setFooBar(fooBar: FooBar): void;
 
+// prettier-ignore
 // @ts-expect-error
 setFooBar({
   [Symbol(42)]: 'life',

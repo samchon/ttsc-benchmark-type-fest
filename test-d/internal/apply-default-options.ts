@@ -65,12 +65,9 @@ declare const requiredOptions: ApplyDefaultOptions<
 >;
 expectType<{ fixedLengthOnly: false; strict: true }>(requiredOptions);
 
+// prettier-ignore
 // @ts-ignore
-declare const undefinedsGetOverwritten: ApplyDefaultOptions<
-  PathsOptions,
-  DefaultPathsOptions,
-  { maxRecursionDepth: undefined }
->; // Possible when `exactOptionalPropertyTypes` is disabled
+declare const undefinedsGetOverwritten: ApplyDefaultOptions<PathsOptions, DefaultPathsOptions, {maxRecursionDepth: undefined}>; // Possible when `exactOptionalPropertyTypes` is disabled
 expectType<DefaultPathsOptions>(undefinedsGetOverwritten);
 
 declare const undefinedsGetOverwritten2: ApplyDefaultOptions<
@@ -115,40 +112,25 @@ declare const anyAsOptionsGetOverwritten: ApplyDefaultOptions<
 >;
 expectType<DefaultPathsOptions>(anyAsOptionsGetOverwritten);
 
+// prettier-ignore
 // @ts-expect-error - `Defaults` should be compatible with `Options`
-declare const defaultsShouldBeCompatible: ApplyDefaultOptions<
-  { fixedLengthOnly?: boolean },
-  { fixedLengthOnly: 'no' },
-  {}
->;
+declare const defaultsShouldBeCompatible: ApplyDefaultOptions<{fixedLengthOnly?: boolean}, {fixedLengthOnly: 'no'}, {}>;
 
+// prettier-ignore
 // @ts-expect-error - `SpecifiedOptions` should be compatible with `Options`
-declare const specifiedOptionsShouldBeCompatible: ApplyDefaultOptions<
-  { fixedLengthOnly?: boolean },
-  { fixedLengthOnly: false },
-  { fixedLengthOnly: 'yes' }
->;
+declare const specifiedOptionsShouldBeCompatible: ApplyDefaultOptions<{fixedLengthOnly?: boolean}, {fixedLengthOnly: false}, {fixedLengthOnly: 'yes'}>;
 
+// prettier-ignore
 // @ts-expect-error - Optional options should have a default value
-declare const defaultForOptionalOptions: ApplyDefaultOptions<
-  PathsOptions,
-  Omit<DefaultPathsOptions, 'depth'>,
-  {}
->;
+declare const defaultForOptionalOptions: ApplyDefaultOptions<PathsOptions, Omit<DefaultPathsOptions, 'depth'>, {}>;
 
+// prettier-ignore
 // @ts-expect-error - Required options should be specified
-declare const requiredOptionsShouldBeSpecified: ApplyDefaultOptions<
-  { fixedLengthOnly: boolean },
-  {},
-  {}
->;
+declare const requiredOptionsShouldBeSpecified: ApplyDefaultOptions<{fixedLengthOnly: boolean}, {}, {}>;
 
+// prettier-ignore
 // @ts-expect-error - Required options should not have a default value
-declare const noDefaultForRequiredOptions: ApplyDefaultOptions<
-  { fixedLengthOnly: boolean },
-  { fixedLengthOnly: false },
-  { fixedLengthOnly: false }
->;
+declare const noDefaultForRequiredOptions: ApplyDefaultOptions<{fixedLengthOnly: boolean}, {fixedLengthOnly: false}, {fixedLengthOnly: false}>;
 
 // The output of `ApplyDefaultOptions<SomeOption, ...>` should be assignable to `Required<SomeOption>`
 type SomeType<Options extends PathsOptions = {}> = _SomeType<
@@ -156,10 +138,9 @@ type SomeType<Options extends PathsOptions = {}> = _SomeType<
 >;
 type _SomeType<Options extends Required<PathsOptions>> = Options;
 
+// prettier-ignore
 // @ts-expect-error
-type SomeType2<Options extends PathsOptions = {}> = _SomeType2<
-  ApplyDefaultOptions<PathsOptions, DefaultPathsOptions, Options>
->;
+type SomeType2<Options extends PathsOptions = {}> = _SomeType2<ApplyDefaultOptions<PathsOptions, DefaultPathsOptions, Options>>;
 type _SomeType2<Options extends Required<PathsOptions> & { extra: string }> =
   Options;
 
@@ -171,9 +152,8 @@ type SomeType3<Options extends SomeTypeOptions> = _SomeType3<
 >;
 type _SomeType3<Options extends Required<SomeTypeOptions>> = Options;
 
+// prettier-ignore
 // @ts-expect-error
-type SomeType4<Options extends SomeTypeOptions> = _SomeType4<
-  ApplyDefaultOptions<SomeTypeOptions, DefaultSomeTypeOptions, Options>
->;
+type SomeType4<Options extends SomeTypeOptions> = _SomeType4<ApplyDefaultOptions<SomeTypeOptions, DefaultSomeTypeOptions, Options>>;
 type _SomeType4<Options extends Required<SomeTypeOptions> & { extra: string }> =
   Options;
