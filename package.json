@@ -69,7 +69,7 @@
 		"npm-run-all2": "^8.0.4",
 		"tsd": "^0.33.0",
 		"ttsc": "file:/tmp/ttsc-tgz/ttsc-0.12.4.tgz",
-		"typescript": "^5.9.2",
+		"typescript": "6.0.0-dev.20260416",
 		"typescript-eslint": "^8.47.0",
 		"xo": "^2.0.2"
 	},
