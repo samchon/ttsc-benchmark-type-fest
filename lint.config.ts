@@ -4,8 +4,6 @@ import type { ITtscLintConfig } from "@ttsc/lint";
 // 12 shared lint rules and the legacy .prettierrc settings so the format
 // benchmark cell measures the no-op steady state.
 export default {
-  files: ["index.d.ts", "source/**/*.d.ts", "test-d/**/*.ts"],
-  ignores: ["lint-rules/**", "lint-processors/**"],
   format: {
     printWidth: 80,
     tabWidth: 2,
